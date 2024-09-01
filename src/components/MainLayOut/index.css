@@ -1,0 +1,206 @@
+/* .sidebar {
+  position: fixed;
+  top: 0;
+  left: -300px; 
+  width: 300px;
+  height: 100vh;
+  background-color: #12171b;
+  transition: left 0.5s ease;
+  z-index: 1000;
+  box-shadow: rgb(22, 29, 35) 0px 5px 10px -1px;
+}
+
+.sidebar.active {
+  left: 0; 
+}
+
+@media only screen and (min-width: 1024px) {
+  .sidebar{
+    display: none;
+  }
+  .media-screen{
+    display: none;
+  }
+  
+}
+.dropdown-sidebar {
+  position: relative;
+  display: inline-block;
+ 
+} 
+.dropdown-sidebar:hover::after {
+  content: "";
+  border-bottom: 8px solid #1f3d58;
+  border-left: 8px solid transparent;
+  z-index: 999;
+  display: block;
+  border-right: 8px solid transparent;
+  
+  bottom: 0;
+  left: 37px;
+  position: absolute;
+ 
+}
+.custom-sidebar {
+  background-color: #001529; 
+}
+
+.custom-sidebar .logo {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.custom-sidebar .logo img {
+  height: 32px;
+  margin-right: 16px;
+}
+
+.custom-sidebar .logo-text {
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.custom-sidebar .logo-text .text-primary {
+  color: #1890ff; 
+}
+
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.sidebar-overlay.active {
+  opacity: 1;
+} */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -300px;
+  width: 300px;
+  height: 100vh;
+  background-color: #12171b;
+  transition: left 0.5s ease;
+  z-index: 1000;
+  box-shadow: rgb(22, 29, 35) 0px 5px 10px -1px;
+}
+
+.sidebar.active {
+  left: 0;
+}
+
+/* CSS cho Ant Design Menu */
+.sidebar .ant-menu {
+  background-color: transparent;
+  border: none;
+  max-height: 90vh; /* Sử dụng đơn vị vh */
+  overflow-y: auto;
+}
+
+.sidebar .ant-menu-item,
+.sidebar .ant-menu-submenu-title {
+  color: #989898;
+  padding: 12px 24px;
+  border-right: 4px solid transparent;
+}
+
+.sidebar .ant-menu-item:hover,
+.sidebar .ant-menu-submenu-title:hover,
+.sidebar .ant-menu-item-selected {
+  color: #ff8a00;
+  background-color: #000000;
+  border-right-color: #ff8a00;
+}
+
+.sidebar .ant-menu-submenu-arrow {
+  color: #989898;
+}
+
+.sidebar .ant-menu-sub {
+  background-color: #1f3d58;
+  overflow-y: scroll;
+  white-space: nowrap;
+  min-height: 100vh;
+  width: 100%;
+}
+.sidebar .ant-menu-sub::-webkit-scrollbar {
+  height: 12px;
+  width: 8px; 
+}
+.sidebar .ant-menu-sub::-webkit-scrollbar-track {
+  background: #1e2732; 
+}
+.sidebar .ant-menu-sub::-webkit-scrollbar-thumb {
+  background-color: #3b6080;
+  border-radius: 10px; 
+  border: 3px solid #1e2732;
+}
+
+
+.sidebar .ant-menu-submenu-popup {
+  top: 0;
+  left: 100%;
+  border-radius: 0;
+  
+}
+
+.sidebar .ant-menu-submenu-open > .ant-menu-submenu-title {
+  background-color: #000000;
+}
+
+/* CSS cho logo */
+.sidebar .logo {
+  display: flex;
+  align-items: center;
+  padding: 7px;
+}
+
+.sidebar .logo img {
+  height: 60px;
+  margin-right: 4px;
+  border-radius: 6px;
+}
+
+.sidebar .logo-text {
+  font-size: 25px;
+  font-weight: bold;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.sidebar .logo-text .text-primary {
+  color: #1890ff;
+}
+.sidebar .x-button {
+  background: linear-gradient(90deg, rgba(8,102,170,1) 5%, rgba(170,87,8,1) 56%, rgba(170,141,8,1) 100%, rgba(8,102,170,1) 100%, rgba(25,22,18,1) 100%);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4); /* Hiệu ứng shadow khi di chuột qua */
+  
+}
+
+/* CSS cho sidebar-overlay */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.sidebar-overlay.active {
+  opacity: 1;
+}

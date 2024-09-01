@@ -1,0 +1,515 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* căn chỉnh toàn bộ bố cục */
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* responsive cho các trang */
+.responsive-edit {
+  @apply min-[540px]:px-12 min-[712px]:px-8 md:px-0 min-[820px]:px-2 min-[853px]:px-6 min-[912px]:px-16 lg:px-0;
+}
+/* Tùy chỉnh thanh cuộn cho toàn bộ trang */
+html,
+body {
+  overflow: auto; /* Đảm bảo rằng trang có thể cuộn */
+}
+
+/* Thanh cuộn */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 12px; /* Chiều rộng của thanh cuộn dọc */
+  height: 12px; /* Chiều cao của thanh cuộn ngang */
+}
+
+/* Track của thanh cuộn */
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track {
+  background: #1e2732; /* Màu nền của track */
+}
+
+/* Thumb của thanh cuộn */
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb {
+  background-color: #3b6080; /* Màu của thumb */
+  border-radius: 10px; /* Bo tròn góc */
+  border: 3px solid #1e2732; /* Đường viền xung quanh thumb */
+}
+
+/* Hover effect cho thumb */
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover {
+  background-color: #b83826; /* Màu của thumb khi hover */
+}
+
+/* -------------------------------------------------------------------------- */
+.custom-page {
+  @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+/* custom header background */
+.custom-bg {
+  background-color: #1b2d3c;
+  background-image: linear-gradient(to right, rgb(35, 74, 113) 0%, rgb(16, 21, 25) 51%, rgb(21, 29, 37) 100%);
+  background-size: 200% 100%;
+}
+/* navbar */
+.shadow-custom {
+  box-shadow: rgb(22, 29, 35) 0px 5px 10px -1px;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+  /* Bổ sung display: inline-block để đảm bảo dropdown nằm trong dòng */
+}
+.dropdown:hover::after {
+  content: '';
+  border-bottom: 8px solid #1f3d58;
+  border-left: 8px solid transparent;
+  z-index: 999;
+  display: block;
+  border-right: 8px solid transparent;
+  /* top: -0px; */
+  bottom: 0;
+  left: 37px;
+  position: absolute;
+}
+
+/* Search-bar */
+.search-container {
+  position: relative; /* Cho phép định vị dropdown */
+}
+
+.search-container input {
+  /* width: calc(100% - 30px);  */
+  width: 100%;
+  padding: 8px;
+  background-color: #12171b6e;
+  font-weight: 500;
+  color: rgb(6, 197, 255);
+  text-shadow: #25aae1;
+}
+
+.search-container .loading {
+  position: absolute;
+  top: 50%;
+  right: 25px;
+  transform: translate(-50%, -50%);
+  color: white;
+  /* background: linear-gradient(90deg, rgba(170, 8, 142, 1) 0%, rgba(91, 171, 134, 1) 0%, rgba(201, 183, 198, 1) 0%, rgba(64, 148, 180, 1) 0%, rgba(170, 8, 142, 1) 0%, rgba(11, 19, 9, 1) 0%, rgba(159, 137, 201, 1) 0%, rgba(170, 8, 47, 1) 0%, rgba(75, 24, 41, 1) 15%, rgba(35, 138, 205, 1) 44%, rgba(59, 91, 51, 1) 65%, rgba(218, 73, 55, 1) 82%, rgba(132, 30, 149, 1) 100%, rgba(25, 22, 18, 1) 100%, rgba(170, 141, 8, 1) 100%, rgba(8, 102, 170, 1) 100%); */
+  display: none;
+}
+
+.search-container input:focus ~ .loading,
+.search-container input[data-loading='true'] ~ .loading {
+  display: block;
+}
+.search-container input:focus {
+  outline: none;
+}
+
+.search-container ul {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #222;
+  border-radius: 4px;
+  list-style: none;
+  padding: 0;
+  margin-top: 5px;
+  z-index: 10;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  /* max-height: 350px; */
+  overflow-y: auto;
+}
+/* phim yeu thich */
+.custom-bg2 {
+  background-image: linear-gradient(to right, rgb(6, 52, 88), rgb(28, 94, 148));
+  background-repeat: repeat;
+  background-size: auto;
+}
+.shadow-custom {
+  box-shadow: rgba(255, 255, 255, 0.07) 0px 1px 1px 0px inset, rgba(0, 0, 0, 0.29) 0px 1px 3px 0px;
+  color: rgb(255, 255, 255);
+}
+
+/* banner slider */
+
+.tw-black-backdrop {
+  background: linear-gradient(to left, transparent, rgba(0, 0, 0, 0.85) 65%);
+}
+.tw-flex-center {
+  @apply flex justify-center items-center;
+}
+.tw-multiline-ellipsis-3 {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: normal;
+
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.tw-multiline-ellipsis-2 {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: normal;
+
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.tw-multiline-ellipsis-1 {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-flex: 1;
+  -webkit-box-orient: vertical;
+}
+/* Banner Slider */
+
+.navigation-button {
+  border-radius: 0.5rem;
+  position: absolute;
+  background-color: rgba(255, 152, 0, 0.75);
+  background-image: linear-gradient(to right, rgb(245, 206, 98), rgb(228, 54, 3), rgb(250, 113, 153), rgb(232, 90, 25));
+  background-size: 300% 100%;
+  box-shadow: rgba(229, 66, 10, 0.75) 0px 4px 15px 0px;
+  text-align: center;
+  color: white;
+}
+
+.swiper-container {
+  --swiper-navigation-size: 30px; /* Kích thước của nút điều hướng */
+  --swiper-navigation-top-offset: 50%; /* Khoảng cách từ trên xuống */
+  --swiper-navigation-sides-offset: 5px; /* Khoảng cách từ hai bên */
+  --swiper-navigation-color: #8a9eaf; /* Màu sắc của nút điều hướng */
+  --swiper-pagination-color: linear-gradient(90deg, rgba(175, 0, 255, 1) 3%, rgba(9, 121, 73, 1) 100%, rgba(0, 36, 17, 1) 100%);
+  --swiper-pagination-progressbar-bg-color: rgba(0, 0, 0, 0.25);
+  --swiper-pagination-progressbar-size: 3px;
+}
+.swiper-pagination-progressbar {
+  background: var(--swiper-pagination-progressbar-bg-color);
+  height: var(--swiper-pagination-progressbar-size);
+}
+/* responsive BannerSlider */
+
+.custom-responsive {
+  @apply h-64 sm:h-80 md:h-96 lg:h-[720px];
+}
+/* responsive card */
+.card-custom {
+  @apply h-[315px] w-[193px] md:w-[175px] md:h-[312.5px] lg:h-[260px] lg:w-full xl:w-full xl:h-[325px]  rounded-lg shadow-xl;
+  color: rgb(35, 82, 124);
+}
+@media (min-height: 1024px) {
+  .responsive-item {
+    /* height: 100vh; Chiều cao cố định của container */
+    overflow: hidden; /* Ngăn chặn tràn bề ngoài container */
+  }
+}
+/* sectionTitle button */
+.sectionTitle-custom {
+  background: linear-gradient(to right, rgb(255, 138, 0), rgb(255, 32, 112));
+  -webkit-background-clip: text; /* Hỗ trợ cho các trình duyệt dựa trên webkit */
+  background-clip: text;
+  color: transparent; /* Biến chữ thành trong suốt */
+  font-size: 15px;
+  font-weight: 700;
+  padding: 13px 0px;
+  line-height: 11px;
+  border-image: linear-gradient(to right, rgb(255, 138, 0), rgb(255, 32, 112));
+  border-image-slice: 1;
+}
+.sectionTitle-button {
+  width: 30%;
+  text-align: right;
+  margin: 5px 0;
+  padding: 4px 12px;
+  border-radius: 20px;
+  color: #ffffff;
+  float: right;
+  font-size: 13px;
+  line-height: 20.8px;
+}
+/* cardItem custom  */
+.cardItemQualang {
+  top: 3px;
+  left: 3px;
+  background: #a94442;
+  z-index: 1;
+  background-image: linear-gradient(to right, #ff00cc 0%, #333399 51%, #ff00cc 100%);
+  background-size: 300% 100%;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 8px;
+  transition: 0.7s;
+  padding: 3px 6px;
+  position: absolute;
+  color: white;
+  text-align: center;
+  line-height: 1.6;
+  font-size: 11px;
+}
+.cardItemQualangMiniSlider {
+  top: 3px;
+  left: 4px;
+  background: #365979;
+  z-index: 1;
+  background-image: linear-gradient(to right, #568db9 0%, #002b50 51%, #145e9e 100%);
+  background-size: 200% 100%;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 8px;
+  transition: 0.7s;
+  padding: 3px 6px;
+  position: absolute;
+  color: white;
+  text-align: center;
+  line-height: 1.6;
+  font-size: 11px;
+}
+.cardItem-qualang::after {
+  content: '';
+  border: 4px solid transparent;
+  border-bottom: 4px solid #5f0e0c;
+  transform: rotate(44deg);
+  position: absolute;
+  bottom: -4px;
+  left: 2px;
+  z-index: 9999999;
+}
+.addOn-custom {
+  position: absolute;
+  right: 2px;
+  bottom: 3px;
+  background: rgb(71, 132, 19);
+  color: white;
+  padding: 3px 5px 1px;
+  z-index: 9;
+  background-image: linear-gradient(to right, #c02425 0%, #f0cb35 51%, #c02425 100%);
+  /* background-position: 50% 100%; */
+  background-size: 200% 100%;
+  transition: 0.7s;
+  text-transform: capitalize;
+  text-align: center;
+  font-size: 11px;
+  border-radius: 2px;
+  line-height: 17.6px;
+}
+/* rightbar custom */
+.rightbar-custom {
+  display: flex;
+  clear: both;
+  padding-right: 10px;
+  line-height: 15.6px;
+  overflow: hidden;
+  background: rgb(11, 15, 21);
+  background-size: 200% 100%;
+  background-image: linear-gradient(to right, rgb(21, 29, 37) 0%, rgba(17, 21, 21, 0) 51%, rgb(6, 8, 8) 50%);
+  border-bottom: 1px solid #1e2732 !important;
+  color: white;
+  font-size: 11.5px;
+  transition-duration: 0.3s;
+  gap: 10px;
+}
+/* Trending Now button ngày tuần tháng */
+.trending-button {
+  color: rgb(165, 165, 165);
+  font-size: 11px;
+  border: 1px solid #1b2b3a;
+  background: #111720;
+  padding: 5px 8px;
+  margin: 0px 0px 0px 0px;
+  float: left;
+  margin: -1px;
+  position: relative;
+}
+.trending-button::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  /* top: 100%; */
+  left: 50%;
+  transform: translate(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid; /* Đặt màu cho tam giác */
+  opacity: 0; /* Ẩn tam giác */
+  transition: opacity 0.1s ease-in-out; /* Animation cho tam giác */
+  color: #ff00cc;
+}
+.activetrending {
+  background: #1b2a39;
+  /* border: 1px solid #1b2a3900; */
+  border: 1px solid transparent;
+  background-size: 200% 100%;
+  background-image: linear-gradient(to right, #ff00cc 0%, #333399 51%, #ff00cc 100%);
+  border-top-left-radius: 3px;
+  color: rgb(250, 245, 245);
+  opacity: 1;
+}
+.activetrending::after {
+  opacity: 1;
+}
+/* CardInfo trailer */
+.cardInfo-trailer {
+  background-image: linear-gradient(to right, #25aae1, #024fd6, #04befe, #3f86ed);
+  background-size: 300% 100%;
+
+  box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+}
+.button-one {
+  background-image: linear-gradient(to right, #009245, #d0c200, #00a8c5, #d9e021);
+  box-shadow: 0 4px 15px 0 rgba(83, 176, 57, 0.75);
+  background-size: 300% 100%;
+  /* transition: 3s ease-in-out; */
+  /* background-size: 100% 200%; */
+}
+.button-two {
+  background-image: linear-gradient(to right, #ffbb00, #e43603, #ff6290, #ff5000);
+  box-shadow: 0 4px 15px 0 rgba(229, 66, 10, 0.75);
+  background-size: 300% 100%;
+}
+.button-one:hover {
+  background-image: linear-gradient(to left, #009245, #d0c200, #00a8c5, #d9e021);
+  box-shadow: 0 4px 15px 0 rgba(83, 176, 57, 0.75);
+  background-size: 300% 100%;
+}
+.button-two:hover {
+  background-image: linear-gradient(to left, #ffbb00, #e43603, #ff6290, #ff5000);
+  box-shadow: 0 4px 15px 0 rgba(229, 66, 10, 0.75);
+  background-size: 300% 100%;
+}
+/* table link */
+.scroll-bar-custom {
+  width: 100%;
+}
+.scroll-bar-custom::-webkit-scrollbar {
+  height: 8px; /* Chiều cao của thanh cuộn ngang */
+  width: 8px; /* Chiều rộng của thanh cuộn dọc */
+}
+
+/* Track của thanh cuộn */
+.scroll-bar-custom::-webkit-scrollbar-track {
+  background: #1e2732; /* Màu nền của track */
+}
+
+/* Thumb của thanh cuộn */
+.scroll-bar-custom::-webkit-scrollbar-thumb {
+  background-color: #3b6080; /* Màu của thumb */
+  border-radius: 10px; /* Bo tròn góc */
+  border: 3px solid #1e2732; /* Đường viền xung quanh thumb */
+}
+
+/* Hover effect cho thumb */
+.scroll-bar-custom::-webkit-scrollbar-thumb:hover {
+  background-color: #b83826; /* Màu của thumb khi hover */
+}
+/* movieWatchBox */
+.plyr {
+  --plyr-color-main: #347492;
+  --plyr-border-radius: 10px;
+  --plyr-video-control-color: #d8cece;
+  --plyr-video-control-color-hover: #030303;
+  /* --plyr-progress-loading-background: rgba(241, 247, 255, 0.6); */
+  --plyr-control-spacing: 5px;
+  --plyr-control-icon-size: 40px;
+  --plyr-control-icon-color: 'black';
+  --plyr-tooltip-background: #584c4c;
+  --plyr-tooltip-color: hsl(216, 21%, 91%);
+}
+.plyr__poster {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+
+.plyr .plyr__control--overlaid:hover {
+  background-color: #9759c0;
+  opacity: 90%;
+}
+@media (max-width: 640px) {
+  .plyr {
+    --plyr-control-spacing: 5px;
+    --plyr-control-icon-size: 14px; /* Có thể điều chỉnh kích thước icon cho phù hợp */
+  }
+}
+
+/* dropdown */
+
+.dropdown {
+  /* Outermost container for the dropdown */
+  position: relative;
+  display: inline-block; /* Allows inline display for better positioning */
+}
+
+.dropdown button {
+  /* Style for the dropdown button */
+  background-color: transparent; /* Remove default background color */
+  border: none; /* Remove default border */
+  cursor: pointer; /* Indicate clickable behavior */
+  display: flex; /* Allow alignment of text and icon */
+  align-items: center; /* Align content vertically */
+  justify-content: space-between; /* Space between text and icon */
+}
+
+.dropdown button span {
+  /* Style for the dropdown label text */
+  font-weight: normal; /* Adjust font weight for readability */
+}
+
+.dropdown-content {
+  background-color: #1f3d58; /* Black background */
+  color: #fff; /* White text color */
+  list-style: none; /* Remove default list styling */
+  padding: 0; /* Remove default padding */
+
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  z-index: 10; /* Ensure dropdown is above other elements */
+  opacity: 0; /* Initially hidden */
+  visibility: hidden; /* Initially hidden */
+  transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out; /* Smooth transition */
+}
+
+.dropdown:hover .dropdown-content {
+  /* Show dropdown content on hover */
+  opacity: 1;
+  visibility: visible;
+}
+
+.dropdown-content li {
+  /* Style for individual dropdown items */
+  padding: 0.5rem 1rem; /* Adjust padding as needed */
+  cursor: pointer; /* Indicate clickable behavior */
+  transition: background-color 0.2s ease-in-out; /* Smooth hover effect */
+}
+
+.dropdown-content li:hover {
+  /* Style for hover on individual items */
+  background-color: #212121; /* Slightly darker background on hover */
+}
+
+/* Skeleton css */
+@media (max-width: 768px) {
+  .skeleton {
+    height: 300px; /* Chiều cao trên điện thoại */
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .skeleton {
+    height: 400px; /* Chiều cao trên iPad */
+  }
+}
+
+@media (min-width: 1024px) {
+  .skeleton {
+    height: 500px; /* Chiều cao trên máy tính */
+  }
+}
