@@ -1,9 +1,13 @@
+import { useMemo } from 'react';
 import useGetImdbDetails from '../../store/apiSlice/imdbApi.slice';
 
 function ImdbScore({ film }) {
-  const imdbId = film?.imdb?.id; // Ví dụ:  lấy từ props detailed
+  const imdbId = film?.imdb?.id;
   const { loading, error, data } = useGetImdbDetails(imdbId);
-  return <>{data?.title?.rating?.aggregate_rating || 7}</>;
+  const rating = useMemo(() => {
+    return data?.title?.rating?.aggregate_rating || 7;
+  }, [data]);
+  return <>{rating}</>;
 }
 
 export default ImdbScore;

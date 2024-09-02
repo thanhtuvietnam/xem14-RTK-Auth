@@ -31,7 +31,6 @@
 
 // export default LinkServer;
 
-
 // import React from 'react';
 
 // import { icons } from '../../shared/icon';
@@ -62,8 +61,6 @@
 
 // export default LinkServer;
 
-
-
 import React from 'react';
 import { icons } from '../../shared/icon';
 const { FaServer } = icons;
@@ -81,8 +78,7 @@ const LinkServer = React.memo(({ serverName, serverData, onEpisodeClick, activeB
             <li
               onClick={() => onEpisodeClick(serverData[index], index)}
               key={index}
-              className={`mr-[4px] mb-[10px] bg-[#1f2c3e] px-[10px] py-[7.5px] rounded-[3px] hover:bg-[#ff9900] hover:text-white transition duration-300 cursor-pointer ${activeButton === index ? 'bg-[#ff9900]' : ''}`}
-            >
+              className={`mr-[4px] mb-[10px] bg-[#1f2c3e] px-[10px] py-[7.5px] rounded-[3px] hover:bg-[#ff9900] hover:text-white transition duration-300 cursor-pointer ${activeButton === index ? 'bg-[#ff9900]' : ''}`}>
               {index + 1}
               {/* {index} */}
             </li>
@@ -92,5 +88,5 @@ const LinkServer = React.memo(({ serverName, serverData, onEpisodeClick, activeB
     </div>
   );
 });
-
+LinkServer.displayName = 'LinkServer';
 export default LinkServer;

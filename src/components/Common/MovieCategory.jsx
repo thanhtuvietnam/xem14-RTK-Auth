@@ -112,8 +112,6 @@
 
 // export default MovieCategory;
 
-
-
 import React, { useEffect, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { NoteViewer, CardItem, Filter, PaginationCom, SectionTitle, TrendingNow, BreadCrumb } from './index.js';
@@ -139,9 +137,7 @@ const MovieCategory = React.memo(({ sectionTitle, dataResults, totalItemsSearch,
   const limit = 24;
 
   const totalPages = useMemo(() => {
-    return totalItemsSearch 
-      ? Math.ceil(totalItemsSearch / limit) 
-      : Math.ceil((categoryData?.data?.params?.pagination?.totalItems || 0) / limit);
+    return totalItemsSearch ? Math.ceil(totalItemsSearch / limit) : Math.ceil((categoryData?.data?.params?.pagination?.totalItems || 0) / limit);
   }, [totalItemsSearch, categoryData, limit]);
 
   const searchPageError = useAppSelector((state) => state.loadingState.Error);
@@ -157,7 +153,9 @@ const MovieCategory = React.memo(({ sectionTitle, dataResults, totalItemsSearch,
   const renderMovieItems = useMemo(() => {
     const items = dataResults || categoryData?.data?.items;
     return items?.map((item) => (
-      <Link to={`/chitiet-phim/${item.slug}`} key={item._id}>
+      <Link
+        to={`/chitiet-phim/${item.slug}`}
+        key={item._id}>
         <CardItem
           image={`${IMG_URL}/${item?.thumb_url}`}
           title={item?.name}
@@ -183,7 +181,10 @@ const MovieCategory = React.memo(({ sectionTitle, dataResults, totalItemsSearch,
 
   return (
     <div className='min-h-screen custom-page px-0 bg-[#151d25]'>
-      <NoteViewer note={noteLine} hidden={`hidden`} />
+      <NoteViewer
+        note={noteLine}
+        hidden={`hidden`}
+      />
       <ToastContainer />
       <Filter />
       <div className='bg-[#151d25] border-t border-t-[#1e2732] custom-page lg:flex shadow-lg  min-h-screen'>
@@ -195,11 +196,12 @@ const MovieCategory = React.memo(({ sectionTitle, dataResults, totalItemsSearch,
               PageBreadCrumb={`Trang ${currentPage}`}
               hiddenOther={hiddenOther}
             />
-            <SectionTitle sectionFilm={sectionTitle} hidden={`hidden`} />
+            <SectionTitle
+              sectionFilm={sectionTitle}
+              hidden={`hidden`}
+            />
           </div>
-          <div className='grid grid-cols-2 sm:grid-cols-3  md:grid-cols-4 responsive-edit gap-2.5'>
-            {renderMovieItems}
-          </div>
+          <div className='grid grid-cols-2 sm:grid-cols-3  md:grid-cols-4 responsive-edit gap-2.5'>{renderMovieItems}</div>
         </div>
         <div className='lg:w-2/6'>
           <TrendingNow />
@@ -217,5 +219,5 @@ const MovieCategory = React.memo(({ sectionTitle, dataResults, totalItemsSearch,
     </div>
   );
 });
-
+MovieCategory.displayName = 'MovieCategory';
 export default MovieCategory;

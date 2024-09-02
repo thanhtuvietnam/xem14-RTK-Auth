@@ -51,7 +51,6 @@
 
 // export default TableLink;
 
-
 import React from 'react';
 import { icons } from '../../shared/icon';
 import { Link } from 'react-router-dom';
@@ -67,7 +66,9 @@ const TableLink = React.memo(({ movieServerData }) => {
         <thead className='border-b-2 border-[#202b35]'>
           <tr className='font-bold'>
             {thContent.map((content, index) => (
-              <th className='p-[8px]' key={index}>
+              <th
+                className='p-[8px]'
+                key={index}>
                 {content}
               </th>
             ))}
@@ -77,8 +78,13 @@ const TableLink = React.memo(({ movieServerData }) => {
           {movieServerData?.map((linkm3u8, index) => (
             <tr key={index}>
               <td className='p-[8px] flex items-center gap-2'>
-                <MdCloudDownload color='#b83826' size={25} />
-                <Link className='text-[#87c3f9] hover:text-[#b83826]' to={linkm3u8.link_m3u8}>
+                <MdCloudDownload
+                  color='#b83826'
+                  size={25}
+                />
+                <Link
+                  className='text-[#87c3f9] hover:text-[#b83826]'
+                  to={linkm3u8.link_m3u8}>
                   {linkm3u8.filename}
                 </Link>
               </td>
@@ -93,5 +99,5 @@ const TableLink = React.memo(({ movieServerData }) => {
     </div>
   );
 });
-
+TableLink.displayName = 'TableLink';
 export default TableLink;

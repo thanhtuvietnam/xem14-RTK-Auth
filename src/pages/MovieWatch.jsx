@@ -149,7 +149,6 @@
 
 // export default MovieWatch;
 
-
 // import React, { useState, useEffect } from 'react';
 // import { useLocation } from 'react-router-dom';
 // import { Filter, TrendingNow, MovieWatchBox, RecommendMovie, TableLink, NoteViewer, BreadCrumb, BackupLinkPlayer } from '../components/Common/index.js';
@@ -212,8 +211,8 @@
 //                 <NoteViewer note={noteMovieWatch} />
 //                 <div>
 //                   {!showBackup ? (
-//                     <MovieWatchBox 
-//                       movieDetails={movieDetails} 
+//                     <MovieWatchBox
+//                       movieDetails={movieDetails}
 //                       onError={handleMovieWatchBoxError}
 //                     />
 //                   ) : (
@@ -244,7 +243,6 @@
 
 // export default React.memo(MovieWatch);
 
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Filter, TrendingNow, MovieWatchBox, RecommendMovie, TableLink, NoteViewer, BreadCrumb, BackupLinkPlayer } from '../components/Common/index.js';
@@ -253,7 +251,7 @@ import { setLoading } from '../store/mainSlice/LoadingSlice/loadingSlice.js';
 import { LazyLoadComponent } from 'react-lazy-load-image-component';
 import { noteLine, noteMovieWatch } from '../shared/constant.js';
 
-const MovieWatch = () => {
+const MovieWatch = React.memo(() => {
   const location = useLocation();
   const movieDetails = location?.state?.movieDetails;
   const serverData = movieDetails?.episodes[0]?.server_data;
@@ -284,16 +282,15 @@ const MovieWatch = () => {
   }, []);
 
   if (isLoading) {
-    return (
-      <div className='min-h-screen w-full'>
-        {/* Loading skeleton */}
-      </div>
-    );
+    return <div className='min-h-screen w-full'>{/* Loading skeleton */}</div>;
   }
 
   return (
     <div className='min-h-screen custom-page px-0 bg-[#151d25]'>
-      <NoteViewer hidden='hidden' note={noteLine} />
+      <NoteViewer
+        hidden='hidden'
+        note={noteLine}
+      />
       <Filter />
       <div className='bg-[#151d25] border-t border-t-[#1e2732] custom-page lg:flex shadow-lg'>
         <div className='lg:w-3/4'>
@@ -309,8 +306,8 @@ const MovieWatch = () => {
             <NoteViewer note={noteMovieWatch} />
             <div>
               {!showBackup ? (
-                <MovieWatchBox 
-                  movieDetails={movieDetails} 
+                <MovieWatchBox
+                  movieDetails={movieDetails}
                   onError={handleMovieWatchBoxError}
                 />
               ) : (
@@ -335,6 +332,6 @@ const MovieWatch = () => {
       </div>
     </div>
   );
-};
-
-export default React.memo(MovieWatch);
+});
+MovieWatch.displayName = 'MovieWatch';
+export default MovieWatch;

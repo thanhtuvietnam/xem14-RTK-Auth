@@ -1,8 +1,9 @@
+import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { titleListButton } from '../../shared/utils';
 
-const SectionTitle = ({ sectionFilm, hidden }) => {
+const SectionTitle = React.memo(({ sectionFilm, hidden }) => {
   const navigate = useNavigate();
   return (
     <div className='flex items-center justify-between lg:mr-5'>
@@ -20,8 +21,9 @@ const SectionTitle = ({ sectionFilm, hidden }) => {
       </button>
     </div>
   );
-};
+});
 SectionTitle.propTypes = {
   sectionFilm: PropTypes.string,
 };
+SectionTitle.displayName = 'SectionTitle';
 export default SectionTitle;

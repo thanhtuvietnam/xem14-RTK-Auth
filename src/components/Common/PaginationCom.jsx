@@ -18,7 +18,7 @@
 //     dispatch(setCurrentPage(newPage));
 //     dispatch(setPage(newPage));
 //     navigate(`${routePath}?page=${newPage}`);
-//     // navigate(`/the-loai/${categorySlug}?page=${newPage}`, { state: { slug: categorySlug, type } }); 
+//     // navigate(`/the-loai/${categorySlug}?page=${newPage}`, { state: { slug: categorySlug, type } });
 //     // console.log(`Trang mới: ${newPage}`);
 //   };
 
@@ -47,7 +47,6 @@
 
 // export default PaginationCom;
 
-
 import React, { useEffect, useCallback } from 'react';
 import { Pagination, Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -62,11 +61,14 @@ const PaginationCom = React.memo(({ currentPage, totalPages, routePath }) => {
     window.scrollTo(0, 0);
   }, [currentPage]);
 
-  const handleChangePagination = useCallback((event, newPage) => {
-    dispatch(setCurrentPage(newPage));
-    dispatch(setPage(newPage));
-    navigate(`${routePath}?page=${newPage}`);
-  }, [dispatch, navigate, routePath]);
+  const handleChangePagination = useCallback(
+    (event, newPage) => {
+      dispatch(setCurrentPage(newPage));
+      dispatch(setPage(newPage));
+      navigate(`${routePath}?page=${newPage}`);
+    },
+    [dispatch, navigate, routePath]
+  );
 
   return (
     <Stack>
@@ -87,5 +89,5 @@ const PaginationCom = React.memo(({ currentPage, totalPages, routePath }) => {
     </Stack>
   );
 });
-
+PaginationCom.displayName = 'PaginationCom';
 export default PaginationCom;

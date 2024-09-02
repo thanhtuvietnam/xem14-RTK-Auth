@@ -3,7 +3,7 @@ import { icons } from '../../shared/icon';
 import YouTube from 'react-youtube';
 
 const { IoCloseCircleSharp } = icons;
-const TrailerModal = ({ setShowModal, link }) => {
+const TrailerModal = React.memo(({ setShowModal, link }) => {
   const closeModal = () => {
     setShowModal(false);
   };
@@ -28,6 +28,8 @@ const TrailerModal = ({ setShowModal, link }) => {
       </div>
     </div>
   );
-};
+});
+
+TrailerModal.displayName = 'TrailerModal';
 
 export default TrailerModal;

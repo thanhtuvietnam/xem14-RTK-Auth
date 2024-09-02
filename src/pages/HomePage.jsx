@@ -33,7 +33,7 @@
 //   }
 //   useEffect(() => {
 //     dispatch(setLoading(true));
-   
+
 //     // setIsLoading(true);
 //     const hasError = [PhimmoiQuery, PhimboQuery, PhimleQuery, TVShowsQuery, HoathinhQuery].some((query) => query.isError);
 
@@ -109,8 +109,6 @@
 
 // export default HomePage;
 
-
-
 import React, { useEffect, useMemo } from 'react';
 import BannerSlider from '../components/Slider/BannerSlider';
 import SectionSlider from '../components/Slider/SectionSlider';
@@ -127,7 +125,7 @@ import SkeletonForAll from '../components/Skeleton/SkeletonForAll/SkeletonForAll
 import Error from './Error.jsx';
 import { useActiveButton } from '../hooks/useActiveButton.js';
 
-const HomePage = () => {
+const HomePage = React.memo(() => {
   const Loading = useAppSelector((state) => state.loadingState.Loading);
   const dispatch = useAppdispatch();
   const [activeButton, handleClick] = useActiveButton(navLists);
@@ -139,9 +137,8 @@ const HomePage = () => {
   const HoathinhQuery = useGetHoathinhQuery(1);
 
   const queries = [PhimmoiQuery, PhimboQuery, PhimleQuery, TVShowsQuery, HoathinhQuery];
-
   const movies = useMemo(() => {
-    if (queries.every(query => query.data)) {
+    if (queries.every((query) => query.data)) {
       return {
         Phimmoi: PhimmoiQuery.data?.data?.items,
         Phimbo: PhimboQuery.data?.data?.items,
@@ -167,7 +164,7 @@ const HomePage = () => {
 
     if (hasError) {
       dispatch(setLoading(false));
-      const error = queries.find(query => query.error)?.error;
+      const error = queries.find((query) => query.error)?.error;
       if (error) {
         console.error('Có lỗi xảy ra:', error);
         toast('BẠN VUI LÒNG BẤM F5 HOẶC BẤM TẢI LẠI TRANG');
@@ -185,10 +182,17 @@ const HomePage = () => {
   return (
     <div className='bg-[#222d38]'>
       <div className='min-h-screen custom-page px-0 bg-[#151d25]'>
-        <NoteViewer hidden='hidden' note={noteLine} />
+        <NoteViewer
+          hidden='hidden'
+          note={noteLine}
+        />
         <ToastContainer />
         {Loading ? (
-          <SkeletonForAll withSlider={true} sectionCount={4} cardCount={12} />
+          <SkeletonForAll
+            withSlider={true}
+            sectionCount={4}
+            cardCount={12}
+          />
         ) : movies ? (
           <>
             <BannerSlider films={movies} />
@@ -209,6 +213,6 @@ const HomePage = () => {
       </div>
     </div>
   );
-};
-
-export default React.memo(HomePage);
+});
+HomePage.displayName = 'HomePage';
+export default HomePage;

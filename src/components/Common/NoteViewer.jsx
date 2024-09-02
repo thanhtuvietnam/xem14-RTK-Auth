@@ -1,7 +1,7 @@
 import React from 'react';
 import { noteLine } from '../../shared/constant';
 
-const NoteViewer = ({ hidden, note }) => {
+const NoteViewer = React.memo(({ hidden, note }) => {
   return (
     <div className='bg-[#fef5c4] border-[1px] border-[#fadf98] p-[5px] overflow-hidden text-center text-[10px] md:text-[11px] lg:text-[13px] leading-[1.6] rounded-t-sm'>
       <span className='text-[#222222]'>
@@ -16,6 +16,7 @@ const NoteViewer = ({ hidden, note }) => {
       </span>
     </div>
   );
-};
+});
 
+NoteViewer.displayName = 'NoteViewer';
 export default NoteViewer;

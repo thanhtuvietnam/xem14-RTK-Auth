@@ -87,7 +87,6 @@
 
 // export default MovieWatchBox;
 
-
 import React, { useState, useCallback, useMemo } from 'react';
 import { LinkServer, MovieBox, NoteViewer } from './index.js';
 import { useActiveButton } from '../../hooks/useActiveButton.js';
@@ -105,19 +104,26 @@ const MovieWatchBox = React.memo(({ movieDetails }) => {
   const [contentClick, setContentClick] = useState(false);
   const [selectedEpisode, setSelectedEpisode] = useState(serverData?.[0]);
 
-  const handleEpisodeClick = useCallback((episode, index) => {
-    setSelectedEpisode(episode);
-    handleClick(index);
-  }, [handleClick]);
+  const handleEpisodeClick = useCallback(
+    (episode, index) => {
+      setSelectedEpisode(episode);
+      handleClick(index);
+    },
+    [handleClick]
+  );
 
-  const contentWithoutTags = useMemo(() => 
-    movieDetails?.content?.replace(/<[^>]+>/g, ''),
-  [movieDetails?.content]);
+  const contentWithoutTags = useMemo(() => movieDetails?.content?.replace(/<[^>]+>/g, ''), [movieDetails?.content]);
 
   return (
     <div>
-      <MovieBox poster={posterUrl} episode={selectedEpisode} />
-      <NoteViewer hidden='hidden' note={noteMovieWatch2} />
+      <MovieBox
+        poster={posterUrl}
+        episode={selectedEpisode}
+      />
+      <NoteViewer
+        hidden='hidden'
+        note={noteMovieWatch2}
+      />
       <div className='bg-[#19222b] p-[15px] pb-0 shadow-md my-2.5 rounded-[4px] flex items-center justify-between'>
         <div className='flex gap-3'>
           <div className='relative animate-bookmarkshake'>
@@ -160,5 +166,5 @@ const MovieWatchBox = React.memo(({ movieDetails }) => {
     </div>
   );
 });
-
+MovieWatchBox.displayName = 'MovieWatchBox';
 export default MovieWatchBox;

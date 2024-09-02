@@ -65,7 +65,6 @@
 //   );
 // }
 
-
 import React, { useCallback } from 'react';
 import HomeIcon from '@mui/icons-material/Home';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
@@ -83,47 +82,63 @@ const BreadCrumb = React.memo(({ categoryBreadCrumb, PageBreadCrumb, hidden, hid
   const activeOther = useAppSelector((state) => state.loadingState.activeOther);
   const dispatch = useAppdispatch();
 
-  const handleClickHome = useCallback((event) => {
-    event.preventDefault();
-    if (activeOther !== null) {
-      dispatch(setActiveOther(null));
-    }
-    if (activeButton !== null) {
-      handleClick(0);
-    }
-    navigate('/');
-  }, [activeOther, activeButton, dispatch, handleClick, navigate]);
+  const handleClickHome = useCallback(
+    (event) => {
+      event.preventDefault();
+      if (activeOther !== null) {
+        dispatch(setActiveOther(null));
+      }
+      if (activeButton !== null) {
+        handleClick(0);
+      }
+      navigate('/');
+    },
+    [activeOther, activeButton, dispatch, handleClick, navigate]
+  );
 
   return (
-    <div role='navigation' className='flex items-center gap-2 text-ellipsis overflow-hidden whitespace-nowrap'>
+    <div
+      role='navigation'
+      className='flex items-center gap-2 text-ellipsis overflow-hidden whitespace-nowrap'>
       <Link
-        to="/"
+        to='/'
         className='cursor-pointer text-[#1890ff] flex items-center'
-        onClick={handleClickHome}
-      >
-        <HomeIcon sx={{ mr: 0.5 }} fontSize='inherit' />
+        onClick={handleClickHome}>
+        <HomeIcon
+          sx={{ mr: 0.5 }}
+          fontSize='inherit'
+        />
         Trang chủ
       </Link>
       {categoryBreadCrumb && (
         <div className='flex text-[#b0e8e5] items-center'>
-          <WhatshotIcon sx={{ mr: 0.5 }} fontSize='inherit' />
+          <WhatshotIcon
+            sx={{ mr: 0.5 }}
+            fontSize='inherit'
+          />
           {categoryBreadCrumb}
         </div>
       )}
       {OthersBreadCrumb && (
         <div className={`${hiddenOther} text-[#b0e8e5] flex items-center`}>
-          <GrainIcon sx={{ mr: 0.5 }} fontSize='inherit' />
+          <GrainIcon
+            sx={{ mr: 0.5 }}
+            fontSize='inherit'
+          />
           {OthersBreadCrumb}
         </div>
       )}
       {PageBreadCrumb && (
         <div className={`${hidden} text-[#b0e8e5] flex items-center`}>
-          <BakeryDiningIcon sx={{ mr: 0.5 }} fontSize='inherit' />
+          <BakeryDiningIcon
+            sx={{ mr: 0.5 }}
+            fontSize='inherit'
+          />
           {PageBreadCrumb}
         </div>
       )}
     </div>
   );
 });
-
+BreadCrumb.displayName = 'BreadCrumb';
 export default BreadCrumb;

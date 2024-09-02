@@ -102,7 +102,6 @@
 //   );
 // };
 
-
 import React, { useMemo } from 'react';
 import { CardItem, SectionTitle } from '../Common';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -137,7 +136,10 @@ export const MiniSlider = React.memo(({ films }) => {
   return (
     <div className='custom-page pb-[3%] bg-[#151d25]'>
       <div className='!border-b !border-[#1e2732] mb-3'>
-        <SectionTitle sectionFilm="Phim hot" hidden="hidden" />
+        <SectionTitle
+          sectionFilm='Phim hot'
+          hidden='hidden'
+        />
       </div>
       <Swiper
         modules={[Navigation, A11y, Autoplay]}
@@ -147,8 +149,7 @@ export const MiniSlider = React.memo(({ films }) => {
         navigation={{
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
-        }}
-      >
+        }}>
         {allMovies.map((movie) => (
           <SwiperSlide key={movie._id}>
             <Link to={linkUrl(movie)}>
@@ -170,3 +171,5 @@ export const MiniSlider = React.memo(({ films }) => {
     </div>
   );
 });
+
+MiniSlider.displayName = 'MiniSlider';

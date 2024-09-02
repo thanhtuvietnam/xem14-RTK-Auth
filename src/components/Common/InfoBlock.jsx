@@ -53,27 +53,12 @@
 
 // export default InfoBlock;
 
-
 import React from 'react';
 import { icons } from '../../shared/icon';
 
 const { FaCalendarAlt, FaClock } = icons;
 
-const InfoBlock = React.memo(({ 
-  title, 
-  originalName, 
-  episodeCurrent, 
-  qua, 
-  lang, 
-  actor, 
-  director, 
-  category, 
-  country, 
-  year, 
-  time, 
-  view, 
-  imdbScore 
-}) => {
+const InfoBlock = React.memo(({ title, originalName, episodeCurrent, qua, lang, actor, director, category, country, year, time, view, imdbScore }) => {
   return (
     <div className='text-[#a5a5a5] text-[12.5px] leading-[20px] flex flex-col gap-1.5'>
       <h1 className='text-[20px] text-[#cacaca] font-bold'>{title}</h1>
@@ -118,5 +103,6 @@ const InfoBlock = React.memo(({
     </div>
   );
 });
+InfoBlock.displayName = 'InfoBlock';
 
 export default InfoBlock;

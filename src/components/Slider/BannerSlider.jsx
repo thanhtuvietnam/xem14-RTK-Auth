@@ -135,7 +135,6 @@
 
 // export default BannerSlider;
 
-
 import React, { useMemo } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css/bundle';
@@ -169,15 +168,15 @@ const BannerSlider = React.memo(({ films }) => {
         }}
         pagination={{ type: 'progressbar', el: '.swiper-pagination' }}
         scrollbar={{ draggable: true, dragSize: 20 }}
-        className='mx-auto max-w-7xl px-0 sm:px-6 lg:px-8 !rounded-lg'
-      >
+        className='mx-auto max-w-7xl px-0 sm:px-6 lg:px-8 !rounded-lg'>
         {shuffledFilms.map((film, index) => (
           <SwiperSlide
             key={film?._id || index}
             onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            <Link to={`/${linkUrl(film)}`} className='group'>
+            onMouseLeave={handleMouseLeave}>
+            <Link
+              to={`/${linkUrl(film)}`}
+              className='group'>
               <LazyLoadImage
                 effect='blur'
                 wrapperProps={{
@@ -194,7 +193,10 @@ const BannerSlider = React.memo(({ films }) => {
               </div>
               {isHovering && (
                 <div className='absolute top-1/3 -translate-x-1/3 md:top-1/2 left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 w-10 h-10 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-[#ff9800bf] to-[#eb5e33] tw-flex-center z-10 transition duration-700'>
-                  <SlControlPlay className='ml-1 text-xl md:text-3xl' color='white' />
+                  <SlControlPlay
+                    className='ml-1 text-xl md:text-3xl'
+                    color='white'
+                  />
                 </div>
               )}
               <div className='absolute top-1/2 -translate-y-1/2 left-[5%] max-w-[200px] md:max-w-md'>
@@ -203,11 +205,17 @@ const BannerSlider = React.memo(({ films }) => {
                   <p className='text-white font-semibold text-base md:text-2xl'>{film?.name}</p>
                   <div className='hidden md:flex items-center gap-3'>
                     <p className='text-[#a5a5a5] hidden md:flex text-lg items-center gap-2 mt-1'>
-                      <IoCalendarOutline color='yellow' size={22} />
+                      <IoCalendarOutline
+                        color='yellow'
+                        size={22}
+                      />
                       {film?.year}
                     </p>
                     <p className='text-[#a5a5a5] text-lg hidden md:flex items-center gap-2 mt-1'>
-                      <IoMdTime color='yellow' size={22} />
+                      <IoMdTime
+                        color='yellow'
+                        size={22}
+                      />
                       {film?.time}
                     </p>
                     <p className='text-lg text-yellow-300 hidden md:flex items-center gap-2 mt-1'>
@@ -218,13 +226,19 @@ const BannerSlider = React.memo(({ films }) => {
                 <div className='tracking-wider'>
                   <p className='hidden md:flex text-[#a5a5a5] gap-1 mt-1'>
                     <span className='hidden md:flex items-center gap-2'>
-                      <LuLanguages color='yellow' size={22} />
+                      <LuLanguages
+                        color='yellow'
+                        size={22}
+                      />
                       Ngôn Ngữ:
                     </span>
                     {film?.lang}
                   </p>
                   <p className='text-[#a5a5a5] mt-1 tracking-wider hidden md:flex items-center gap-2'>
-                    <MdOutlineHighQuality color='yellow' size={22} />
+                    <MdOutlineHighQuality
+                      color='yellow'
+                      size={22}
+                    />
                     Chất lượng: {film?.quality}
                   </p>
                 </div>
@@ -242,5 +256,5 @@ const BannerSlider = React.memo(({ films }) => {
     </div>
   );
 });
-
+BannerSlider.displayName = 'BannerSlider';
 export default BannerSlider;

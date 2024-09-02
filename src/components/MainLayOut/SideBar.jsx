@@ -15,7 +15,7 @@
 
 // const SideBar = ({ onCloseSideBar, isSidebarActive, theLoaiData, quocGiaData }) => {
 //   const [openKeys, setOpenKeys] = useState([]); // State để quản lý openKeys
- 
+
 //   const typeRTK = useAppSelector((state) => state.submenu.type);
 //   const slugRTK = useAppSelector((state) => state.submenu.slug);
 //   const searchKeyRTK = useAppSelector((state) => state.search.searchKey);
@@ -166,7 +166,6 @@
 
 // export default SideBar;
 
-
 import React, { useState, useCallback, useMemo } from 'react';
 import { Menu } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
@@ -184,7 +183,7 @@ const icons = [<HomeOutlined />, <VideoCameraOutlined />, <PlaySquareOutlined />
 
 const SideBar = React.memo(({ onCloseSideBar, isSidebarActive, theLoaiData, quocGiaData }) => {
   const [openKeys, setOpenKeys] = useState([]);
- 
+
   const typeRTK = useAppSelector((state) => state.submenu.type);
   const slugRTK = useAppSelector((state) => state.submenu.slug);
   const searchKeyRTK = useAppSelector((state) => state.search.searchKey);
@@ -203,12 +202,15 @@ const SideBar = React.memo(({ onCloseSideBar, isSidebarActive, theLoaiData, quoc
     }
   }, [dispatch, searchKeyRTK, currentPageRTK, pageRTK]);
 
-  const handleCategoryClick = useCallback((slug, type) => {
-    setOpenKeys([]);
-    onCloseSideBar();
-    navigate(`/${type}/${slug}`, { state: { slug, type } });
-    handleRTK();
-  }, [navigate, onCloseSideBar, handleRTK]);
+  const handleCategoryClick = useCallback(
+    (slug, type) => {
+      setOpenKeys([]);
+      onCloseSideBar();
+      navigate(`/${type}/${slug}`, { state: { slug, type } });
+      handleRTK();
+    },
+    [navigate, onCloseSideBar, handleRTK]
+  );
 
   const handleCloseSideBar = useCallback(() => {
     setOpenKeys([]);
@@ -224,47 +226,45 @@ const SideBar = React.memo(({ onCloseSideBar, isSidebarActive, theLoaiData, quoc
     onCloseSideBar();
   }, [onCloseSideBar]);
 
-  const menuItems = useMemo(() => navLists.map((item, index) => {
-    if (item === 'THỂ LOẠI') {
-      return {
-        key: item,
-        icon: icons[index],
-        label: item,
-        children: theLoaiData?.map((theLoai) => ({
-          key: theLoai.name,
-          label: (
-            <div onClick={() => handleCategoryClick(theLoai?.slug, 'the-loai')}>
-              {theLoai.name}
-            </div>
-          ),
-        })),
-      };
-    } else if (item === 'QUỐC GIA') {
-      return {
-        key: item,
-        icon: icons[index],
-        label: item,
-        children: quocGiaData?.map((quocGia) => ({
-          key: quocGia.name,
-          label: (
-            <div onClick={() => handleCategoryClick(quocGia?.slug, 'quoc-gia')}>
-              {quocGia.name}
-            </div>
-          ),
-        })),
-      };
-    } else {
-      return {
-        key: item,
-        icon: icons[index],
-        label: (
-          <Link to={`/${convertToSlug(item)}`} onClick={handleCloseSideBar}>
-            {item}
-          </Link>
-        ),
-      };
-    }
-  }), [theLoaiData, quocGiaData, handleCategoryClick, handleCloseSideBar]);
+  const menuItems = useMemo(
+    () =>
+      navLists.map((item, index) => {
+        if (item === 'THỂ LOẠI') {
+          return {
+            key: item,
+            icon: icons[index],
+            label: item,
+            children: theLoaiData?.map((theLoai) => ({
+              key: theLoai.name,
+              label: <div onClick={() => handleCategoryClick(theLoai?.slug, 'the-loai')}>{theLoai.name}</div>,
+            })),
+          };
+        } else if (item === 'QUỐC GIA') {
+          return {
+            key: item,
+            icon: icons[index],
+            label: item,
+            children: quocGiaData?.map((quocGia) => ({
+              key: quocGia.name,
+              label: <div onClick={() => handleCategoryClick(quocGia?.slug, 'quoc-gia')}>{quocGia.name}</div>,
+            })),
+          };
+        } else {
+          return {
+            key: item,
+            icon: icons[index],
+            label: (
+              <Link
+                to={`/${convertToSlug(item)}`}
+                onClick={handleCloseSideBar}>
+                {item}
+              </Link>
+            ),
+          };
+        }
+      }),
+    [theLoaiData, quocGiaData, handleCategoryClick, handleCloseSideBar]
+  );
 
   return (
     <div>
@@ -272,7 +272,10 @@ const SideBar = React.memo(({ onCloseSideBar, isSidebarActive, theLoaiData, quoc
         <div className='relative custom-bg rounded-tr-lg'>
           <div className='flex items-center justify-between'>
             <div className='logo'>
-              <LazyLoadImage src='/logo.jpg' alt='Logo' />
+              <LazyLoadImage
+                src='/logo.jpg'
+                alt='Logo'
+              />
             </div>
             <div className='mr-5'>
               <span className='logo-text'>
@@ -303,5 +306,5 @@ const SideBar = React.memo(({ onCloseSideBar, isSidebarActive, theLoaiData, quoc
     </div>
   );
 });
-
+SideBar.displayName = 'SideBar';
 export default SideBar;
