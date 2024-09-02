@@ -7,7 +7,7 @@ export const registerUser = createAsyncThunk('auth/register', async ({ name, ema
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
     await updateProfile(user, { displayName: name });
-    console.log(userCredential);
+    // console.log(userCredential);
     return {
       uid: user.uid,
       email: user.email,
@@ -20,7 +20,7 @@ export const registerUser = createAsyncThunk('auth/register', async ({ name, ema
 export const loginUser = createAsyncThunk('auth/login', async ({ email, password }, { rejectWithValue }) => {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    console.log(userCredential);
+    // console.log(userCredential);
     const user = userCredential.user;
     return {
       uid: user.id,

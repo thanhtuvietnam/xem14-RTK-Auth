@@ -86,7 +86,7 @@
 
 // export default Header;
 
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -100,6 +100,8 @@ import { setActiveOther } from '../../store/mainSlice/LoadingSlice/loadingSlice.
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { logOut } from '../../store/Auth/auth.slice.js';
+import useClickOutSide from '../../hooks/useClickOutSide.js';
+import Avatar from '@mui/joy/Avatar';
 
 // import { useActiveButton } from '../../hooks/useActiveButton.js';
 // import { navLists } from '../../shared/constant.js';
@@ -112,6 +114,8 @@ const Header = React.memo(({ onLogoClick }) => {
   const { searchKey: searchKeyRTK, currentPage: currentPageRTK, page: pageRTK } = useAppSelector((state) => state.search);
   const activeOther = useAppSelector((state) => state.loadingState.activeOther);
   const { loading, error, success, userInfo } = useAppSelector((state) => state.auth);
+  // const [dropdownOpen, setDropdownOpen] = useState(null);
+  const { isOpen, toggleDropdown, dropdownRef, closeDropdown } = useClickOutSide([], 'mousedown');
 
   const handleOnClick = useCallback(() => {
     onLogoClick();
@@ -131,8 +135,12 @@ const Header = React.memo(({ onLogoClick }) => {
     }
   }, [onLogoClick, activeOther, currentPageRTK, pageRTK, searchKeyRTK, typeRTK, slugRTK, dispatch]);
 
+  // const toggleDropdown = () => {
+  //   setDropdownOpen((prev) => !prev);
+  // };
   const handleLogOut = () => {
     dispatch(logOut());
+    closeDropdown();
   };
 
   return (
@@ -160,19 +168,44 @@ const Header = React.memo(({ onLogoClick }) => {
           <SearchBar />
         </div>
         <div className='flex gap-2 items-center'>
-          {success ? (
-            <div className='flex items-center gap-1 truncate'>
-              <div className='truncate'>Xin chào, {userInfo?.displayName}!</div>
-              <button
-                onClick={handleLogOut}
-                className=' text-[#e6d9d9] hover:text-white bg-[#c03131] hover:bg-[#ec2e2e] px-3 py-2 rounded-md'>
-                Logout
-              </button>
+          {userInfo ? (
+            <div className='flex items-center gap-2'>
+              <div className='flex items-center gap-1 truncate'>
+                <div className='truncate'>
+                  Xin chào, <span className='capitalize'>{userInfo?.displayName} !</span>
+                </div>
+              </div>
+              <div
+                className='relative'
+                ref={dropdownRef}>
+                <button
+                  onClick={() => toggleDropdown(!isOpen)}
+                  className='flex items-center rounded-full  '>
+                  <Avatar variant='soft' />
+                  {/* <img
+                    src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1024px-User_icon_2.svg.png'
+                    alt=''
+                    className='w-10 h-10 rounded-full'
+                  /> */}
+                </button>
+                {isOpen && (
+                  <div className='absolute right-0 mt-2 w-48 bg-[#fff] rounded-md shadow-lg z-10'>
+                    <div className='py-2'>
+                      <Link className='block px-4 py-2 text-gray-800 hover:bg-gray-200'>Setting</Link>
+                      <button
+                        onClick={handleLogOut}
+                        className='block text-gray-800 w-full text-left px-4 py-2 hover:bg-gray-200'>
+                        Logout
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           ) : (
             <Link
               to='/log-in'
-              className=' text-[#e6d9d9] hover:text-white bg-[#c03131] hover:bg-[#ec2e2e] px-3 py-2 rounded-md'>
+              className=' text-[#0f0707] hover:black bg-[#3dc031] hover:bg-[#3be907] px-3 py-2 rounded-md'>
               Login
             </Link>
           )}

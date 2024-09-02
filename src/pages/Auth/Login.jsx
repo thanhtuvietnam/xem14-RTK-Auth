@@ -88,7 +88,7 @@ function Login() {
               </div>
             </form>
             {error && <ToastContainer />}
-            {success && <ToastContainer />}
+            {success && <ToastContainer position='top-center' />}
           </div>
         </div>
       </div>
