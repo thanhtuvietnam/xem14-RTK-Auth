@@ -26,7 +26,7 @@ const SideMovieInfo = ({ detail, handleWatchMovie }) => {
     <div>
       <div>
         <div className='grid md:flex gap-4 my-3'>
-          <div className='md:w-[30%]'>
+          <div className='md:w-[30%] rounded-lg'>
             {detail ? (
               <CarInfo
                 handleWatchMovie={handleWatchMovie}

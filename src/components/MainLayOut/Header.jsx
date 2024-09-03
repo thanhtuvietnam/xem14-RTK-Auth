@@ -205,7 +205,7 @@ const Header = React.memo(({ onLogoClick }) => {
           ) : (
             <Link
               to='/log-in'
-              className=' text-[#0f0707] hover:black bg-[#3dc031] hover:bg-[#3be907] px-3 py-2 rounded-md'>
+              className=' text-[#0f0707] hover:text-[#ff3939]  bg-[#3dc031] hover:bg-[#3be907] px-3 py-2 rounded-md'>
               Login
             </Link>
           )}

@@ -105,12 +105,13 @@ const CarInfo = React.memo(({ image, altname, setExpandServer, trailerLink, hand
         <LazyLoadImage
           effect='blur'
           wrapperProps={{
-            style: { transitionDelay: '200ms', background: '#f0f0f0' },
+            style: { transitionDelay: '200ms' },
           }}
           src={image}
           alt={altname}
-          className='w-full h-full object-cover rounded-lg'
+          className='rounded-lg'
         />
+
         <div className='mt-4 absolute text-black left-1.5 -top-4 animate-bookmarkshake'>
           <div className='relative'>
             <ImBookmark

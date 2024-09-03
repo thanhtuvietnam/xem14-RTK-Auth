@@ -1,20 +1,25 @@
-import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { loginUser } from '../../store/Auth/auth.slice';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { Formik, Form, FastField, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+const validationSchema = Yup.object().shape({
+  email: Yup.string()
+    .required('Email là bắt buộc') // Email là trường bắt buộc
+    .email('Email không hợp lệ'), // Kiểm tra định dạng email
+  password: Yup.string()
+    .required('Mật khẩu là bắt buộc') // Mật khẩu là trường bắt buộc
+    .min(6, 'Mật khẩu phải có ít nhất 6 ký tự'), // Mật khẩu tối thiểu 6 ký tự
+});
 function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { loading, error, success } = useSelector((state) => state.auth);
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (values) => {
     try {
-      await dispatch(loginUser({ email, password })).unwrap();
+      await dispatch(loginUser({ email: values.email, password: values.password })).unwrap();
       toast.success('Chúc mừng bạn đăng nhập thành công! ');
       setTimeout(() => {
         navigate('/');
@@ -32,66 +37,71 @@ function Login() {
         </div>
         <div className='mt-8 sm:mx-auto sm:w-full sm:max-w-md'>
           <div className='bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10'>
-            <form
+            <Formik
+              initialValues={{ email: '', password: '' }}
               onSubmit={handleSubmit}
-              className='space-y-6 p-5'>
-              <div>
-                <label
-                  htmlFor='email'
-                  className='block text-sm font-medium text-gray-700'>
-                  Email
-                </label>
-                <div>
-                  <input
-                    type='email'
-                    name='email'
-                    id='email'
-                    autoComplete='email'
-                    required
-                    className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                  />
-                </div>
+              validationSchema={validationSchema}>
+              <Form className='space-y-6 p-5'>
                 <div>
                   <label
-                    htmlFor='password'
+                    htmlFor='email'
                     className='block text-sm font-medium text-gray-700'>
-                    Mật khẩu
+                    Email
                   </label>
-                  <input
-                    type='password'
-                    id='password'
-                    name='password'
-                    autoComplete='current-password'
-                    required
-                    className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
-                    onChange={(e) => setPassword(e.target.value)}
-                    value={password}
-                  />
+                  <div>
+                    <FastField
+                      type='email'
+                      name='email'
+                      id='email'
+                      className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                    />
+                    <ErrorMessage
+                      name='email'
+                      component='div'
+                      className='text-red-500 text-sm'
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor='password'
+                      className='block text-sm font-medium text-gray-700'>
+                      Mật khẩu
+                    </label>
+                    <FastField
+                      type='password'
+                      id='password'
+                      name='password'
+                      className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+                    />
+                    <ErrorMessage
+                      name='password'
+                      component='div'
+                      className='text-red-500 text-sm'
+                    />
+                  </div>
+                  <div className='w-ful'>
+                    <button
+                      type='submit'
+                      className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mt-5'>
+                      {loading ? 'Đang đăng nhập...' : 'Đăng nhập'}
+                    </button>
+                  </div>
+                  <div className='mt-1'>
+                    Chưa có tài khoản?
+                    <Link
+                      to='/sign-up'
+                      className='text-indigo-900 underline'>
+                      đăng ký ngay
+                    </Link>
+                  </div>
                 </div>
-                <div className='w-ful'>
-                  <button
-                    type='submit'
-                    className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mt-5'>
-                    {loading ? 'Đang đăng nhập...' : 'Đăng nhập'}
-                  </button>
-                </div>
-                <div className='mt-1'>
-                  Chưa có tài khoản?
-                  <Link
-                    to='/sign-up'
-                    className='text-indigo-900 underline'>
-                    đăng ký ngay
-                  </Link>
-                </div>
-              </div>
-            </form>
-            {error && <ToastContainer />}
-            {success && <ToastContainer position='top-center' />}
+              </Form>
+            </Formik>
           </div>
         </div>
       </div>
+      {error && <ToastContainer />}
+      {success && <ToastContainer position='top-center' />}
     </div>
   );
 }
