@@ -120,16 +120,17 @@ export const MiniSlider = React.memo(({ films }) => {
   }, [films]);
 
   const swiperBreakpoints = {
-    320: { slidesPerView: 2, spaceBetween: 110 },
-    375: { slidesPerView: 2, spaceBetween: 55 },
-    412: { slidesPerView: 2, spaceBetween: 15 },
-    425: { slidesPerView: 2, spaceBetween: 10 },
-    540: { slidesPerView: 3, spaceBetween: 90 },
-    640: { slidesPerView: 3, spaceBetween: 10 },
-    712: { slidesPerView: 4, spaceBetween: 120 },
-    768: { slidesPerView: 4, spaceBetween: 10 },
-    820: { slidesPerView: 5, spaceBetween: 140 },
-    912: { slidesPerView: 5, spaceBetween: 35 },
+    // 320: { slidesPerView: 2, spaceBetween: 110 },
+    320: { slidesPerView: 2, spaceBetween: 10 },
+    // 375: { slidesPerView: 2, spaceBetween: 55 },
+    // 412: { slidesPerView: 2, spaceBetween: 15 },
+    // 425: { slidesPerView: 2, spaceBetween: 10 },
+    540: { slidesPerView: 3, spaceBetween: 10 },
+    // 640: { slidesPerView: 3, spaceBetween: 10 },
+    712: { slidesPerView: 4, spaceBetween: 10 },
+    // 768: { slidesPerView: 4, spaceBetween: 10 },
+    // 820: { slidesPerView: 5, spaceBetween: 10 },
+    // 912: { slidesPerView: 5, spaceBetween: 35 },
     1024: { slidesPerView: 6, spaceBetween: 10 },
   };
 

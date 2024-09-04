@@ -102,14 +102,14 @@ const MovieWatchBox = React.memo(({ movieDetails }) => {
 
   const [activeButton, handleClick] = useActiveButton();
   const [contentClick, setContentClick] = useState(false);
-  const [selectedEpisode, setSelectedEpisode] = useState(serverData?.[0]);
+  const [selectedEpisode, setSelectedEpisode] = useState(serverData[0]);
 
   const handleEpisodeClick = useCallback(
     (episode, index) => {
       setSelectedEpisode(episode);
       handleClick(index);
     },
-    [handleClick]
+    [handleClick, setSelectedEpisode]
   );
 
   const contentWithoutTags = useMemo(() => movieDetails?.content?.replace(/<[^>]+>/g, ''), [movieDetails?.content]);

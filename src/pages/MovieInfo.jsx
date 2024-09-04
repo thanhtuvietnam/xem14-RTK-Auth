@@ -156,7 +156,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Error from './Error.jsx';
 import { noteLine } from '../shared/constant.js';
-import { useActiveButton } from '../hooks/useActiveButton.js';
+import { useAppdispatch } from '../store/hook.js';
+import { setActiveButton } from '../store/mainSlice/LoadingSlice/loadingSlice.js';
 
 const MovieInfo = React.memo(() => {
   const { slug } = useParams();
@@ -170,17 +171,14 @@ const MovieInfo = React.memo(() => {
   } = useGetMovieResQuery(slug, {
     skip: !slug,
   });
-  // const prefetchMovie = homeApi.usePrefetch('getMovieRes');
-
-  // When you know the user might view this movie soon:
-  // prefetchMovie(movieSlug);
   const movieDetails = MovieRes?.data?.item;
   const breadCrumbItem = MovieRes?.data?.breadCrumb[0];
-  const [activeButton, handleClick] = useActiveButton();
 
+  const dispatch = useAppdispatch();
   const handleWatchMovie = useCallback(() => {
+    dispatch(setActiveButton(0));
     navigate(`/xem-phim/${slug}`, { state: { movieDetails } });
-  }, [navigate, slug, movieDetails]);
+  }, [navigate, slug, movieDetails, dispatch]);
 
   useEffect(() => {
     if (isError && error) {

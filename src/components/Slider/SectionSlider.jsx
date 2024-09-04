@@ -118,7 +118,7 @@ const SectionSlider = React.memo(({ films }) => {
               {selectedFilms.map((film) => (
                 <div
                   key={film._id}
-                  className='overflow-hidden responsive-item'>
+                  className='responsive-item'>
                   <Link to={linkUrl(film)}>
                     <CardItem
                       data={film}

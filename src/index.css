@@ -202,9 +202,14 @@ body::-webkit-scrollbar-thumb:hover {
 }
 /* responsive card */
 .card-custom {
-  @apply h-[315px] w-[193px] md:w-[175px] md:h-[312.5px] lg:h-[260px] lg:w-full xl:w-full xl:h-[325px]  rounded-lg shadow-xl;
+  /* @apply h-[315px] w-[193px] md:w-[175px] md:h-[312.5px] lg:h-[260px] lg:w-full xl:w-full xl:h-[325px]  rounded-lg shadow-xl; */
+  @apply h-[315px] md:h-[312.5px] lg:h-[260px] xl:h-[325px] w-full  rounded-lg shadow-xl;
   color: rgb(35, 82, 124);
 }
+/* .card-custom {
+  @apply h-auto w-full max-w-[193px] rounded-lg shadow-xl;
+  color: rgb(35, 82, 124);
+} */
 @media (min-height: 1024px) {
   .responsive-item {
     /* height: 100vh; Chiều cao cố định của container */
@@ -428,7 +433,6 @@ body::-webkit-scrollbar-thumb:hover {
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
 }
-
 
 .plyr .plyr__control--overlaid:hover {
   background-color: #9759c0;

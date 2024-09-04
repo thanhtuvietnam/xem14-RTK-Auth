@@ -30,8 +30,8 @@ function Login() {
     }
   };
   return (
-    <div className='mt-2 custom-page shadow-lg gap-3 min-h-screen bg-[#151d25] border-t border-t-[#1e2732] flex flex-col justify-center items-center'>
-      <div className='bg-gray-100 py-12 sm:px-6 lg:px-8 rounded-md'>
+    <div className='flex custom-page flex-col justify-center items-center min-h-screen bg-[#151d25]'>
+      <div className='bg-gray-100 py-12 px-6 rounded-md shadow-lg w-full max-w-md'>
         <div className='sm:mx-auto sm:w-full sm:max-w-md'>
           <h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900'> Đăng nhập</h2>
         </div>
@@ -86,11 +86,11 @@ function Login() {
                       {loading ? 'Đang đăng nhập...' : 'Đăng nhập'}
                     </button>
                   </div>
-                  <div className='mt-1'>
+                  <div className='mt-1 whitespace-nowrap'>
                     Chưa có tài khoản?
                     <Link
                       to='/sign-up'
-                      className='text-indigo-900 underline'>
+                      className='text-indigo-900 underline e'>
                       đăng ký ngay
                     </Link>
                   </div>

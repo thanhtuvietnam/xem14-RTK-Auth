@@ -45,7 +45,7 @@ function SignUp() {
     }
   };
   return (
-    <div className='flex flex-col justify-center items-center min-h-screen bg-[#151d25]'>
+    <div className='flex custom-page flex-col justify-center items-center min-h-screen bg-[#151d25]'>
       <div className='bg-gray-100 py-12 px-6 rounded-md shadow-lg w-full max-w-md'>
         <h2 className='text-center text-3xl font-extrabold text-gray-900 mb-6'>Đăng ký làm thành viên</h2>
 

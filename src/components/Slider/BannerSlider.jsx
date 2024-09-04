@@ -153,7 +153,7 @@ const { SlControlPlay, FaStar, IoCalendarOutline, IoMdTime, LuLanguages, MdOutli
 const BannerSlider = React.memo(({ films }) => {
   const { isHovering, handleMouseEnter, handleMouseLeave } = useHoverState();
 
-  const shuffledFilms = useMemo(() => shuffleAndSliceArray(films?.Phimmoi || [], 5), [films?.Phimmoi]);
+  const shuffledFilms = useMemo(() => shuffleAndSliceArray(films?.Phimmoi || [], 15), [films?.Phimmoi]);
 
   return (
     <div className='mt-[3px] custom-responsive relative !rounded-lg overflow-hidden swiper-container'>

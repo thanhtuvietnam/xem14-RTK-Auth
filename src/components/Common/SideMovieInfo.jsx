@@ -13,6 +13,7 @@ const SideMovieInfo = ({ detail, handleWatchMovie }) => {
 
   const movie = detail;
   const movieTrailerUrl = movie?.trailer_url;
+  // console.log(movieTrailerUrl);
   const movieID = getYoutubeVideoId(movieTrailerUrl);
   const movieServerName = movie?.episodes[0]?.server_name;
   const movieServerData = movie?.episodes[0]?.server_data;
@@ -31,6 +32,7 @@ const SideMovieInfo = ({ detail, handleWatchMovie }) => {
               <CarInfo
                 handleWatchMovie={handleWatchMovie}
                 trailerLink={movieID}
+                // trailerLink={movieTrailerUrl}
                 setExpandServer={setExpandServer}
                 image={`${IMG_URL}/${movie?.thumb_url} `}
                 altname={movie?.name}
