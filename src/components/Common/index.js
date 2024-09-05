@@ -24,3 +24,4 @@ export { default as UtilityButton } from './UtilityButton.jsx';
 export { default as TooltipCom } from './TooltipCom.jsx';
 export { default as BreadCrumb } from './BreadCrumb.jsx';
 export { default as BackupLinkPlayer } from './BackupLinkPlayer.jsx';
+export { default as BookMarks } from './BookMarks.jsx';

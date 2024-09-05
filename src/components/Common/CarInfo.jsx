@@ -80,15 +80,16 @@
 
 // export default CarInfo;
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { icons } from '../../shared/icon';
 
 import { TrailerModal } from './index.js';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import { useAppSelector } from '../../store/hook.js';
 
-const { IoPlaySharp, MdExpandMore, FaCirclePlus, IoLogoYoutube, ImBookmark } = icons;
-const CarInfo = React.memo(({ image, altname, setExpandServer, trailerLink, handleWatchMovie }) => {
+const { IoPlaySharp, MdExpandMore, FaCirclePlus, IoLogoYoutube, ImBookmark, FaCheck } = icons;
+const CarInfo = React.memo(({ image, altname, setExpandServer, trailerLink, handleWatchMovie, handleBMarks, isBookmarked }) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = useCallback(() => {
@@ -113,16 +114,25 @@ const CarInfo = React.memo(({ image, altname, setExpandServer, trailerLink, hand
         />
 
         <div className='mt-4 absolute text-black left-1.5 -top-4 animate-bookmarkshake'>
-          <div className='relative'>
+          <button
+            onClick={handleBMarks}
+            className='relative'>
             <ImBookmark
               size={30}
-              color='#d75a4a'
+              color={isBookmarked ? '#0fdd20' : '#d75a4a'}
             />
-            <FaCirclePlus
-              color='#77a61a'
-              className='absolute top-1/2 -right-1 bg-white rounded-full'
-            />
-          </div>
+            {isBookmarked ? (
+              <FaCheck
+                color='#0fdd20'
+                className='absolute top-1/2 -right-1 bg-[#3c523e] rounded-full'
+              />
+            ) : (
+              <FaCirclePlus
+                color='#0fdd20'
+                className='absolute top-1/2 -right-1 bg-[#3c523e] rounded-full'
+              />
+            )}
+          </button>
         </div>
         <button
           className='text-sm text-white flex items-center gap-1 mt-2 absolute top-[2px] right-[7px] cardInfo-trailer rounded-[20px] px-3 py-1'

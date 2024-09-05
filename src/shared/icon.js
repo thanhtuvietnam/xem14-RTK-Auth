@@ -30,7 +30,8 @@ import { IoLogoOctocat } from 'react-icons/io';
 import { PiArrowLineUpBold } from 'react-icons/pi';
 import { ImStarEmpty } from 'react-icons/im';
 import { TbRewindForward10, TbRewindBackward10 } from 'react-icons/tb';
-import { MdOutlineExpandLess } from "react-icons/md";
+import { MdOutlineExpandLess } from 'react-icons/md';
+import { FaCheck } from 'react-icons/fa6';
 
 /* -------------------------------------------------------------------------- */
 //Plyr icons
@@ -90,7 +91,8 @@ export const icons = {
   TbRewindForward10,
   TbRewindBackward10,
   IoMdArrowDropup,
-  MdOutlineExpandLess
+  FaCheck,
+  MdOutlineExpandLess,
 };
 /* -------------------------------------------------------------------------- */
 export const customPlyrIcons = {

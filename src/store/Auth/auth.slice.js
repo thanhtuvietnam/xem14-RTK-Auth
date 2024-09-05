@@ -23,7 +23,7 @@ export const loginUser = createAsyncThunk('auth/login', async ({ email, password
     // console.log(userCredential);
     const user = userCredential.user;
     return {
-      uid: user.id,
+      uid: user.uid,
       email: user.email,
       displayName: user.displayName,
     };

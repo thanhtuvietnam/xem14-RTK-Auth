@@ -102,19 +102,15 @@ import 'react-toastify/dist/ReactToastify.css';
 import { logOut } from '../../store/Auth/auth.slice.js';
 import useClickOutSide from '../../hooks/useClickOutSide.js';
 import Avatar from '@mui/joy/Avatar';
-
-// import { useActiveButton } from '../../hooks/useActiveButton.js';
-// import { navLists } from '../../shared/constant.js';
-const { FaBookmark } = icons;
+import { BookMarks } from '../Common/index.js';
+import { fetchBookmarks, removeBmRdStore } from '../../store/bookmarks/bookmarks.slice.js';
 
 const Header = React.memo(({ onLogoClick }) => {
-  // const [activeButton] = useActiveButton(navLists);
   const dispatch = useAppdispatch();
   const { type: typeRTK, slug: slugRTK } = useAppSelector((state) => state.submenu);
   const { searchKey: searchKeyRTK, currentPage: currentPageRTK, page: pageRTK } = useAppSelector((state) => state.search);
   const activeOther = useAppSelector((state) => state.loadingState.activeOther);
   const { loading, error, success, userInfo } = useAppSelector((state) => state.auth);
-  // const [dropdownOpen, setDropdownOpen] = useState(null);
   const { isOpen, toggleDropdown, dropdownRef, closeDropdown } = useClickOutSide([], 'mousedown');
 
   const handleOnClick = useCallback(() => {
@@ -139,10 +135,15 @@ const Header = React.memo(({ onLogoClick }) => {
   //   setDropdownOpen((prev) => !prev);
   // };
   const handleLogOut = () => {
+    dispatch(removeBmRdStore());
     dispatch(logOut());
     closeDropdown();
   };
-
+  useEffect(() => {
+    if (userInfo) {
+      dispatch(fetchBookmarks(userInfo.uid)); // Fetch bookmarks khi người dùng đăng nhập
+    }
+  }, [userInfo, dispatch]);
   return (
     <header className='h-16 custom-bg'>
       <div className='h-full flex items-center justify-between text-[13px] text-[#e9eaee] leading-5 custom-page'>
@@ -209,15 +210,7 @@ const Header = React.memo(({ onLogoClick }) => {
               Login
             </Link>
           )}
-
-          <div className='bg-[#337ab7] rounded-2xl px-[15px] py-[6px] ml-3 custom-bg2 shadow-custom text-sm items-center gap-1 hidden lg:flex'>
-            <FaBookmark
-              size={15}
-              color='white'
-            />
-            <span>Phim yêu thích</span>
-            <span className='bg-red-600 rounded-full px-[6px] py-[3px] ml-2.5'>0</span>
-          </div>
+          <BookMarks />
         </div>
       </div>
     </header>
