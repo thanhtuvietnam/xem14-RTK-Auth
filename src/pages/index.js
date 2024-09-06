@@ -4,7 +4,6 @@ export { default as PhimLe } from './PhimLe.jsx';
 export { default as PhimBo } from './PhimBo.jsx';
 export { default as HomePage } from './HomePage.jsx';
 export { default as SapChieu } from './SapChieu.jsx';
-export { default as Phim18Cong } from './Phim18Cong.jsx';
 export { default as MovieInfo } from './MovieInfo.jsx';
 export { default as TVShows } from './TVShows.jsx';
 export { default as HoatHinh } from './HoatHinh.jsx';

@@ -9,6 +9,7 @@ import { useAppdispatch, useAppSelector } from '../../store/hook.js';
 import { addBookmarks, fetchBookmarks, removeBookmarks, setActiveBM } from '../../store/bookmarks/bookmarks.slice.js';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import useBookmark from '../../hooks/useBookmark.js';
 
 const { TbAlertTriangleFilled } = icons;
 
@@ -24,64 +25,23 @@ const SideMovieInfo = React.memo(({ detail, handleWatchMovie }) => {
 
   const actors = movie?.actor?.length > 0 && movie.actor[0] !== '' ? movie.actor.join(', ') : 'NaN';
   const directors = movie?.director?.length > 0 && movie.director[0] !== '' ? movie.director.join(', ') : 'NaN';
+  const { handleBMarks, isBookmarked } = useBookmark(movie);
   // console.log(movie);
-  const dispatch = useAppdispatch();
-  const { userInfo } = useAppSelector((state) => state.auth);
-  const bookmarks = useAppSelector((state) => state.bookmarks.bookmarks);
-  const isBookmarked = Array.isArray(bookmarks) && bookmarks.some((bookmark) => bookmark.movieName === movie?.name);
-
-  const handleBMarks = useCallback(() => {
-    if (userInfo) {
-      const movieNameDb = movie?.name;
-      const posterPathDb = movie?.poster_url;
-      const thumbPathDb = movie?.thumb_url;
-      const slug = movie?.slug;
-      const originName = movie?.origin_name;
-
-      if (isBookmarked) {
-        const bookmarkId = bookmarks.find((bookmark) => bookmark.movieName === movieNameDb).id;
-        dispatch(removeBookmarks(bookmarkId))
-          .unwrap()
-          .then(() => {
-            toast.warn(`Bạn đã xoá ${movieNameDb} khỏi danh sách yêu thích`);
-
-            dispatch(fetchBookmarks(userInfo.uid));
-          })
-          .catch((error) => {
-            toast.error(error);
-          });
-      } else {
-        // dispatch(setActiveBM(true));
-        dispatch(addBookmarks({ userId: userInfo.uid, movieName: movieNameDb, posterPath: posterPathDb, thumbPath: thumbPathDb, slug: slug, originName: originName }))
-          .unwrap()
-          .then(() => {
-            toast.success(`Bạn đã thêm ${movieNameDb} vào danh sách yêu thích`);
-          })
-          .catch((error) => {
-            toast.error(error);
-          });
-      }
-    } else {
-      toast.info(`Vui lòng đang nhập để thực hiện chức năng này`);
-      // console.log(`vui long dang nhap de thuc hien chuc nang nay`);
-    }
-  }, [userInfo, dispatch, movie, isBookmarked, bookmarks]);
-
   return (
     <div>
       <div>
-        <div className='grid md:flex gap-4 my-3'>
+        <div className='grid md:flex  gap-4 my-3'>
           <div className='md:w-[30%] rounded-lg'>
             {detail ? (
               <CarInfo
                 isBookmarked={isBookmarked}
                 handleWatchMovie={handleWatchMovie}
+                handleBMarks={handleBMarks}
                 trailerLink={movieID}
                 // trailerLink={movieTrailerUrl}
                 setExpandServer={setExpandServer}
                 image={`${IMG_URL}/${movie?.thumb_url} `}
                 altname={movie?.name}
-                handleBMarks={handleBMarks}
               />
             ) : (
               <div>đang tải</div>

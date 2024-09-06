@@ -25,7 +25,6 @@
     "firebase": "^10.13.1",
     "formik": "^2.4.6",
     "hls.js": "^1.5.14",
-    "mdb-react-ui-kit": "^8.0.0",
     "media-icons": "^1.1.5",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",

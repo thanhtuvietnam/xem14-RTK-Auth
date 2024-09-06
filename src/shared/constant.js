@@ -13,11 +13,9 @@ export const path = {
   XEMPHIM: '/xem-phim/:slug',
   THELOAI: '/the-loai/:slug',
   QUOCGIA: '/quoc-gia/:slug',
-  SEARCHRESULTS: '/tim-kiem'
+  SEARCHRESULTS: '/tim-kiem',
 };
-export const navLists = ['TRANG CHỦ', 'PHIM BỘ', 'PHIM LẺ', 'TV SHOWS', 'HOẠT HÌNH', 'THỂ LOẠI', 'QUỐC GIA', 'PHIM 18', 'SẮP CHIẾU'];
-
-
+export const navLists = ['TRANG CHỦ', 'PHIM BỘ', 'PHIM LẺ', 'TV SHOWS', 'HOẠT HÌNH', 'THỂ LOẠI', 'QUỐC GIA', 'SẮP CHIẾU'];
 
 export const dropdownItems = {
   5: ['Hành Động', 'Tình Cảm', 'Hài Hước', 'Cổ Trang', 'Tâm Lý', 'Hình Sự', 'Chiến Tranh', 'Thể Thao', 'Võ Thuật', 'Viễn Tưởng', 'Phiêu Lưu', 'Khoa Học', 'Kinh Dị', 'Âm Nhạc', 'Thần Thoại', 'Tài Liệu', 'Gia Đình', 'Chính kịch', 'Bí ẩn', 'Học Đường', 'Kinh Điển', 'Phim 18+'],

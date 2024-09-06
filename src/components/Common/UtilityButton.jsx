@@ -4,7 +4,7 @@ import { icons } from '../../shared/icon';
 import { CommentOutlined, CustomerServiceOutlined } from '@ant-design/icons';
 const { PiArrowLineUpBold } = icons;
 
-const UtilityButton = () => {
+const UtilityButton = React.memo(() => {
   return (
     <>
       <FloatButton.Group
@@ -12,9 +12,8 @@ const UtilityButton = () => {
         type='primary'
         style={{
           insetInlineEnd: 24,
-       
         }}
-        icon={<CustomerServiceOutlined />}>
+        icon={<CustomerServiceOutlined aria-label='Customer Service' />}>
         <FloatButton />
         <FloatButton icon={<CommentOutlined />} />
       </FloatButton.Group>
@@ -25,10 +24,11 @@ const UtilityButton = () => {
         }}
         type='primary'
         duration={100}
-        icon={<PiArrowLineUpBold />}
+        icon={<PiArrowLineUpBold aria-label='Back to Top' />}
       />
     </>
   );
-};
+});
+UtilityButton.displayName = 'UtilityButton';
 
 export default UtilityButton;
