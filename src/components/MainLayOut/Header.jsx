@@ -104,14 +104,17 @@ import useClickOutSide from '../../hooks/useClickOutSide.js';
 import Avatar from '@mui/joy/Avatar';
 import { BookMarks } from '../Common/index.js';
 import { fetchBookmarks, removeBmRdStore } from '../../store/bookmarks/bookmarks.slice.js';
-
+const { FaBookmark } = icons;
 const Header = React.memo(({ onLogoClick }) => {
   const dispatch = useAppdispatch();
   const { type: typeRTK, slug: slugRTK } = useAppSelector((state) => state.submenu);
   const { searchKey: searchKeyRTK, currentPage: currentPageRTK, page: pageRTK } = useAppSelector((state) => state.search);
   const activeOther = useAppSelector((state) => state.loadingState.activeOther);
   const { loading, error, success, userInfo } = useAppSelector((state) => state.auth);
-  const { isOpen, toggleDropdown, dropdownRef, closeDropdown } = useClickOutSide([], 'mousedown');
+  // const { isOpen, toggleDropdown, dropdownRef, closeDropdown } = useClickOutSide([], 'mousedown');
+  const { isOpen: isUserDropdownOpen, toggleDropdown: toggleUserDropdown, dropdownRef: userDropdownRef, closeDropdown: closeUserDropdown } = useClickOutSide([], 'mousedown');
+  const { isOpen: isBookmarkDropdownOpen, toggleDropdown: toggleBookmarkDropdown, dropdownRef: bookmarkDropdownRef, closeDropdown: closeBookmarkDropdown } = useClickOutSide([], 'mousedown');
+  const bookmarks = useAppSelector((state) => state.bookmarks.bookmarks);
 
   const handleOnClick = useCallback(() => {
     onLogoClick();
@@ -134,16 +137,27 @@ const Header = React.memo(({ onLogoClick }) => {
   // const toggleDropdown = () => {
   //   setDropdownOpen((prev) => !prev);
   // };
-  const handleLogOut = () => {
-    dispatch(removeBmRdStore());
+  const handleLogOut = useCallback(() => {
     dispatch(logOut());
-    closeDropdown();
-  };
+    dispatch(removeBmRdStore());
+    // closeDropdown();
+    closeUserDropdown();
+    // }, [dispatch, closeDropdown]);
+  }, [dispatch, closeUserDropdown]);
   useEffect(() => {
     if (userInfo) {
       dispatch(fetchBookmarks(userInfo.uid)); // Fetch bookmarks khi người dùng đăng nhập
     }
   }, [userInfo, dispatch]);
+
+  const handdleBmClick = () => {
+    if (userInfo) {
+      toggleBookmarkDropdown((e) => !e);
+    } else {
+      toast.info(`Vui lòng đăng nhập để thực hiện chức năng này`);
+    }
+    // toggleDropdown(true);
+  };
   return (
     <header className='h-16 custom-bg'>
       <div className='h-full flex items-center justify-between text-[13px] text-[#e9eaee] leading-5 custom-page'>
@@ -178,9 +192,11 @@ const Header = React.memo(({ onLogoClick }) => {
               </div>
               <div
                 className='relative'
-                ref={dropdownRef}>
+                // ref={dropdownRef}>
+                ref={userDropdownRef}>
                 <button
-                  onClick={() => toggleDropdown(!isOpen)}
+                  // onClick={() => toggleDropdown(!isOpen)}
+                  onClick={() => toggleUserDropdown(!isUserDropdownOpen)}
                   className='flex items-center rounded-full  '>
                   <Avatar variant='soft' />
                   {/* <img
@@ -189,8 +205,8 @@ const Header = React.memo(({ onLogoClick }) => {
                     className='w-10 h-10 rounded-full'
                   /> */}
                 </button>
-                {isOpen && (
-                  <div className='absolute right-0 mt-2 w-48 bg-[#fff] rounded-md shadow-lg z-10'>
+                {isUserDropdownOpen && (
+                  <div className='absolute right-0 mt-2 w-48 bg-[#fff] rounded-md shadow-lg z-[9999]'>
                     <div className='py-2'>
                       <Link className='block px-4 py-2 text-gray-800 hover:bg-gray-200'>Setting</Link>
                       <button
@@ -210,7 +226,22 @@ const Header = React.memo(({ onLogoClick }) => {
               Login
             </Link>
           )}
-          <BookMarks />
+          {/* Bookmark */}
+          <div
+            className='bg-[#337ab7] relative rounded-2xl px-[15px] py-[6px] ml-3 custom-bg2 shadow-custom text-sm items-center gap-1 hidden lg:flex cursor-pointer duration-300 transition'
+            onClick={handdleBmClick}
+            ref={bookmarkDropdownRef}>
+            <FaBookmark
+              size={15}
+              color={bookmarks.length > 0 ? 'green' : 'white'}
+            />
+            <span>Phim yêu thích</span>
+            {bookmarks && <span className='bg-red-600 rounded-full px-[6px] py-[3px] ml-2.5'>{bookmarks.length}</span>}
+            <BookMarks
+              isBookmarkDropdownOpen={isBookmarkDropdownOpen}
+              toggleDropdown={toggleBookmarkDropdown}
+            />
+          </div>
         </div>
       </div>
     </header>

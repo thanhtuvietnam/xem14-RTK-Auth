@@ -12,7 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const { TbAlertTriangleFilled } = icons;
 
-const SideMovieInfo = ({ detail, handleWatchMovie }) => {
+const SideMovieInfo = React.memo(({ detail, handleWatchMovie }) => {
   const [expandServer, setExpandServer] = React.useState(false);
 
   const movie = detail;
@@ -35,13 +35,16 @@ const SideMovieInfo = ({ detail, handleWatchMovie }) => {
       const movieNameDb = movie?.name;
       const posterPathDb = movie?.poster_url;
       const thumbPathDb = movie?.thumb_url;
+      const slug = movie?.slug;
+      const originName = movie?.origin_name;
 
       if (isBookmarked) {
         const bookmarkId = bookmarks.find((bookmark) => bookmark.movieName === movieNameDb).id;
         dispatch(removeBookmarks(bookmarkId))
           .unwrap()
           .then(() => {
-            toast.success('Bạn đã xóa phim khỏi danh sách yêu thích');
+            toast.warn(`Bạn đã xoá ${movieNameDb} khỏi danh sách yêu thích`);
+
             dispatch(fetchBookmarks(userInfo.uid));
           })
           .catch((error) => {
@@ -49,22 +52,20 @@ const SideMovieInfo = ({ detail, handleWatchMovie }) => {
           });
       } else {
         // dispatch(setActiveBM(true));
-        dispatch(addBookmarks({ userId: userInfo.uid, movieName: movieNameDb, posterPath: posterPathDb, thumbPath: thumbPathDb }))
+        dispatch(addBookmarks({ userId: userInfo.uid, movieName: movieNameDb, posterPath: posterPathDb, thumbPath: thumbPathDb, slug: slug, originName: originName }))
           .unwrap()
           .then(() => {
-            toast.success('Bạn đã thêm phim vào danh sách yêu thích');
+            toast.success(`Bạn đã thêm ${movieNameDb} vào danh sách yêu thích`);
           })
           .catch((error) => {
             toast.error(error);
           });
       }
     } else {
-      toast.info(`vui long dang nhap de thuc hien chuc nang nay`);
+      toast.info(`Vui lòng đang nhập để thực hiện chức năng này`);
       // console.log(`vui long dang nhap de thuc hien chuc nang nay`);
     }
   }, [userInfo, dispatch, movie, isBookmarked, bookmarks]);
-
-  // const isBookmarked = bookmarks.bookmarks.some((bookmark) => bookmark.movienName === movie?.name);
 
   return (
     <div>
@@ -126,9 +127,10 @@ const SideMovieInfo = ({ detail, handleWatchMovie }) => {
           <RecommendMovie />
         </div>
       </div>
-      <ToastContainer />
+      {/* <ToastContainer position='top-center' /> */}
     </div>
   );
-};
+});
+SideMovieInfo.displayName = 'SideMovieInfo';
 
 export default SideMovieInfo;

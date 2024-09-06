@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Formik, Form, FastField, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { setActiveButton } from '../../store/mainSlice/LoadingSlice/loadingSlice';
 const validationSchema = Yup.object().shape({
   email: Yup.string()
     .required('Email là bắt buộc') // Email là trường bắt buộc
@@ -17,12 +18,14 @@ function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { loading, error, success } = useSelector((state) => state.auth);
+
   const handleSubmit = async (values) => {
     try {
       await dispatch(loginUser({ email: values.email, password: values.password })).unwrap();
       toast.success('Chúc mừng bạn đăng nhập thành công! ');
       setTimeout(() => {
         navigate('/');
+        dispatch(setActiveButton(0));
       }, 500);
     } catch (error) {
       toast.error('Registration failed: ' + error.message);

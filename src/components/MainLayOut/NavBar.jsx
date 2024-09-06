@@ -257,18 +257,21 @@ import { useGetCategoriesQuery } from '../../store/apiSlice/homeApi.slice.js';
 import { addQuocGia, addTheLoai, clearSlug, clearType } from '../../store/mainSlice/SubmenuSlice/submenuSlice.js';
 import { setActiveOther } from '../../store/mainSlice/LoadingSlice/loadingSlice.js';
 import useClickOutSide from '../../hooks/useClickOutSide.js';
-
+import BookMarks from '../Common/BookMarks.jsx';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const { MdOutlineMenu, FaBookmark, HiOutlineDotsVertical, IoMdArrowDropdown, IoMdArrowDropup } = icons;
 
 const NavBar = React.memo(() => {
   const [isSideBarActive, setIsSideBarActive] = useState(false);
   const [activeButton, handleClick] = useActiveButton(navLists);
-  // const [showDropDown, setShowDropDown] = useState(null);
-  const navigate = useNavigate();
-  // const dropdownRef = useRef(null);
-  const navbarRef = useRef(null);
-  const { isOpen, toggleDropdown, dropdownRef, closeDropdown } = useClickOutSide([navbarRef], 'mousedown');
 
+  const navigate = useNavigate();
+  const navbarRef = useRef(null);
+  const { isOpen: isOpenNav, toggleDropdown: toggleDropdownNav, dropdownRef: dropdownRefNav, closeDropdown: closeDropdownNav } = useClickOutSide([navbarRef], 'mousedown');
+  const { isOpen: isOpenBM, toggleDropdown: toggleDropdownBM, dropdownRef: dropdownRefBM, closeDropdown: closeDropdownBM } = useClickOutSide([], 'mousedown');
+
+  const { loading, error, success, userInfo } = useAppSelector((state) => state.auth);
   const { data: theLoaiRes, isLoading: isLoadingTheLoai } = useGetCategoriesQuery({ category: 'the-loai' });
   const { data: quocGiaRes, isLoading: isLoadingQuocGia } = useGetCategoriesQuery({ category: 'quoc-gia' });
 
@@ -285,6 +288,7 @@ const NavBar = React.memo(() => {
   const pageRTK = useAppSelector((state) => state.search.page);
   const activeOther = useAppSelector((state) => state.loadingState.activeOther);
 
+  const bookmarks = useAppSelector((state) => state.bookmarks.bookmarks);
   const navListsSlug = useMemo(() => navLists.map(convertToSlug), []);
 
   useEffect(() => {
@@ -315,16 +319,24 @@ const NavBar = React.memo(() => {
         dispatch(clearSlug());
       }
       // setShowDropDown(null);
-      closeDropdown();
+      // closeDropdown();
+      closeDropdownNav();
     },
     [dispatch, handleClick, handleRTK, navigate, navListsSlug, slugRTK, typeRTK]
   );
 
   const handleDropdownClick = useCallback((item) => {
     // setShowDropDown((prev) => (prev === item ? null : item));
-    toggleDropdown((prev) => (prev === item ? null : item));
+    toggleDropdownNav((prev) => (prev === item ? null : item));
   }, []);
-
+  const handdleBmClick = () => {
+    if (userInfo) {
+      toggleDropdownBM((e) => !e);
+    } else {
+      toast.info(`Vui lòng đăng nhập để thực hiện chức năng này`);
+    }
+    // toggleDropdown(true);
+  };
   // useEffect(() => {
   //   const handleClickOutside = (event) => {
   //     if (dropdownRef.current && !dropdownRef.current.contains(event.target) && navbarRef.current && !navbarRef.current.contains(event.target)) {
@@ -347,9 +359,10 @@ const NavBar = React.memo(() => {
       navigate(`/${type}/${slug}`, { state: { slug, type } });
       handleRTK();
       // setShowDropDown(null);
-      closeDropdown();
+      // closeDropdown();
+      closeDropdownNav();
     },
-    [dispatch, navigate, handleRTK, closeDropdown]
+    [dispatch, navigate, handleRTK, closeDropdownNav]
   );
 
   const renderDropdownContent = useCallback(
@@ -387,7 +400,7 @@ const NavBar = React.memo(() => {
             {navList === 'THỂ LOẠI' || navList === 'QUỐC GIA' ? (
               <div
                 // ref={showDropDown === navList ? dropdownRef : null}
-                ref={isOpen === navList ? dropdownRef : null}
+                ref={isOpenNav === navList ? dropdownRefNav : null}
                 className={`px-2.5 py-3.5 dropdown hover:text-[#ff8a00] hover:bg-[#000000] cursor-pointer ${activeButton === index ? 'bg-[#223344] text-[#ffff]' : ''}`}
                 onClick={() => {
                   handleDropdownClick(navList);
@@ -396,7 +409,7 @@ const NavBar = React.memo(() => {
                 <div className='flex items-center justify-center'>
                   {navList}
                   {/* {showDropDown === navList ? <IoMdArrowDropup /> : <IoMdArrowDropdown />} */}
-                  {isOpen === navList ? <IoMdArrowDropup /> : <IoMdArrowDropdown />}
+                  {isOpenNav === navList ? <IoMdArrowDropup /> : <IoMdArrowDropdown />}
                 </div>
               </div>
             ) : (
@@ -407,10 +420,10 @@ const NavBar = React.memo(() => {
               </div>
             )}
             {/* {showDropDown === navList && ( */}
-            {isOpen === navList && (
+            {isOpenNav === navList && (
               <div
                 // ref={showDropDown === navList ? dropdownRef : null}
-                ref={isOpen === navList ? dropdownRef : null}
+                ref={isOpenNav === navList ? dropdownRefNav : null}
                 className='absolute left-0 bg-[#1f3d58] shadow-custom py-2 rounded-lg w-96 z-50 rounded-t-none'>
                 {isLoading ? <div className='absolute bg-black w-96 h-5 z-50'></div> : renderDropdownContent(index)}
               </div>
@@ -431,11 +444,25 @@ const NavBar = React.memo(() => {
           <div className='max-sm:flex hidden'>
             <SearchBar />
           </div>
-          <div className='flex relative h-5'>
-            <FaBookmark size={17} />
-            <span className='bg-red-700 rounded-full absolute text-sm px-1 transform -translate-y-full left-2.5 top-1.5'>0</span>
+          <div
+            className='flex relative h-5'
+            onClick={handdleBmClick}
+            ref={dropdownRefBM}>
+            <FaBookmark
+              size={17}
+              color={`${bookmarks.length > 0 ? 'green' : ''}`}
+            />
+            <span className='bg-red-700 rounded-full absolute text-sm px-1 transform -translate-y-full left-2.5 top-1.5 z-50'>
+              {bookmarks?.length}
+
+              <BookMarks
+                isBookmarkDropdownOpen={isOpenBM}
+                toggleDropdown={toggleDropdownBM}
+              />
+            </span>
           </div>
-          <HiOutlineDotsVertical size={17} />
+
+          {/* <HiOutlineDotsVertical size={17} /> */}
         </div>
       </div>
 

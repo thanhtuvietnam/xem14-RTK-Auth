@@ -7,7 +7,7 @@ const initialState = {
   error: null,
   activeBM: null,
 };
-export const addBookmarks = createAsyncThunk('bookmarks/add', async ({ userId, movieName, posterPath, thumbPath }, { rejectWithValue, getState }) => {
+export const addBookmarks = createAsyncThunk('bookmarks/add', async ({ userId, movieName, posterPath, thumbPath, slug, originName }, { rejectWithValue, getState }) => {
   // const state = getState();
   // const existingBookmark = state.bookmarks.bookmarks.map((bookmark) => bookmark.movieName).includes(movieName);
 
@@ -21,11 +21,13 @@ export const addBookmarks = createAsyncThunk('bookmarks/add', async ({ userId, m
     const docRef = await addDoc(collection(db, 'bookmarks'), {
       userId,
       movieName,
+      originName,
       posterPath,
       thumbPath,
+      slug,
       createdAt: serverTimestamp(),
     });
-    return { id: docRef.id, movieName, posterPath, thumbPath, createdAt: new Date().toISOString() };
+    return { id: docRef.id, movieName, posterPath, thumbPath, slug, originName, createdAt: new Date().toISOString() };
   } catch (error) {
     return rejectWithValue(error.message);
   }
@@ -38,7 +40,23 @@ export const removeBookmarks = createAsyncThunk('bookmarks/remove', async (bookm
     return rejectWithValue(error.message);
   }
 });
+// Thêm async thunk để xóa tất cả bookmark theo userId
+export const removeAllBookmarks = createAsyncThunk('bookmarks/removeAll', async (userId, { rejectWithValue }) => {
+  try {
+    const q = query(collection(db, 'bookmarks'), where('userId', '==', userId));
+    const querySnapshot = await getDocs(q);
 
+    // Tạo một mảng các promise để xóa từng bookmark
+    const deletePromises = querySnapshot.docs.map((doc) => deleteDoc(doc.ref));
+
+    // Chờ cho tất cả các promise hoàn thành
+    await Promise.all(deletePromises);
+
+    return userId; // Trả về userId để có thể sử dụng trong reducer nếu cần
+  } catch (error) {
+    return rejectWithValue(error.message);
+  }
+});
 const convertTimestamp = (timestamp) => {
   if (timestamp && typeof timestamp.toDate === 'function') {
     return timestamp.toDate().toISOString();
@@ -69,8 +87,11 @@ const bookmarksSlice = createSlice({
     setActiveBM: (state, action) => {
       state.activeBM = action.payload;
     },
-    addBM: (state, action) => {
-      state.bookmarks.push(action.payload);
+    // addBM: (state, action) => {
+    //   state.bookmarks.push(action.payload);
+    // },
+    removeBmId: (state, action) => {
+      state.bookmarks = state.bookmarks.filter((bookmark) => bookmark.id !== action.payload);
     },
     removeBmRdStore: (state) => {
       state.bookmarks = [];
@@ -91,8 +112,16 @@ const bookmarksSlice = createSlice({
       })
       .addCase(fetchBookmarks.fulfilled, (state, action) => {
         state.bookmarks = action.payload;
+      })
+      .addCase(removeBookmarks.fulfilled, (state, action) => {
+        // Cập nhật state khi xóa bookmark thành công
+        state.bookmarks = state.bookmarks.filter((bookmark) => bookmark.id !== action.payload);
+      })
+      .addCase(removeAllBookmarks.fulfilled, (state, action) => {
+        // Xóa tất cả bookmark trong state
+        state.bookmarks = [];
       });
   },
 });
-export const { setActiveBM, addBM, removeBmRdStore } = bookmarksSlice.actions;
+export const { setActiveBM, removeBmRdStore } = bookmarksSlice.actions;
 export default bookmarksSlice.reducer;

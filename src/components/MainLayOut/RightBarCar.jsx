@@ -5,7 +5,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { useAppdispatch, useAppSelector } from '../../store/hook';
 import { clearSearchKey } from '../../store/searchSlice/searchSlice';
-const RightBarCar = ({ movieName, originName, year, view, thumbImage, heightThumb, lineclampCss, setShowDropdown }) => {
+const RightBarCar = React.memo(({ movieName, originName, year, view, thumbImage, heightThumb, lineclampCss, setShowDropdown, onRemove, showRemoveButton }) => {
   const { isHovering, handleMouseEnter, handleMouseLeave } = useHoverState();
   const searchKeyRTK = useAppSelector((state) => state.search.searchKey);
   const dispatch = useAppdispatch();
@@ -44,15 +44,25 @@ const RightBarCar = ({ movieName, originName, year, view, thumbImage, heightThum
         <div>
           <p className='text-gray-400 line-clamp-3 sm:line-clamp-none text-[9px] sm:text-[11px] md:text-sm'>
             {originName}
-            <span className='ml-1'>({year})</span>
+            <span className='ml-1'>{year}</span>
           </p>
         </div>
         <div>
           <span>{view}</span>
         </div>
+        {showRemoveButton && (
+          <button
+            onClick={() => {
+              onRemove();
+            }}
+            className='absolute top-0 right-0 hover:bg-red-600 bg-[#b34646] text-white rounded-md px-2 py-1'>
+            Xóa
+          </button>
+        )}
       </div>
     </div>
   );
-};
+});
+RightBarCar.displayName = 'RightBarCar';
 
 export default RightBarCar;
