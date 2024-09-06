@@ -38,7 +38,10 @@ const SectionSlider = React.memo(({ films }) => {
         return (
           <div key={index}>
             <div className='w-full !border-b !border-[#1e2732]'>
-              <SectionTitle sectionFilm={sectionFilm} />
+              <SectionTitle
+                sectionFilm={sectionFilm}
+                activeIndex={index}
+              />
             </div>
             <div className='mt-2 grid grid-cols-2  sm:grid-cols-4 gap-2 md:grid-cols-4 md:grid-rows-3 lg:mr-5 mb-5 responsive-edit'>
               {selectedFilms.map((film) => (

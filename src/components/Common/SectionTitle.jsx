@@ -2,9 +2,15 @@ import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { titleListButton } from '../../shared/utils';
+import { useActiveButton } from '../../hooks/useActiveButton';
 
-const SectionTitle = React.memo(({ sectionFilm, hidden, disable, showSeeAll, showDeleteAll, onDeleteAll, isDeleting }) => {
+const SectionTitle = React.memo(({ sectionFilm, hidden, disable, showSeeAll, showDeleteAll, onDeleteAll, isDeleting, activeIndex }) => {
   const navigate = useNavigate();
+  const [activeButton, handleClick] = useActiveButton();
+  const titleListButtonClick = () => {
+    handleClick(activeIndex + 1);
+    navigate(`/${titleListButton(sectionFilm)}`);
+  };
   return (
     <div className='flex items-center justify-between lg:mr-5'>
       <button
@@ -12,7 +18,7 @@ const SectionTitle = React.memo(({ sectionFilm, hidden, disable, showSeeAll, sho
         className='sectionTitle-custom border-b py-3'>
         <span
           className='font-extrabold tracking-wider capitalize whitespace-nowrap'
-          onClick={() => navigate(`${titleListButton(sectionFilm)}`)}>
+          onClick={titleListButtonClick}>
           {sectionFilm}
         </span>
       </button>
@@ -20,10 +26,10 @@ const SectionTitle = React.memo(({ sectionFilm, hidden, disable, showSeeAll, sho
       <button
         disabled={disable}
         className={`sectionTitle-button md:tracking-widest bg-gradient-to-r from-[#151d25] to-[#194161] hover:from-black hover:to-black transition duration-300 mb-1 ${hidden}`}
-        onClick={() => navigate(`/${titleListButton(sectionFilm)}`)}>
+        onClick={titleListButtonClick}>
         Xem tất cả
       </button>
-      {/* )} */}
+
       {showDeleteAll && (
         <button
           // disabled={disable}
