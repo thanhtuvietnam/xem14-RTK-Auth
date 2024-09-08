@@ -34,14 +34,32 @@ function SignUp() {
   const handleSubmit = async (values) => {
     try {
       await dispatch(registerUser({ name: values.userName, email: values.email, password: values.password })).unwrap();
-      toast.success('Chúc mừng bạn đã đăng ký thành công! ');
+      toast.success('Chúc mừng bạn đã đăng ký thành công! ', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
 
       setTimeout(() => {
         navigate('/log-in');
       }, 800);
     } catch (error) {
-      console.log('registration failed', error);
-      toast.error('Đăng ký thất bại!');
+      // console.log('registration failed', error);
+      toast.error('Đăng ký thất bại!', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
     }
   };
   return (

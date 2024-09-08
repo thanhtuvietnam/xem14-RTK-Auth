@@ -1,3 +1,5 @@
+import { nanoid } from '@reduxjs/toolkit';
+
 export const path = {
   HOME: '/',
   HOMEPAGE: '/',
@@ -13,6 +15,7 @@ export const path = {
   XEMPHIM: '/xem-phim/:slug',
   THELOAI: '/the-loai/:slug',
   QUOCGIA: '/quoc-gia/:slug',
+  SORT: '/sort/:movieSort/',
   SEARCHRESULTS: '/tim-kiem',
 };
 export const navLists = ['TRANG CHỦ', 'PHIM BỘ', 'PHIM LẺ', 'TV SHOWS', 'HOẠT HÌNH', 'THỂ LOẠI', 'QUỐC GIA', 'SẮP CHIẾU'];
@@ -25,7 +28,13 @@ export const dropdownItems = {
 export const noteLine = `– CHÚ Ý: NẾU KHÔNG TẢI ĐƯỢC NỘI DUNG,HÃY BẤM F5 HOẶC BẤM TẢI LẠI TRANG 1 HOẶC 2 LẦN BẠN NHÉ .`;
 export const noteMovieWatch = `– Chú ý: Yêu Cầu Phim Tại Đây:`;
 export const noteMovieWatch2 = `– Chú ý: Hãy bình luận khen chê báo lỗi bên dưới nhé.`;
+export const movieSort = ['Phim Mới', 'Phim Bộ', 'Phim Lẻ', 'TV Shows', 'Hoạt Hình', 'Phim Vietsub', 'Phim Thuyết Minh', 'Phim Lồng Tiếng', 'Phim Bộ Đang Chiếu', 'Phim Trọn Bộ', 'Phim Sắp Chiếu', 'Subteam'];
 
+export const timeSort = [
+  { id: nanoid(), name: 'Thời gian đăng', sortfield: '_id' },
+  { id: nanoid(), name: 'Năm sản xuất', sortfield: 'year' },
+  { id: nanoid(), name: 'Thời gian cập nhật', sortfield: 'modified.time' },
+];
 // export const API_URL = 'https://phimapi.com/v1/api';
 export const API_URL = 'https://ophim1.com/v1/api/';
 // export const API_URL = "https://api.themoviedb.org/3";

@@ -9,7 +9,7 @@ const Footer = () => {
   return (
     <footer className='bg-[#151d25] text-[#8f8f8f] py-8 border-t border-[#435153a8]'>
       {/* <div className='container mx-auto px-4'> */}
-      <div className='container mx-auto px-4'>
+      <div className='container  custom-page '>
         {/* Đặt padding là 0 */}
         <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
           <div>

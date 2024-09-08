@@ -45,10 +45,10 @@ const MovieBox = React.memo(({ episode, poster }) => {
       <MediaPlayer
         streamType='on-demand'
         viewType='video'
-        crossOrigin='mixed'
+        crossOrigin='true'
         load='play'
         poster={`${IMG_URL}/${poster}`}
-        posterLoad='visible'
+        posterLoad='idle'
         src={episode?.link_m3u8}
         onSeeking={handleSeeking}
         onSeeked={handleSeeked}>

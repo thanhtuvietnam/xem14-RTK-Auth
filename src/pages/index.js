@@ -13,3 +13,4 @@ export { default as QuocGia } from './QuocGia.jsx';
 export { default as SearchPage } from './SearchPage.jsx';
 export { default as Signup } from './Auth/Signup.jsx';
 export { default as Login } from './Auth/Login.jsx';
+export { default as SortPage } from './SortPage.jsx';

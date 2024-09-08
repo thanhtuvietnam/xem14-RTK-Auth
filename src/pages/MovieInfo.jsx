@@ -30,13 +30,22 @@ const MovieInfo = React.memo(() => {
 
   const dispatch = useAppdispatch();
   const handleWatchMovie = useCallback(() => {
-    dispatch(setActiveButton(0));
+    // dispatch(setActiveButton(0));
     navigate(`/xem-phim/${slug}`, { state: { movieDetails } });
-  }, [navigate, slug, movieDetails, dispatch]);
+  }, [navigate, slug, movieDetails]);
 
   useEffect(() => {
     if (isError && error) {
-      toast('BẠN VUI LÒNG BẤM F5 HOẶC BẤM TẢI LẠI TRANG');
+      toast.warn('BẠN VUI LÒNG BẤM F5 HOẶC BẤM TẢI LẠI TRANG', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
     }
   }, [isError, error]);
 

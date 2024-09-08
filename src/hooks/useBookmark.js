@@ -55,7 +55,16 @@ const useBookmark = (movie) => {
           });
       }
     } else {
-      toast.info(`Vui lòng đang nhập để thực hiện chức năng này`);
+      toast.info(`Vui lòng đang nhập để thực hiện chức năng này`, {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
     }
   }, [userInfo, dispatch, movie, isBookmarked, bookmarks]);
 

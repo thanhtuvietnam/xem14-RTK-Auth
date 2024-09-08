@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider, createRoutesFromElements, Route } from 'react-router-dom';
-import { Home, Error, PhimBo, PhimLe, HomePage, HoatHinh, TVShows, MovieInfo, SapChieu, MovieWatch, Theloai, QuocGia, SearchPage, Login, Signup } from './pages/index';
+import { Home, Error, PhimBo, PhimLe, HomePage, HoatHinh, TVShows, MovieInfo, SapChieu, MovieWatch, Theloai, QuocGia, SearchPage, Login, Signup, SortPage } from './pages/index';
 import { path } from './shared/constant';
 
 const router = createBrowserRouter(
@@ -54,6 +54,10 @@ const router = createBrowserRouter(
       <Route
         path={path.QUOCGIA}
         element={<QuocGia />}
+      />
+      <Route
+        path={path.SORT}
+        element={<SortPage />}
       />
       <Route
         path={path.SEARCHRESULTS}

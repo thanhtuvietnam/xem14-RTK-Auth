@@ -77,11 +77,10 @@ const NavBar = React.memo(() => {
       }
       closeDropdownNav();
     },
-    [dispatch, handleClick, handleRTK, navigate, navListsSlug, slugRTK, typeRTK]
+    [dispatch, handleClick, handleRTK, navigate, navListsSlug, slugRTK, typeRTK, closeDropdownNav]
   );
 
   const handleDropdownClick = useCallback((item) => {
-    // setShowDropDown((prev) => (prev === item ? null : item));
     toggleDropdownNav((prev) => (prev === item ? null : item));
   }, []);
   const handdleBmClick = useCallback(() => {
@@ -91,9 +90,18 @@ const NavBar = React.memo(() => {
     if (userInfo) {
       toggleDropdownBM((e) => !e);
     } else {
-      toast.info(`Vui lòng đăng nhập để thực hiện chức năng này`);
+      toast.info(`Vui lòng đăng nhập để thực hiện chức năng này`, {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
     }
-  }, [dispatch, toggleDropdownBM]);
+  }, [dispatch, toggleDropdownBM, userInfo, searchKeyRTK]);
 
   const handleCloseSideBar = useCallback(() => {
     setIsSideBarActive(false);

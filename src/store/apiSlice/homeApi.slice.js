@@ -51,7 +51,10 @@ export const homeApi = createApi({
       query: ({ searchTerm, page = 1 }) => `tim-kiem?keyword=${encodeURIComponent(searchTerm)}&page=${page}`,
       keepUnusedDataFor: 60, // Keep search results for 1 minute
     }),
+    getSort: builder.query({
+      query: ({ movieSort, theLoaiSort, quocGiaSort, yearSort, timeSort, pageSort }) => `danh-sach/${movieSort}?category=${theLoaiSort}&country=${quocGiaSort}&year=${yearSort}&sort_field=${timeSort}&page=${pageSort}`,
+    }),
   }),
 });
 
-export const { useGetHomeQuery, useGetMovieResQuery, useGetPhimmoiQuery, useGetPhimboQuery, useGetPhimleQuery, useGetTVShowsQuery, useGetHoathinhQuery, useGetMoviesByCategoryQuery, useGetCategoriesQuery, useGetSearchQuery } = homeApi;
+export const { useGetHomeQuery, useGetMovieResQuery, useGetPhimmoiQuery, useGetPhimboQuery, useGetPhimleQuery, useGetTVShowsQuery, useGetHoathinhQuery, useGetMoviesByCategoryQuery, useGetCategoriesQuery, useGetSearchQuery, useGetSortQuery } = homeApi;

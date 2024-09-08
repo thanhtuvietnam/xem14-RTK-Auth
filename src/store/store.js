@@ -6,6 +6,7 @@ import searchReducer from './searchSlice/searchSlice';
 import submenuReducer from './mainSlice/SubmenuSlice/submenuSlice';
 import authReducer from './Auth/auth.slice';
 import bookmarksReducer from './bookmarks/bookmarks.slice';
+import filterReducer from './filterSlice/filter.slice';
 export const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -14,6 +15,7 @@ export const store = configureStore({
     loadingState: loadingReducer,
     [homeApi.reducerPath]: homeApi.reducer,
     bookmarks: bookmarksReducer,
+    filter: filterReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(homeApi.middleware),
 });

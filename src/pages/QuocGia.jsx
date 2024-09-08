@@ -13,9 +13,9 @@ const Theloai = () => {
       ) : (
         <MovieCategory
           OthersBreadCrumb={titlePage}
-          categoryBreadCrumb={'Thể Loại'}
+          categoryBreadCrumb={'Quốc gia'}
           dataResults={dataResults}
-          sectionTitle={`Thể loại ${titlePage}`}
+          sectionTitle={`quốc gia ${titlePage}`}
           totalItemsSearch={totalPages}
         />
       )}

@@ -5,12 +5,14 @@ import { useAppdispatch, useAppSelector } from '../store/hook';
 import { useGetSearchQuery } from '../store/apiSlice/homeApi.slice';
 import { useDebounce } from '../hooks/useDebounce';
 import { setError } from '../store/mainSlice/LoadingSlice/loadingSlice';
+import { useNavigate } from 'react-router-dom';
 
-const SearchPage = () => {
+const SearchPage = React.memo(() => {
   const dispatch = useAppdispatch();
   const searchTerm = useAppSelector((state) => state.search.searchKey);
   const page = useAppSelector((state) => state.search.page);
   const debouncedSearchTerm = useDebounce(searchTerm, 400);
+  const navigate = useNavigate();
 
   const { data: state, isLoading, isError, error, isFetching } = useGetSearchQuery({ searchTerm: debouncedSearchTerm, page }, { skip: !debouncedSearchTerm });
 
@@ -21,6 +23,7 @@ const SearchPage = () => {
     if (isError && error) {
       console.error('Search error:', error);
       dispatch(setError(true));
+      navigate('/error');
     }
   }, [isError, error, dispatch]);
 
@@ -43,6 +46,7 @@ const SearchPage = () => {
       />
     </div>
   );
-};
+});
 
-export default React.memo(SearchPage);
+SearchPage.displayName = 'SearchPage';
+export default SearchPage;

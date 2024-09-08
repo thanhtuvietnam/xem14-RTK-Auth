@@ -3,13 +3,16 @@ import { Link, useLocation } from 'react-router-dom';
 import { NoteViewer, CardItem, Filter, PaginationCom, SectionTitle, TrendingNow, BreadCrumb } from './index.js';
 import { IMG_URL, noteLine } from '../../shared/constant.js';
 import { classifyAddon } from '../../shared/utils.js';
-
+import PropTypes from 'prop-types';
 import SkeletonForAll from '../Skeleton/SkeletonForAll/SkeletonForAll.jsx';
 import { useGetMoviesByCategoryQuery } from '../../store/apiSlice/homeApi.slice.js';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAppSelector } from '../../store/hook.js';
 import { setCurrentPage } from '../../store/searchSlice/searchSlice.js';
+import { icons } from '../../shared/icon.js';
+
+const { IoWarningSharp } = icons;
 
 const MovieCategory = React.memo(({ sectionTitle, dataResults, totalItemsSearch, categorySlug, categoryBreadCrumb, OthersBreadCrumb, hiddenOther }) => {
   const location = useLocation();
@@ -30,14 +33,45 @@ const MovieCategory = React.memo(({ sectionTitle, dataResults, totalItemsSearch,
 
   useEffect(() => {
     if (isError && error) {
-      toast('BẠN VUI LÒNG BẤM F5 HOẶC BẤM TẢI LẠI TRANG');
+      toast('BẠN VUI LÒNG BẤM F5 HOẶC BẤM TẢI LẠI TRANG', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
     } else if (searchPageError) {
-      toast('BẠN VUI LÒNG NHẬP LẠI PHIM VÀ ENTER');
+      toast('BẠN THỬ THỰC HIỆN LẠI THAO TÁC VÀ F5 XEM', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
     }
   }, [isError, error, searchPageError]);
 
   const renderMovieItems = useMemo(() => {
     const items = dataResults || categoryData?.data?.items;
+    if (!items || items.length === 0) {
+      return (
+        <div className='col-span-full text-center text-white text-lg'>
+          <div className='flex gap-2 items-center justify-center'>
+            <IoWarningSharp
+              color='yellow'
+              size={45}
+            />
+            <h1>Rất tiếc, chúng tôi không có phim cho mục này...</h1>
+          </div>
+        </div>
+      );
+    }
     return items?.map((item) => (
       <Link
         to={`/chitiet-phim/${item.slug}`}
@@ -90,7 +124,7 @@ const MovieCategory = React.memo(({ sectionTitle, dataResults, totalItemsSearch,
           <div className='grid grid-cols-2 sm:grid-cols-3  md:grid-cols-4 responsive-edit gap-2.5'>{renderMovieItems}</div>
         </div>
         <div className='lg:w-2/6'>
-          <TrendingNow addClass={`mt-4`} />
+          <TrendingNow addClass={'mt-5'} />
         </div>
       </div>
       <div className='fixed bottom-0 bg-black/75 z-10'>
@@ -105,5 +139,12 @@ const MovieCategory = React.memo(({ sectionTitle, dataResults, totalItemsSearch,
     </div>
   );
 });
+MovieCategory.propTypes = {
+  dataResults: PropTypes.array,
+  categoryBreadCrumb: PropTypes.string,
+  sectionTitle: PropTypes.string,
+  totalItemsSearch: PropTypes.number,
+  hiddenOther: PropTypes.string,
+};
 MovieCategory.displayName = 'MovieCategory';
 export default MovieCategory;

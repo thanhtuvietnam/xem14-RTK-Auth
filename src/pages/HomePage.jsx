@@ -55,10 +55,28 @@ const HomePage = React.memo(() => {
       dispatch(setLoading(false));
       const error = queries.find((query) => query.error)?.error;
       if (error) {
-        console.error('Có lỗi xảy ra:', error);
-        toast('BẠN VUI LÒNG BẤM F5 HOẶC BẤM TẢI LẠI TRANG');
+        // console.error('Có lỗi xảy ra:', error);
+        toast.warn('BẠN VUI LÒNG BẤM F5 HOẶC BẤM TẢI LẠI TRANG', {
+          position: 'top-right',
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
       } else {
-        console.error('Có lỗi xảy ra!');
+        toast.warn('CÓ LỖI XẢY RA RỒI, HÃY BẤM TẢI LẠI TRANG', {
+          position: 'top-right',
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
       }
       return;
     }
@@ -66,7 +84,7 @@ const HomePage = React.memo(() => {
     if (allLoaded) {
       dispatch(setLoading(false));
     }
-  }, queries);
+  }, [queries, dispatch]);
 
   return (
     <div className='bg-[#222d38]'>

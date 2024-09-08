@@ -23,7 +23,6 @@ const Header = React.memo(({ onLogoClick }) => {
   const { searchKey: searchKeyRTK, currentPage: currentPageRTK, page: pageRTK } = useAppSelector((state) => state.search);
   const activeOther = useAppSelector((state) => state.loadingState.activeOther);
   const { loading, error, success, userInfo } = useAppSelector((state) => state.auth);
-  // const { isOpen, toggleDropdown, dropdownRef, closeDropdown } = useClickOutSide([], 'mousedown');
   const { isOpen: isUserDropdownOpen, toggleDropdown: toggleUserDropdown, dropdownRef: userDropdownRef, closeDropdown: closeUserDropdown } = useClickOutSide([], 'mousedown');
   const { isOpen: isBookmarkDropdownOpen, toggleDropdown: toggleBookmarkDropdown, dropdownRef: bookmarkDropdownRef, closeDropdown: closeBookmarkDropdown } = useClickOutSide([], 'mousedown');
   const bookmarks = useAppSelector((state) => state.bookmarks.bookmarks);
@@ -58,13 +57,22 @@ const Header = React.memo(({ onLogoClick }) => {
     }
   }, [userInfo, dispatch]);
 
-  const handdleBmClick = () => {
+  const handdleBmClick = useCallback(() => {
     if (userInfo) {
       toggleBookmarkDropdown((e) => !e);
     } else {
-      toast.info(`Vui lòng đăng nhập để thực hiện chức năng này`);
+      toast.info(`Vui lòng đăng nhập để thực hiện chức năng này`, {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
     }
-  };
+  }, [toggleBookmarkDropdown, userInfo]);
   return (
     <header className='h-16 custom-bg w-full'>
       <div className='h-full flex items-center justify-between text-[13px] text-[#e9eaee] leading-5 custom-page'>

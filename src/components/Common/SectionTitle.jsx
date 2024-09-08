@@ -29,7 +29,6 @@ const SectionTitle = React.memo(({ sectionFilm, hidden, disable, showSeeAll, sho
         onClick={titleListButtonClick}>
         Xem tất cả
       </button>
-
       {showDeleteAll && (
         <button
           // disabled={disable}

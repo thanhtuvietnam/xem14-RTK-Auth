@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { navLists } from './constant';
+import { nanoid } from '@reduxjs/toolkit';
 
 export const convertToSlug = (text) => {
   if (text === 'TRANG CHỦ') {
@@ -100,4 +101,16 @@ export const getYoutubeVideoId = (url) => {
 export function randomPage() {
   const randomScore = Math.floor(Math.random() * (50 - 2 + 1)) + 2;
   return randomScore;
+}
+
+export function createYears(startYear, endYear) {
+  const years = [];
+  for (let year = startYear; year <= endYear; year++) {
+    years.push({
+      _id: nanoid(),
+      year: year,
+      slug: year,
+    });
+  }
+  return years;
 }

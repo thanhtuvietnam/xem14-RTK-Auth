@@ -13,9 +13,9 @@ const QuocGia = () => {
       ) : (
         <MovieCategory
           OthersBreadCrumb={titlePage}
-          categoryBreadCrumb={'Quốc gia'}
+          categoryBreadCrumb={'Thể loại'}
           totalItemsSearch={totalPages}
-          sectionTitle={`Quốc gia ${titlePage}`}
+          sectionTitle={`Thể loại ${titlePage}`}
           dataResults={dataResults}
         />
       )}

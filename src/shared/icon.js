@@ -32,6 +32,7 @@ import { ImStarEmpty } from 'react-icons/im';
 import { TbRewindForward10, TbRewindBackward10 } from 'react-icons/tb';
 import { MdOutlineExpandLess } from 'react-icons/md';
 import { FaCheck } from 'react-icons/fa6';
+import { IoWarningSharp } from 'react-icons/io5';
 
 /* -------------------------------------------------------------------------- */
 //Plyr icons
@@ -93,6 +94,7 @@ export const icons = {
   IoMdArrowDropup,
   FaCheck,
   MdOutlineExpandLess,
+  IoWarningSharp,
 };
 /* -------------------------------------------------------------------------- */
 export const customPlyrIcons = {

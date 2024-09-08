@@ -22,14 +22,23 @@ function Login() {
   const handleSubmit = async (values) => {
     try {
       await dispatch(loginUser({ email: values.email, password: values.password })).unwrap();
-      toast.success('Chúc mừng bạn đăng nhập thành công! ');
+      toast.success('Chúc mừng bạn đăng nhập thành công! ', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
       setTimeout(() => {
         navigate('/');
         dispatch(setActiveButton(0));
       }, 500);
     } catch (error) {
       toast.error('Registration failed: ' + error.message);
-      console.log('login failed', error);
+      // console.log('login failed', error);
     }
   };
   return (
