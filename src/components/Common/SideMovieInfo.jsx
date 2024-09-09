@@ -1,15 +1,15 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { CarInfo, InfoBlock, ContentInfo, TableLink, RecommendMovie, LinkServer } from './index.js';
-import { IMG_URL } from '../../shared/constant.js';
+import { IMG_URL, timeSort } from '../../shared/constant.js';
 import { icons } from '../../shared/icon.js';
-import { getYoutubeVideoId } from '../../shared/utils.js';
+import { getRandomItem, getYoutubeVideoId } from '../../shared/utils.js';
 
 import ImdbScore from './ImdbScore.jsx';
-import { useAppdispatch, useAppSelector } from '../../store/hook.js';
-import { addBookmarks, fetchBookmarks, removeBookmarks, setActiveBM } from '../../store/bookmarks/bookmarks.slice.js';
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useBookmark from '../../hooks/useBookmark.js';
+import { useAppSelector } from '../../store/hook.js';
 
 const { TbAlertTriangleFilled } = icons;
 
@@ -18,15 +18,19 @@ const SideMovieInfo = React.memo(({ detail, handleWatchMovie }) => {
 
   const movie = detail;
   const movieTrailerUrl = movie?.trailer_url;
-  // console.log(movieTrailerUrl);
+
   const movieID = getYoutubeVideoId(movieTrailerUrl);
+
   const movieServerName = movie?.episodes[0]?.server_name;
   const movieServerData = movie?.episodes[0]?.server_data;
 
   const actors = movie?.actor?.length > 0 && movie.actor[0] !== '' ? movie.actor.join(', ') : 'NaN';
   const directors = movie?.director?.length > 0 && movie.director[0] !== '' ? movie.director.join(', ') : 'NaN';
   const { handleBMarks, isBookmarked } = useBookmark(movie);
-  // console.log(movie);
+
+  const items = useAppSelector((state) => state.filter.recommendMovies);
+  // console.log(category);
+
   return (
     <div>
       <div>
@@ -84,7 +88,7 @@ const SideMovieInfo = React.memo(({ detail, handleWatchMovie }) => {
         </div>
 
         <div className='hidden min-[425px]:flex transition duration-300'>
-          <RecommendMovie />
+          <RecommendMovie items={items} />
         </div>
       </div>
       {/* <ToastContainer position='top-center' /> */}

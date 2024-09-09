@@ -3,7 +3,6 @@ import { createSlice } from '@reduxjs/toolkit';
 const filterSlice = createSlice({
   name: 'filter',
   initialState: {
-    filterData: null,
     filterValues: {
       timeSort: '',
       movieSort: '',
@@ -12,15 +11,30 @@ const filterSlice = createSlice({
       yearSort: '',
       pageSort: 1,
     },
+    recommendMovies: [],
+    isSortFetching: false, // Thêm isSortFetching vào initialState
+    bothFetchingComplete: false, // Thêm bothFetchingComplete vào initialState
   },
   reducers: {
-    setFilterData: (state, action) => {
-      state.filterData = action.payload;
-    },
     setFilterValues: (state, action) => {
       state.filterValues = action.payload;
     },
+
+    setRecommendMovies: (state, action) => {
+      state.recommendMovies = action.payload;
+    },
+    clearRecommendMovies(state) {
+      state.recommendMovies = [];
+    },
+    setSortFetching: (state, action) => {
+      // Thêm reducer setSortFetching
+      state.isSortFetching = action.payload;
+    },
+    setBothFetchingComplete: (state, action) => {
+      // Thêm reducer setBothFetchingComplete
+      state.bothFetchingComplete = action.payload;
+    },
   },
 });
-export const { setFilterData, setFilterValues } = filterSlice.actions;
+export const { setFilterValues, setRecommendMovies, clearRecommendMovies, setSortFetching, setBothFetchingComplete } = filterSlice.actions;
 export default filterSlice.reducer;

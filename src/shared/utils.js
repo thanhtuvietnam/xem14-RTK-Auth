@@ -114,3 +114,10 @@ export function createYears(startYear, endYear) {
   }
   return years;
 }
+export const getRandomItem = (array) => {
+  if (!Array.isArray(array) || array.length === 0) {
+    return null; // Hoặc giá trị mặc định nào đó
+  }
+  const randomIndex = Math.floor(Math.random() * array.length);
+  return randomIndex;
+};

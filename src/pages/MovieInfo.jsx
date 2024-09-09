@@ -1,27 +1,29 @@
-import React, { useEffect, useCallback, useMemo } from 'react';
+import React, { useEffect, useCallback, useMemo, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Filter, TrendingNow, SideMovieInfo, ScrollToTop, BreadCrumb, NoteViewer } from '../components/Common/index.js';
 import { MoonLoader } from 'react-spinners';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import { CardSkeleton, FilterSkeleton } from '../components/Skeleton/HomePageSkeleton/index.js';
-import { useGetMovieResQuery } from '../store/apiSlice/homeApi.slice.js';
+import { useGetMovieResQuery, useGetSortQuery } from '../store/apiSlice/homeApi.slice.js';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Error from './Error.jsx';
-import { noteLine } from '../shared/constant.js';
-import { useAppdispatch } from '../store/hook.js';
+import { noteLine, timeSort } from '../shared/constant.js';
+import { useAppdispatch, useAppSelector } from '../store/hook.js';
 import { setActiveButton } from '../store/mainSlice/LoadingSlice/loadingSlice.js';
+import { getRandomItem } from '../shared/utils.js';
+import { clearRecommendMovies, setRecommendMovies } from '../store/filterSlice/filter.slice.js';
 
 const MovieInfo = React.memo(() => {
   const { slug } = useParams();
   const navigate = useNavigate();
   const {
     data: MovieRes,
-    isLoading,
-    isFetching,
-    isError,
-    error,
+    isLoading: isMovieLoading,
+    isFetching: isMovieFetching,
+    isError: isMovieError,
+    error: movieError,
   } = useGetMovieResQuery(slug, {
     skip: !slug,
   });
@@ -34,8 +36,69 @@ const MovieInfo = React.memo(() => {
     navigate(`/xem-phim/${slug}`, { state: { movieDetails } });
   }, [navigate, slug, movieDetails]);
 
+  // ------------------------------------------------------------------//
+
+  //------------------------------------------------------------//
+  const [isReady, setIsReady] = useState(false);
+  const [isValuesSet, setIsValuesSet] = useState(false);
+  const [filterValuesIndex, setFilterValuesIndex] = useState({
+    timeSortIndex: '',
+    theLoaiSortIndex: '',
+    categoryRTK: [],
+    timeSortValueMain: [],
+  });
+
   useEffect(() => {
-    if (isError && error) {
+    if (movieDetails) {
+      const country = movieDetails.country?.map((coun) => coun.name) || [];
+      const timeSortValue = timeSort.map((slug) => slug.sortfield) || [];
+      const category = movieDetails.category?.map((i) => i.slug) || [];
+
+      if (category.length > 0 && timeSortValue.length > 0) {
+        const timeSortValueIndex = getRandomItem(timeSortValue);
+        const theLoaiSortValueIndex = getRandomItem(category);
+        setFilterValuesIndex({
+          timeSortIndex: timeSortValueIndex,
+          theLoaiSortIndex: theLoaiSortValueIndex,
+          categoryRTK: category,
+          timeSortValueMain: timeSortValue,
+        });
+        setIsValuesSet(true);
+      }
+    }
+  }, [movieDetails]);
+
+  const { timeSortIndex, theLoaiSortIndex, categoryRTK, timeSortValueMain } = filterValuesIndex;
+
+  const filterValues = useMemo(
+    () => ({
+      timeSort: timeSortValueMain[timeSortIndex] || '',
+      movieSort: '',
+      theLoaiSort: categoryRTK[theLoaiSortIndex] || '',
+      quocGiaSort: '',
+      yearSort: '',
+      page: 1,
+    }),
+    [timeSortValueMain, timeSortIndex, categoryRTK, theLoaiSortIndex]
+  );
+
+  useEffect(() => {
+    if (timeSortIndex !== '' && theLoaiSortIndex !== '') {
+      setIsReady(true);
+    }
+  }, [timeSortIndex, theLoaiSortIndex]);
+
+  const shouldSkip = !isValuesSet || !isReady || !filterValues.timeSort || !filterValues.theLoaiSort;
+  const { data: sortData, isFetching: isSortFetching, isError: isSortError, error: sortError } = useGetSortQuery(filterValues, { skip: shouldSkip });
+
+  useEffect(() => {
+    if (sortData && !isSortFetching) {
+      dispatch(setRecommendMovies(sortData.data.items));
+      // dispatch(setSortFetching(false)); // Cập nhật trạng thái isSortFetching khi hoàn thành
+    }
+  }, [sortData, isSortFetching]);
+  useEffect(() => {
+    if ((isSortError && sortError) || (isMovieLoading && movieError)) {
       toast.warn('BẠN VUI LÒNG BẤM F5 HOẶC BẤM TẢI LẠI TRANG', {
         position: 'top-right',
         autoClose: 2000,
@@ -47,7 +110,20 @@ const MovieInfo = React.memo(() => {
         theme: 'light',
       });
     }
-  }, [isError, error]);
+  }, [isSortError, sortError, isMovieLoading, movieError]);
+
+  const [bothFetchingComplete, setBothFetchingComplete] = useState(false);
+  useEffect(() => {
+    if (!isMovieFetching && !isSortFetching) {
+      setBothFetchingComplete(true);
+    }
+  }, [isMovieFetching, isSortFetching]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearRecommendMovies());
+    };
+  }, [dispatch]);
 
   const renderSkeletonContent = useMemo(
     () => (
@@ -154,7 +230,7 @@ const MovieInfo = React.memo(() => {
       />
       <ToastContainer />
       <ScrollToTop />
-      {isFetching ? renderSkeletonContent : movieDetails ? renderMovieContent : <Error />}
+      {bothFetchingComplete ? isMovieError || isSortError ? <Error /> : renderMovieContent : renderSkeletonContent}
     </div>
   );
 });

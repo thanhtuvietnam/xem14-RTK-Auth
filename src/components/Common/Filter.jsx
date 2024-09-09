@@ -41,7 +41,7 @@ const Filter = () => {
     const hasChanged = Object.keys(values).some((key) => values[key] !== filterValues[key]);
     if (hasChanged) {
       dispatch(setFilterValues(values));
-      console.log('im here');
+      // console.log('im here');
       if (page && currentPage !== 1) {
         dispatch(setPage(1));
         dispatch(setCurrentPage(1));
@@ -71,7 +71,7 @@ const Filter = () => {
         window.history.pushState(null, '', newPath); // Thay đổi URL mà không điều hướng lại trang
       } else {
         navigate(newPath);
-        console.log(`i have navigated`);
+        // console.log(`i have navigated`);
       }
     }
   };
@@ -79,7 +79,7 @@ const Filter = () => {
     <div className='custom-page w-full'>
       <div className='flex justify-end mt-3 mb-3 font-bold'>
         <Typography
-          className='underline cursor-pointer'
+          className='underline cursor-pointer hover:text-yellow-400'
           color='warning'
           variant='plain'
           component='label'

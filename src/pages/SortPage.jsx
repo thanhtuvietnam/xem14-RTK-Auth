@@ -16,7 +16,7 @@ function SortPage() {
 
   const shouldSkip = !filterValues.timeSort && !filterValues.movieSort && !filterValues.theLoaiSort && !filterValues.quocGiaSort && !filterValues.yearSort;
   const { data, isFetching, isLoading, isError, error } = useGetSortQuery(filterValues, { skip: shouldSkip });
-  console.log(data);
+  // console.log(data);
   const dataFilter = data?.data?.items;
   const totalPages = useMemo(() => data?.data?.params?.pagination?.totalItems, [data?.data?.params?.pagination?.totalItems]);
   const currentPage = useAppSelector((state) => state.search.currentPage);
@@ -36,13 +36,13 @@ function SortPage() {
       }).toString();
       const newPath = `/sort/${filterValues.movieSort}?${queryParams}`;
       window.history.replaceState(null, '', newPath); // Thay đổi URL mà không điều hướng lại trang
-      console.log(`i have changed`);
+      // console.log(`i have changed`);
     }
   }, [currentPage, dispatch, filterValues]);
 
   useEffect(() => {
     if (isError && error) {
-      console.error('Search error:', error);
+      // console.error('Search error:', error);
       dispatch(setError(true));
       navigate('/error');
     }
