@@ -1,10 +1,8 @@
-import React from 'react';
-import { Footer, Header } from '../components/MainLayOut/index.js';
-import { NavBar, Title } from '../components/MainLayOut/index.js';
+import React, { useCallback } from 'react';
+import { Footer, Header, NavBar, Title } from '../components/MainLayOut/index.js';
 import { Outlet } from 'react-router-dom';
 import { useActiveButton } from '../hooks/useActiveButton.js';
 import { navLists } from '../shared/constant.js';
-import { useCallback } from 'react';
 
 const Home = React.memo(() => {
   const [activeButton, handleClick] = useActiveButton(navLists);

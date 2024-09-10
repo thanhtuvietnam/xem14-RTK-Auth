@@ -1,19 +1,19 @@
 import React, { useEffect, useCallback, useMemo, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Filter, TrendingNow, SideMovieInfo, ScrollToTop, BreadCrumb, NoteViewer } from '../components/Common/index.js';
-import { MoonLoader } from 'react-spinners';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import { CardSkeleton, FilterSkeleton } from '../components/Skeleton/HomePageSkeleton/index.js';
 import { useGetMovieResQuery, useGetSortQuery } from '../store/apiSlice/homeApi.slice.js';
-
+import { useAppdispatch, useAppSelector } from '../store/hook.js';
+import { clearRecommendMovies, setExcludeItems, setRecommendMovies, setRecommendMoviesWatch } from '../store/filterSlice/filter.slice.js';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import { Filter, TrendingNow, SideMovieInfo, ScrollToTop, BreadCrumb, NoteViewer } from '../components/Common/index.js';
 import Error from './Error.jsx';
+
+import { MoonLoader } from 'react-spinners';
+import { CardSkeleton, FilterSkeleton } from '../components/Skeleton/HomePageSkeleton/index.js';
+
 import { noteLine, timeSort } from '../shared/constant.js';
-import { useAppdispatch, useAppSelector } from '../store/hook.js';
-import { setActiveButton } from '../store/mainSlice/LoadingSlice/loadingSlice.js';
 import { getRandomItem } from '../shared/utils.js';
-import { clearRecommendMovies, setExcludeItems, setRecommendMovies, setRecommendMoviesWatch } from '../store/filterSlice/filter.slice.js';
 
 const MovieInfo = React.memo(() => {
   const { slug } = useParams();
