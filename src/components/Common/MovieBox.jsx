@@ -5,13 +5,10 @@ import { PlyrLayout } from '@vidstack/react/player/layouts/plyr';
 import { ThumbsDownIcon, ThumbsUpIcon } from '@vidstack/react/icons';
 import { customPlyrIcons } from '../../shared/icon';
 import Rating from '@mui/material/Rating';
-import { icons } from '../../shared/icon';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import '@vidstack/react/player/styles/base.css';
 import '@vidstack/react/player/styles/plyr/theme.css';
 import { IMG_URL } from '../../shared/constant';
-const { ImStarEmpty } = icons;
 
 const PlyrControl = [
   'play-large', // The large play button in the center

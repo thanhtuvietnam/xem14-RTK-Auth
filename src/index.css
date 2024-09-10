@@ -9,9 +9,7 @@ body {
 }
 
 /* responsive cho các trang */
-/* .responsive-edit {
-  @apply min-[540px]:px-12 min-[712px]:px-8 md:px-0 min-[820px]:px-2 min-[853px]:px-6 min-[912px]:px-16 lg:px-0;
-} */
+
 .responsive-edit {
   @apply min-[540px]:grid-cols-3;
 }
@@ -101,7 +99,7 @@ body::-webkit-scrollbar-thumb:hover {
   right: 25px;
   transform: translate(-50%, -50%);
   color: white;
-  /* background: linear-gradient(90deg, rgba(170, 8, 142, 1) 0%, rgba(91, 171, 134, 1) 0%, rgba(201, 183, 198, 1) 0%, rgba(64, 148, 180, 1) 0%, rgba(170, 8, 142, 1) 0%, rgba(11, 19, 9, 1) 0%, rgba(159, 137, 201, 1) 0%, rgba(170, 8, 47, 1) 0%, rgba(75, 24, 41, 1) 15%, rgba(35, 138, 205, 1) 44%, rgba(59, 91, 51, 1) 65%, rgba(218, 73, 55, 1) 82%, rgba(132, 30, 149, 1) 100%, rgba(25, 22, 18, 1) 100%, rgba(170, 141, 8, 1) 100%, rgba(8, 102, 170, 1) 100%); */
+
   display: none;
 }
 
@@ -212,10 +210,7 @@ body::-webkit-scrollbar-thumb:hover {
   @apply h-[315px] md:h-[312.5px] lg:h-[260px] xl:h-[325px] w-full  rounded-lg shadow-xl;
   color: rgb(35, 82, 124);
 }
-/* .card-custom {
-  @apply h-auto w-full max-w-[193px] rounded-lg shadow-xl;
-  color: rgb(35, 82, 124);
-} */
+
 @media (min-height: 1024px) {
   .responsive-item {
     /* height: 100vh; Chiều cao cố định của container */
@@ -397,10 +392,7 @@ body::-webkit-scrollbar-thumb:hover {
   box-shadow: 0 4px 15px 0 rgba(229, 66, 10, 0.75);
   background-size: 300% 100%;
 }
-/* table link */
-/* .scroll-bar-custom {
-  width: 100%;
-} */
+
 .scroll-bar-custom::-webkit-scrollbar {
   height: 8px; /* Chiều cao của thanh cuộn ngang */
   width: 8px; /* Chiều rộng của thanh cuộn dọc */

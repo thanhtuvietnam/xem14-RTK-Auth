@@ -12,8 +12,8 @@ const filterSlice = createSlice({
       pageSort: 1,
     },
     recommendMovies: [],
-    isSortFetching: false, // Thêm isSortFetching vào initialState
-    bothFetchingComplete: false, // Thêm bothFetchingComplete vào initialState
+    recommendMoviesWatch: [],
+    excludeItems: [],
   },
   reducers: {
     setFilterValues: (state, action) => {
@@ -23,18 +23,16 @@ const filterSlice = createSlice({
     setRecommendMovies: (state, action) => {
       state.recommendMovies = action.payload;
     },
+    setRecommendMoviesWatch: (state, action) => {
+      state.recommendMoviesWatch = action.payload;
+    },
+    setExcludeItems: (state, action) => {
+      state.excludeItems = action.payload;
+    },
     clearRecommendMovies(state) {
       state.recommendMovies = [];
     },
-    setSortFetching: (state, action) => {
-      // Thêm reducer setSortFetching
-      state.isSortFetching = action.payload;
-    },
-    setBothFetchingComplete: (state, action) => {
-      // Thêm reducer setBothFetchingComplete
-      state.bothFetchingComplete = action.payload;
-    },
   },
 });
-export const { setFilterValues, setRecommendMovies, clearRecommendMovies, setSortFetching, setBothFetchingComplete } = filterSlice.actions;
+export const { setFilterValues, setRecommendMovies, setRecommendMoviesWatch, clearRecommendMovies, setExcludeItems } = filterSlice.actions;
 export default filterSlice.reducer;

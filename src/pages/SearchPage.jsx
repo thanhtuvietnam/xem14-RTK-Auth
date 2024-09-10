@@ -25,7 +25,7 @@ const SearchPage = React.memo(() => {
       dispatch(setError(true));
       navigate('/error');
     }
-  }, [isError, error, dispatch]);
+  }, [isError, error, dispatch, navigate]);
 
   if (isLoading || isFetching) {
     return (

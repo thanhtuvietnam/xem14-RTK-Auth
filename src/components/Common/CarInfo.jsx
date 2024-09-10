@@ -4,7 +4,6 @@ import { icons } from '../../shared/icon';
 import { TrailerModal } from './index.js';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import { useAppSelector } from '../../store/hook.js';
 
 const { IoPlaySharp, MdExpandMore, FaCirclePlus, IoLogoYoutube, ImBookmark, FaCheck } = icons;
 const CarInfo = React.memo(({ image, altname, setExpandServer, trailerLink, handleWatchMovie, handleBMarks, isBookmarked }) => {

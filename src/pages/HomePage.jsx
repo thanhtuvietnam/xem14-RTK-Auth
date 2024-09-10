@@ -25,7 +25,8 @@ const HomePage = React.memo(() => {
   const TVShowsQuery = useGetTVShowsQuery(1);
   const HoathinhQuery = useGetHoathinhQuery(1);
 
-  const queries = [PhimmoiQuery, PhimboQuery, PhimleQuery, TVShowsQuery, HoathinhQuery];
+  const queries = useMemo(() => [PhimmoiQuery, PhimboQuery, PhimleQuery, TVShowsQuery, HoathinhQuery], [PhimmoiQuery, PhimboQuery, PhimleQuery, TVShowsQuery, HoathinhQuery]);
+
   const movies = useMemo(() => {
     if (queries.every((query) => query.data)) {
       return {
@@ -37,7 +38,7 @@ const HomePage = React.memo(() => {
       };
     }
     return null;
-  }, [PhimmoiQuery.data, PhimboQuery.data, PhimleQuery.data, TVShowsQuery.data, HoathinhQuery.data]);
+  }, [PhimmoiQuery.data, PhimboQuery.data, PhimleQuery.data, TVShowsQuery.data, HoathinhQuery.data, queries]);
 
   useEffect(() => {
     if (activeButton === null) {

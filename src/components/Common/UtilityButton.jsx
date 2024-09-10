@@ -20,7 +20,6 @@ const UtilityButton = React.memo(() => {
       <FloatButton.BackTop
         style={{
           insetInlineEnd: 94,
-          // backgroundColor: '#f5bb90',
         }}
         type='primary'
         duration={100}

@@ -1,14 +1,12 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { MovieCategory } from '../components/Common';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAppdispatch, useAppSelector } from '../store/hook';
 import { setFilterValues } from '../store/filterSlice/filter.slice';
 import { useGetSortQuery } from '../store/apiSlice/homeApi.slice';
 import SkeletonForAll from '../components/Skeleton/SkeletonForAll/SkeletonForAll';
 import { setError } from '../store/mainSlice/LoadingSlice/loadingSlice';
-
-function SortPage() {
-  const location = useLocation();
+const SortPage = React.memo(() => {
   const dispatch = useAppdispatch();
   const navigate = useNavigate();
 
@@ -60,12 +58,13 @@ function SortPage() {
     <MovieCategory
       dataResults={dataFilter}
       categoryBreadCrumb='Lọc phim'
-      // categorySlug='phim-bo'
       sectionTitle={`Lọc phim: ${titlePage}`}
       totalItemsSearch={totalPages}
       hiddenOther='hidden'
     />
   );
-}
+});
+
+SortPage.displayName = 'SortPage';
 
 export default SortPage;

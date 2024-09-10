@@ -13,6 +13,9 @@ const MovieWatch = React.memo(() => {
   const isLoading = useAppSelector((state) => state.loadingState.Loading);
   const dispatch = useAppdispatch();
 
+  const items = useAppSelector((state) => state.filter.recommendMoviesWatch);
+  const excludeItems = useAppSelector((state) => state.filter.excludeItems);
+
   const [currentLink, setCurrentLink] = useState(null);
   const [backupLink, setBackupLink] = useState(null);
   const [showBackup, setShowBackup] = useState(false);
@@ -77,7 +80,10 @@ const MovieWatch = React.memo(() => {
               <TableLink movieServerData={serverData} />
             </div>
             <div>
-              <RecommendMovie />
+              <RecommendMovie
+                items={items}
+                excludeItems={excludeItems}
+              />
             </div>
           </div>
         </div>

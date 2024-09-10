@@ -1,13 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React from 'react';
 import { CarInfo, InfoBlock, ContentInfo, TableLink, RecommendMovie, LinkServer } from './index.js';
-import { IMG_URL, timeSort } from '../../shared/constant.js';
+import { IMG_URL } from '../../shared/constant.js';
 import { icons } from '../../shared/icon.js';
-import { getRandomItem, getYoutubeVideoId } from '../../shared/utils.js';
+import { getYoutubeVideoId } from '../../shared/utils.js';
 
 import ImdbScore from './ImdbScore.jsx';
-
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import useBookmark from '../../hooks/useBookmark.js';
 import { useAppSelector } from '../../store/hook.js';
 
@@ -29,6 +26,7 @@ const SideMovieInfo = React.memo(({ detail, handleWatchMovie }) => {
   const { handleBMarks, isBookmarked } = useBookmark(movie);
 
   const items = useAppSelector((state) => state.filter.recommendMovies);
+  const excludeItems = useAppSelector((state) => state.filter.excludeItems);
   // console.log(category);
 
   return (
@@ -88,7 +86,10 @@ const SideMovieInfo = React.memo(({ detail, handleWatchMovie }) => {
         </div>
 
         <div className='hidden min-[425px]:flex transition duration-300'>
-          <RecommendMovie items={items} />
+          <RecommendMovie
+            items={items}
+            excludeItems={excludeItems}
+          />
         </div>
       </div>
       {/* <ToastContainer position='top-center' /> */}

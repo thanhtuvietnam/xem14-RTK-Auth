@@ -1,4 +1,3 @@
-import React from 'react';
 import { MovieCategory } from '../components/Common';
 
 const HoatHinh = () => (

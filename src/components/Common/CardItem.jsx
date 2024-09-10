@@ -9,10 +9,8 @@ const CardItem = memo(({ image, title, originalName, quality, lang, addOn, cardI
     <div className={`card-custom flex flex-col bg-[#202a34] group`}>
       <div className='h-5/6 relative overflow-hidden rounded-t-lg'>
         <LazyLoadImage
-          // effect='opacity'
           effect='blur'
           wrapperProps={{
-            // If you need to, you can tweak the effect transition using the wrapper style.
             background: '#f0f0f0',
             style: { transitionDelay: '200ms' },
           }}

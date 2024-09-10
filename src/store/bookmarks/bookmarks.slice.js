@@ -7,16 +7,7 @@ const initialState = {
   error: null,
   activeBM: null,
 };
-export const addBookmarks = createAsyncThunk('bookmarks/add', async ({ userId, movieName, posterPath, thumbPath, slug, originName }, { rejectWithValue, getState }) => {
-  // const state = getState();
-  // const existingBookmark = state.bookmarks.bookmarks.map((bookmark) => bookmark.movieName).includes(movieName);
-
-  // console.log('Existing bookmarks:', state.bookmarks.bookmarks); // Kiểm tra danh sách bookmark
-
-  // if (existingBookmark) {
-  //   return rejectWithValue('Movie already bookmarked');
-  // }
-
+export const addBookmarks = createAsyncThunk('bookmarks/add', async ({ userId, movieName, posterPath, thumbPath, slug, originName }, { rejectWithValue }) => {
   try {
     const docRef = await addDoc(collection(db, 'bookmarks'), {
       userId,

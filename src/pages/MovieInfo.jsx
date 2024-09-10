@@ -13,11 +13,13 @@ import { noteLine, timeSort } from '../shared/constant.js';
 import { useAppdispatch, useAppSelector } from '../store/hook.js';
 import { setActiveButton } from '../store/mainSlice/LoadingSlice/loadingSlice.js';
 import { getRandomItem } from '../shared/utils.js';
-import { clearRecommendMovies, setRecommendMovies } from '../store/filterSlice/filter.slice.js';
+import { clearRecommendMovies, setExcludeItems, setRecommendMovies, setRecommendMoviesWatch } from '../store/filterSlice/filter.slice.js';
 
 const MovieInfo = React.memo(() => {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const [isLoadingRecommend, setIsLoadingRecommend] = useState(null);
+
   const {
     data: MovieRes,
     isLoading: isMovieLoading,
@@ -31,8 +33,8 @@ const MovieInfo = React.memo(() => {
   const breadCrumbItem = MovieRes?.data?.breadCrumb[0];
 
   const dispatch = useAppdispatch();
+
   const handleWatchMovie = useCallback(() => {
-    // dispatch(setActiveButton(0));
     navigate(`/xem-phim/${slug}`, { state: { movieDetails } });
   }, [navigate, slug, movieDetails]);
 
@@ -93,10 +95,11 @@ const MovieInfo = React.memo(() => {
 
   useEffect(() => {
     if (sortData && !isSortFetching) {
-      dispatch(setRecommendMovies(sortData.data.items));
-      // dispatch(setSortFetching(false)); // Cập nhật trạng thái isSortFetching khi hoàn thành
+      dispatch(setExcludeItems(movieDetails?._id));
+      dispatch(setRecommendMovies(sortData.data.items || []));
+      dispatch(setRecommendMoviesWatch(sortData.data.items || []));
     }
-  }, [sortData, isSortFetching]);
+  }, [sortData, isSortFetching, movieDetails, dispatch]);
   useEffect(() => {
     if ((isSortError && sortError) || (isMovieLoading && movieError)) {
       toast.warn('BẠN VUI LÒNG BẤM F5 HOẶC BẤM TẢI LẠI TRANG', {
@@ -116,6 +119,7 @@ const MovieInfo = React.memo(() => {
   useEffect(() => {
     if (!isMovieFetching && !isSortFetching) {
       setBothFetchingComplete(true);
+      setIsLoadingRecommend(false); // Cập nhật trạng thái isLoading khi dữ liệu đã tải xong
     }
   }, [isMovieFetching, isSortFetching]);
 
@@ -124,6 +128,26 @@ const MovieInfo = React.memo(() => {
       dispatch(clearRecommendMovies());
     };
   }, [dispatch]);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setIsLoadingRecommend(true);
+      // Cập nhật dữ liệu mới dựa trên slug
+      const newSlug = window.location.pathname.split('/').pop();
+      navigate(`/chitiet-phim/${newSlug}`, { replace: true });
+
+      // Đảm bảo setIsLoading(false) được gọi sau khi điều hướng hoàn tất
+      setTimeout(() => {
+        setIsLoadingRecommend(false);
+      }, 500);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [navigate]);
 
   const renderSkeletonContent = useMemo(
     () => (
@@ -179,7 +203,7 @@ const MovieInfo = React.memo(() => {
           <div className='lg:w-2/6'>
             <Skeleton
               className='h-screen lg:flex'
-              height={2000}
+              height={1200}
             />
           </div>
         </div>
@@ -222,15 +246,20 @@ const MovieInfo = React.memo(() => {
     [movieDetails, breadCrumbItem, handleWatchMovie]
   );
 
-  return (
-    <div className='min-h-screen custom-page px-0 bg-[#151d25]'>
+  const renderNoteViewer = useMemo(() => {
+    return (
       <NoteViewer
         hidden='hidden'
         note={noteLine}
       />
+    );
+  }, []);
+  return (
+    <div className='min-h-screen custom-page px-0 bg-[#151d25]'>
+      {renderNoteViewer}
       <ToastContainer />
       <ScrollToTop />
-      {bothFetchingComplete ? isMovieError || isSortError ? <Error /> : renderMovieContent : renderSkeletonContent}
+      {isLoadingRecommend ? renderSkeletonContent : bothFetchingComplete ? isMovieError || isSortError ? <Error /> : renderMovieContent : renderSkeletonContent}
     </div>
   );
 });

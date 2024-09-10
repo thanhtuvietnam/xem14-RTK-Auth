@@ -83,13 +83,6 @@ export const getYoutubeVideoId = (url) => {
   // const url = 'https://www.youtube.com/watch?v=Q47BZGNaA2o';
   const regExp = /^.*((youtu.be\/)|(v\/)|(e\/)|(u\/\w+\/)|(embed\/)|(v=))([^#\&\?]*).*/;
   const match = url?.match(regExp);
-  // if (match) {
-  //   match.forEach((e, index) => {
-  //     console.log(`Element ${index}: ${e}`);
-  //   });
-  // } else {
-  //   console.log('nono');
-  // }
   if (match && match[8].length === 11) {
     // console.log(match[8]);
     return match[8];

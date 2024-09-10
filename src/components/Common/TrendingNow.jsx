@@ -1,8 +1,9 @@
 import { RightBarCar, SectionTitle } from './index.js';
 import { useActiveButton } from '../../hooks/useActiveButton.js';
 import { IMG_URL } from '../../shared/constant.js';
+import React from 'react';
 
-const TrendingNow = ({ addClass }) => {
+const TrendingNow = React.memo(({ addClass }) => {
   const buttonLists = ['Ngày', 'Tuần', 'Tháng'];
   const [activeButton, handleClick] = useActiveButton();
   return (
@@ -39,6 +40,7 @@ const TrendingNow = ({ addClass }) => {
       </div>
     </div>
   );
-};
+});
+TrendingNow.displayName = 'TrendingNow';
 
 export default TrendingNow;

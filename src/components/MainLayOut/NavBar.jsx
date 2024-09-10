@@ -60,6 +60,7 @@ const NavBar = React.memo(() => {
       dispatch(setCurrentPage(1));
       dispatch(setPage(1));
     }
+
     if (searchKeyRTK !== '') {
       dispatch(clearSearchKey());
     }
@@ -80,9 +81,12 @@ const NavBar = React.memo(() => {
     [dispatch, handleClick, handleRTK, navigate, navListsSlug, slugRTK, typeRTK, closeDropdownNav]
   );
 
-  const handleDropdownClick = useCallback((item) => {
-    toggleDropdownNav((prev) => (prev === item ? null : item));
-  }, []);
+  const handleDropdownClick = useCallback(
+    (item) => {
+      toggleDropdownNav((prev) => (prev === item ? null : item));
+    },
+    [toggleDropdownNav]
+  );
   const handdleBmClick = useCallback(() => {
     if (searchKeyRTK !== '') {
       dispatch(clearSearchKey());

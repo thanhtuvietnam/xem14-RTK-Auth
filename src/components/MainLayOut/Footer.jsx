@@ -1,16 +1,14 @@
 import { navLists } from '../../shared/constant';
 import { Link } from 'react-router-dom';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { convertToSlug } from '../../shared/utils';
 
-const Footer = () => {
+const Footer = React.memo(() => {
   const getCurrentYear = new Date().getFullYear();
   const navListsSlug = useMemo(() => navLists.map(convertToSlug), []);
   return (
     <footer className='bg-[#151d25] text-[#8f8f8f] py-8 border-t border-[#435153a8]'>
-      {/* <div className='container mx-auto px-4'> */}
       <div className='container  custom-page '>
-        {/* Đặt padding là 0 */}
         <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
           <div>
             <h5 className='text-lg md:text-xl font-bold mb-2'>Cuồng Phim</h5>
@@ -50,6 +48,7 @@ const Footer = () => {
       </div>
     </footer>
   );
-};
+});
+Footer.displayName = 'Footer';
 
 export default Footer;
