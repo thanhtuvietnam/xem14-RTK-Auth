@@ -2,7 +2,6 @@
   "name": "xem14-clone",
   "private": true,
   "version": "0.0.0",
-  "homepage": ".",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,6 +9,7 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
+  "homepage": ".",
   "dependencies": {
     "@ant-design/icons": "^5.4.0",
     "@apollo/client": "^3.11.4",
