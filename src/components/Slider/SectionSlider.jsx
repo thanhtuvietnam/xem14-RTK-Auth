@@ -5,12 +5,17 @@ import { IMG_URL, navLists } from '../../shared/constant.js';
 import { linkUrl, shuffleAndSliceArray, classifyAddon } from '../../shared/utils.js';
 
 const SectionSlider = React.memo(({ films }) => {
+  // console.log(films);
   const limitedFilms = useMemo(
     () => ({
-      Phimle: shuffleAndSliceArray(films?.Phimle || [], 12),
-      Phimbo: shuffleAndSliceArray(films?.Phimbo || [], 12),
-      TVShows: shuffleAndSliceArray(films?.TVShows || [], 12),
-      Hoathinh: shuffleAndSliceArray(films?.Hoathinh || [], 12),
+      // Phimle: shuffleAndSliceArray(films?.Phimle || [], 12),
+      // Phimbo: shuffleAndSliceArray(films?.Phimbo || [], 12),
+      // TVShows: shuffleAndSliceArray(films?.TVShows || [], 12),
+      // Hoathinh: shuffleAndSliceArray(films?.Hoathinh || [], 12),
+      Phimle: (films?.Phimle).slice(0, 12) || [],
+      Phimbo: (films?.Phimbo).slice(0, 12) || [],
+      TVShows: (films?.TVShows).slice(0, 12) || [],
+      Hoathinh: (films?.Hoathinh).slice(0, 12) || [],
     }),
     [films]
   );

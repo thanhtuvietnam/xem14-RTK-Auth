@@ -14,6 +14,14 @@ import SkeletonForAll from '../components/Skeleton/SkeletonForAll/SkeletonForAll
 import Error from './Error.jsx';
 import { useActiveButton } from '../hooks/useActiveButton.js';
 
+const movieSortValue = 'phim-moi';
+
+const sortParams = [
+  { movieSort: movieSortValue, theLoaiSort: '', quocGiaSort: '', yearSort: '', timeSort: '_id', pageSort: 1 }, // Ngày
+  { movieSort: movieSortValue, theLoaiSort: '', quocGiaSort: '', yearSort: '', timeSort: 'modified.time', pageSort: 1 }, // Tuần
+  { movieSort: movieSortValue, theLoaiSort: '', quocGiaSort: '', yearSort: '', timeSort: 'year', pageSort: 1 }, // Tháng
+];
+
 const HomePage = React.memo(() => {
   const Loading = useAppSelector((state) => state.loadingState.Loading);
   const dispatch = useAppdispatch();
@@ -111,7 +119,7 @@ const HomePage = React.memo(() => {
                 <SectionSlider films={movies} />
               </div>
               <div className='lg:w-2/6'>
-                <TrendingNow />
+                <TrendingNow movieSortValue={sortParams} />
               </div>
             </div>
           </>

@@ -6,6 +6,14 @@ import { setLoading } from '../store/mainSlice/LoadingSlice/loadingSlice.js';
 import { LazyLoadComponent } from 'react-lazy-load-image-component';
 import { noteLine, noteMovieWatch } from '../shared/constant.js';
 
+const movieSortValue = '';
+
+const sortParams = [
+  { movieSort: movieSortValue, theLoaiSort: '', quocGiaSort: '', yearSort: '', timeSort: '_id', pageSort: 1 }, // Ngày
+  { movieSort: movieSortValue, theLoaiSort: '', quocGiaSort: '', yearSort: '', timeSort: 'modified.time', pageSort: 1 }, // Tuần
+  { movieSort: movieSortValue, theLoaiSort: '', quocGiaSort: '', yearSort: '', timeSort: 'year', pageSort: 1 }, // Tháng
+];
+
 const MovieWatch = React.memo(() => {
   const location = useLocation();
   const movieDetails = location?.state?.movieDetails;
@@ -88,7 +96,10 @@ const MovieWatch = React.memo(() => {
           </div>
         </div>
         <div className='lg:w-2/6'>
-          <TrendingNow />
+          <TrendingNow
+            numberSlice={10}
+            movieSortValue={sortParams}
+          />
         </div>
       </div>
     </div>

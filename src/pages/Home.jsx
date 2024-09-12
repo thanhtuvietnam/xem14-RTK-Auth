@@ -12,7 +12,7 @@ const Home = React.memo(() => {
     }
   }, [handleClick, activeButton]);
   return (
-    <div className='bg-[#222d38]'>
+    <div className='bg-[#222d38] overflow-x-hidden'>
       <Title value='Cuồng Phim | Xem phim thỏa thích' />
       <Header onLogoClick={handleLogoClick} />
       <NavBar />

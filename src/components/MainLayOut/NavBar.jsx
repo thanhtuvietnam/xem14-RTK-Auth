@@ -198,7 +198,7 @@ const NavBar = React.memo(() => {
             <SearchBar />
           </div>
           <div
-            className={`flex relative h-5 `}
+            className={`flex relative h-5 mr-1.5`}
             onClick={handdleBmClick}
             ref={dropdownRefBM}>
             <FaBookmark

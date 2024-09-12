@@ -81,11 +81,11 @@ const SideMovieInfo = React.memo(({ detail, handleWatchMovie }) => {
         <div className='bg-[#101821] p-3 rounded-md  mb-2.5'>
           <ContentInfo data={movie} />
         </div>
-        <div className='bg-[#101821] rounded-md p-3 text-[#a5a5a5] mb-2 border-[1px] border-[#1e2732] overflow-y-auto overflow-x-scroll h-60 scroll-bar-custom'>
+        <div className='bg-[#101821] rounded-md p-3 text-[#a5a5a5] mb-2 border-[1px] border-[#1e2732] overflow-y-auto  h-60 scroll-bar-custom'>
           <TableLink movieServerData={movieServerData} />
         </div>
 
-        <div className='hidden min-[425px]:flex transition duration-300'>
+        <div className='transition duration-300'>
           <RecommendMovie
             items={items}
             excludeItems={excludeItems}

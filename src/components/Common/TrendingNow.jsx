@@ -1,13 +1,27 @@
 import { RightBarCar, SectionTitle } from './index.js';
-import { useActiveButton } from '../../hooks/useActiveButton.js';
+import { useActiveButton, useActiveLinkButton } from '../../hooks/useActiveButton.js';
 import { IMG_URL } from '../../shared/constant.js';
 import React from 'react';
-
-const TrendingNow = React.memo(({ addClass }) => {
+import { homeApi, useGetSortQuery } from '../../store/apiSlice/homeApi.slice.js';
+import { Link, useNavigate } from 'react-router-dom';
+import { shuffleAndSliceArray } from '../../shared/utils.js';
+import { ScaleLoader } from 'react-spinners';
+const TrendingNow = React.memo(({ addClass, movieSortValue, numberSlice }) => {
   const buttonLists = ['Ngày', 'Tuần', 'Tháng'];
-  const [activeButton, handleClick] = useActiveButton();
+  const [activeLinkButton, handleClickLink] = useActiveLinkButton();
+
+  const sortParams = movieSortValue || [];
+  const { data, error, isLoading } = useGetSortQuery(sortParams[activeLinkButton], { skip: !sortParams.length });
+
+  const dataRightBar = data?.data?.items;
+  const dataRightBarSlice = shuffleAndSliceArray(dataRightBar || [], numberSlice);
+
+  const handleButtonClick = (index) => {
+    handleClickLink(index);
+  };
+
   return (
-    <div className={`mb-5 ${addClass}  `}>
+    <div className={` mb-5 ${addClass} min-h-screen `}>
       <div className='!border-b !border-[#1e2732] flex items-center justify-between'>
         <SectionTitle
           sectionFilm={`TOP XEM NHIỀU`}
@@ -16,8 +30,8 @@ const TrendingNow = React.memo(({ addClass }) => {
         <div className='flex items-center '>
           {buttonLists.map((button, index) => (
             <button
-              onClick={() => handleClick(index)}
-              className={`trending-button ${activeButton === index ? 'activetrending' : ''}`}
+              onClick={() => handleButtonClick(index)}
+              className={`trending-button ${activeLinkButton === index ? 'activetrending' : ''}`}
               key={index}>
               {button}
             </button>
@@ -25,18 +39,31 @@ const TrendingNow = React.memo(({ addClass }) => {
         </div>
       </div>
       <div className='mt-2'>
-        {[...Array(10)].map((_, index) => (
-          <RightBarCar
-            key={index}
-            thumbImage={`${IMG_URL}/bot-hon-thumb.jpg`}
-            year='2018'
-            movieName='lassName=lassName=text '
-            originName='lassName=text-gray-400 line-clamp-3 '
-            heightThumb={`sm:h-20 lg:h-auto`}
-            lineclampCss={`lg:line-clamp-6`}
-            view={500}
-          />
-        ))}
+        {isLoading && (
+          <div>
+            <ScaleLoader
+              size={160}
+              color='#e06c26'
+            />
+          </div>
+        )}
+        {error && <div>Error loading data</div>}
+        {dataRightBarSlice &&
+          dataRightBarSlice.map((item) => (
+            <Link
+              key={item?._index}
+              to={`/chitiet-phim/${item.slug}`}>
+              <RightBarCar
+                thumbImage={`${IMG_URL}/${item?.thumb_url}`}
+                year={item.year}
+                movieName={item.name}
+                originName={item.origin_name}
+                // heightThumb={`lg:h-auto`}
+                lineclampCss={`lg:line-clamp-3`}
+                view={item.view}
+              />
+            </Link>
+          ))}
       </div>
     </div>
   );

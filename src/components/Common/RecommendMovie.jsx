@@ -59,7 +59,7 @@ const RecommendMovie = React.memo(({ items, excludeItems }) => {
       <div className='sectionTitle-custom  mb-3'>
         <h1 className='font-bold tracking-wide text-base '>{renderSectionTitle}</h1>
       </div>
-      <div className='mt-2 grid grid-cols-2 gap-2 md:grid-cols-4 grid-rows-2  mb-5'>{renderRecommend}</div>
+      <div className='mt-2 grid grid-cols-2 gap-2 min-[540px]:grid-cols-3 md:grid-cols-4 grid-rows-2  mb-5'>{renderRecommend}</div>
     </div>
   );
 });

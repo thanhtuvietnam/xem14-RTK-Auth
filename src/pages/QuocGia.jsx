@@ -2,8 +2,14 @@ import React from 'react';
 import { MovieCategory } from '../components/Common';
 import SkeletonForAll from '../components/Skeleton/SkeletonForAll/SkeletonForAll';
 import { useCategoryPage } from '../hooks/useCategoryPage';
+const movieSortValue = '';
 
-const Theloai = () => {
+const sortParams = [
+  { movieSort: movieSortValue, theLoaiSort: '', quocGiaSort: '', yearSort: '', timeSort: '_id', pageSort: 1 }, // Ngày
+  { movieSort: movieSortValue, theLoaiSort: '', quocGiaSort: '', yearSort: '', timeSort: 'modified.time', pageSort: 1 }, // Tuần
+  { movieSort: movieSortValue, theLoaiSort: '', quocGiaSort: '', yearSort: '', timeSort: 'year', pageSort: 1 }, // Tháng
+];
+const Quocgia = () => {
   const { titlePage, totalPages, dataResults, isFetching } = useCategoryPage();
 
   return (
@@ -12,6 +18,8 @@ const Theloai = () => {
         <SkeletonForAll />
       ) : (
         <MovieCategory
+          numberSlice={10}
+          movieSortValue={sortParams}
           OthersBreadCrumb={titlePage}
           categoryBreadCrumb={'Quốc gia'}
           dataResults={dataResults}
@@ -23,4 +31,4 @@ const Theloai = () => {
   );
 };
 
-export default Theloai;
+export default Quocgia;

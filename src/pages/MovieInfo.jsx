@@ -15,6 +15,14 @@ import { CardSkeleton, FilterSkeleton } from '../components/Skeleton/HomePageSke
 import { noteLine, timeSort } from '../shared/constant.js';
 import { getRandomItem } from '../shared/utils.js';
 
+const movieSortValue = '';
+
+const sortParams = [
+  { movieSort: movieSortValue, theLoaiSort: '', quocGiaSort: '', yearSort: '', timeSort: '_id', pageSort: 1 }, // Ngày
+  { movieSort: movieSortValue, theLoaiSort: '', quocGiaSort: '', yearSort: '', timeSort: 'modified.time', pageSort: 1 }, // Tuần
+  { movieSort: movieSortValue, theLoaiSort: '', quocGiaSort: '', yearSort: '', timeSort: 'year', pageSort: 1 }, // Tháng
+];
+
 const MovieInfo = React.memo(() => {
   const { slug } = useParams();
   const navigate = useNavigate();
@@ -238,7 +246,11 @@ const MovieInfo = React.memo(() => {
             />
           </div>
           <div className='lg:w-2/6'>
-            <TrendingNow addClass={`mb-4`} />
+            <TrendingNow
+              numberSlice={10}
+              movieSortValue={sortParams}
+              addClass={`mb-4`}
+            />
           </div>
         </div>
       </>

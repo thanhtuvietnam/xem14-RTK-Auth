@@ -3,7 +3,15 @@ import { MovieCategory } from '../components/Common';
 import SkeletonForAll from '../components/Skeleton/SkeletonForAll/SkeletonForAll';
 import { useCategoryPage } from '../hooks/useCategoryPage';
 
-const QuocGia = () => {
+const movieSortValue = '';
+
+const sortParams = [
+  { movieSort: movieSortValue, theLoaiSort: '', quocGiaSort: '', yearSort: '', timeSort: '_id', pageSort: 1 }, // Ngày
+  { movieSort: movieSortValue, theLoaiSort: '', quocGiaSort: '', yearSort: '', timeSort: 'modified.time', pageSort: 1 }, // Tuần
+  { movieSort: movieSortValue, theLoaiSort: '', quocGiaSort: '', yearSort: '', timeSort: 'year', pageSort: 1 }, // Tháng
+];
+
+const Theloai = () => {
   const { titlePage, totalPages, dataResults, isFetching } = useCategoryPage();
 
   return (
@@ -12,6 +20,8 @@ const QuocGia = () => {
         <SkeletonForAll />
       ) : (
         <MovieCategory
+          numberSlice={10}
+          movieSortValue={sortParams}
           OthersBreadCrumb={titlePage}
           categoryBreadCrumb={'Thể loại'}
           totalItemsSearch={totalPages}
@@ -23,4 +33,6 @@ const QuocGia = () => {
   );
 };
 
-export default QuocGia;
+// Theloai.displayName = 'Theloai';
+
+export default Theloai;

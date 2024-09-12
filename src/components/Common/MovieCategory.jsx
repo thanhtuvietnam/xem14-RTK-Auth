@@ -14,7 +14,7 @@ import { icons } from '../../shared/icon.js';
 
 const { IoWarningSharp } = icons;
 
-const MovieCategory = React.memo(({ sectionTitle, dataResults, totalItemsSearch, categorySlug, categoryBreadCrumb, OthersBreadCrumb, hiddenOther }) => {
+const MovieCategory = React.memo(({ sectionTitle, dataResults, totalItemsSearch, categorySlug, categoryBreadCrumb, OthersBreadCrumb, hiddenOther, movieSortValue, numberSlice }) => {
   const location = useLocation();
 
   const pageType = location.pathname === '/tim-kiem' ? 'search' : 'normal';
@@ -124,7 +124,11 @@ const MovieCategory = React.memo(({ sectionTitle, dataResults, totalItemsSearch,
           <div className='grid grid-cols-2 sm:grid-cols-3  md:grid-cols-4 responsive-edit gap-2.5'>{renderMovieItems}</div>
         </div>
         <div className='lg:w-2/6'>
-          <TrendingNow addClass={'mt-5'} />
+          <TrendingNow
+            numberSlice={numberSlice}
+            addClass={'mt-5'}
+            movieSortValue={movieSortValue}
+          />
         </div>
       </div>
       <div className='fixed bottom-0 bg-black/75 z-10'>
