@@ -11,8 +11,8 @@ export const useActiveButton = () => {
   return [activeButton, handleClick];
 };
 
-export const useActiveLinkButton = () => {
-  const [activeLinkButton, setActiveLinkButton] = useState(0);
+export const useActiveLinkButton = (firstIndex) => {
+  const [activeLinkButton, setActiveLinkButton] = useState(firstIndex);
   const handleClickLink = (index) => {
     setActiveLinkButton(index);
   };

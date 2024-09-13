@@ -6,7 +6,7 @@ export const path = {
   ERROR: '/error',
   PHIMLE: '/phim-le',
   PHIMBO: '/phim-bo',
-  SAPCHIEU: '/sap-chieu',
+  // SAPCHIEU: '/sap-chieu',
   PHIM18CONG: '/phim-18',
   // MOVIEINFO: '/:loai/chitiet-phim/:slug/',
   MOVIEINFO: '/chitiet-phim/:slug/',
@@ -18,7 +18,7 @@ export const path = {
   SORT: '/sort/:movieSort/',
   SEARCHRESULTS: '/tim-kiem',
 };
-export const navLists = ['TRANG CHỦ', 'PHIM BỘ', 'PHIM LẺ', 'TV SHOWS', 'HOẠT HÌNH', 'THỂ LOẠI', 'QUỐC GIA', 'SẮP CHIẾU'];
+export const navLists = ['TRANG CHỦ', 'PHIM BỘ', 'PHIM LẺ', 'TV SHOWS', 'HOẠT HÌNH', 'THỂ LOẠI', 'QUỐC GIA'];
 
 export const dropdownItems = {
   5: ['Hành Động', 'Tình Cảm', 'Hài Hước', 'Cổ Trang', 'Tâm Lý', 'Hình Sự', 'Chiến Tranh', 'Thể Thao', 'Võ Thuật', 'Viễn Tưởng', 'Phiêu Lưu', 'Khoa Học', 'Kinh Dị', 'Âm Nhạc', 'Thần Thoại', 'Tài Liệu', 'Gia Đình', 'Chính kịch', 'Bí ẩn', 'Học Đường', 'Kinh Điển', 'Phim 18+'],

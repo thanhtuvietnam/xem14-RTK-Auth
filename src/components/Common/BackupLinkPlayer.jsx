@@ -2,50 +2,39 @@ import React, { useState, useEffect } from 'react';
 import { Button, Typography, Box } from '@mui/material';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
-const BackupLinkPlayer = ({ mainLink, backupLink, onLinkChange }) => {
-  const [showBackup, setShowBackup] = useState(false);
+const BackupLinkPlayer = React.memo(({ backupLink }) => {
   const [error, setError] = useState(null);
-
-  useEffect(() => {
-    setShowBackup(false);
-    setError(null);
-  }, [mainLink, backupLink]);
-
-  const handleMainError = () => {
-    setError("Main link failed to load. Try the backup link.");
-    setShowBackup(true);
-  };
-
-  const handleBackupClick = () => {
-    onLinkChange(backupLink);
-  };
 
   return (
     <Box>
       {error && (
-        <Box display="flex" alignItems="center" mb={2} color="error.main">
+        <Box
+          display='flex'
+          alignItems='center'
+          mb={2}
+          color='error.main'>
           <ErrorOutlineIcon sx={{ mr: 1 }} />
-          <Typography variant="body2">{error}</Typography>
+          <Typography variant='body2'>{error}</Typography>
         </Box>
       )}
-      {showBackup && backupLink && (
-        <Button 
-          variant="contained" 
-          color="secondary" 
-          onClick={handleBackupClick}
-          startIcon={<ErrorOutlineIcon />}
-        >
-          Try Backup Link
-        </Button>
-      )}
-      <video
-        src={mainLink}
-        onError={handleMainError}
-        style={{ width: '100%', display: showBackup ? 'none' : 'block' }}
-        controls
-      />
+
+      <Box>
+        <iframe
+          autoPlay={false}
+          loading='lazy'
+          allowFullScreen
+          src={`${backupLink}?autoplay=0`}
+          style={{ width: '100%' }}
+          referrerPolicy='strict-origin-when-cross-origin'
+          title='Link dự phòng'
+          allow='accelerometer; clipboard-write; 
+                 encrypted-media; gyroscope; 
+                 picture-in-picture; web-share'
+        />
+      </Box>
     </Box>
   );
-};
+});
+BackupLinkPlayer.displayName = 'BackupLinkPlayer';
 
 export default BackupLinkPlayer;

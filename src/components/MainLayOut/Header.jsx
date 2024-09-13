@@ -123,7 +123,7 @@ const Header = React.memo(({ onLogoClick }) => {
                 {isUserDropdownOpen && (
                   <div className='absolute right-0 mt-2 w-48 bg-[#181a1b] border-[1px] border-[#684808] rounded-md shadow-lg z-[9999]'>
                     <div className='py-2'>
-                      <Link className='block px-4 py-2 text-[#dad7b2] hover:bg-[#25282a]'>Setting</Link>
+                      <Link className='block px-4 py-2 text-[#dad7b2] hover:bg-[#25282a]'>Profile</Link>
                       <button
                         onClick={handleLogOut}
                         className='block text-[#dad7b2] w-full text-left px-4 py-2 border-t border-[#3d3333] hover:bg-[#25282a]'>

@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo } from 'react';
-import { LinkServer, MovieBox, NoteViewer } from './index.js';
+import { BackupLinkPlayer, LinkServer, MovieBox, NoteViewer } from './index.js';
 import { useActiveButton, useActiveLinkButton } from '../../hooks/useActiveButton.js';
 import { icons } from '../../shared/icon.js';
 import { noteMovieWatch2 } from '../../shared/constant.js';
@@ -10,6 +10,8 @@ import 'react-toastify/dist/ReactToastify.css';
 const { MdOutlineExpandMore, ImBookmark, FaCirclePlus, MdOutlineExpandLess, FaCheck } = icons;
 
 const MovieWatchBox = React.memo(({ movieDetails }) => {
+  // console.log(movieDetails);
+
   const serverData = movieDetails?.episodes[0]?.server_data;
   const serverName = movieDetails?.episodes[0]?.server_name;
   const posterUrl = movieDetails?.poster_url;
@@ -17,23 +19,44 @@ const MovieWatchBox = React.memo(({ movieDetails }) => {
   // const [activeButton, handleClick] = useActiveButton(serverData);
   const [contentClick, setContentClick] = useState(false);
   const [selectedEpisode, setSelectedEpisode] = useState(serverData[0]);
-  const [activeLinkButton, handleClickLink] = useActiveLinkButton(serverData);
+  const [backupLink, setBackupLink] = useState(null);
+  const [showBackup, setShowBackup] = useState(false);
+
+  const [activeMainLink, handleMainLinkClick] = useActiveLinkButton(0);
+  const [activeBackupLink, handleBackupLinkClick] = useActiveLinkButton();
+
   const handleEpisodeClick = useCallback(
     (episode, index) => {
       setSelectedEpisode(episode);
-      handleClickLink(index);
+      handleMainLinkClick(index);
+      handleBackupLinkClick(null);
+      setShowBackup(false);
     },
-    [handleClickLink, setSelectedEpisode]
+    [handleMainLinkClick, handleBackupLinkClick]
+  );
+  const handleEpisodeBackupClick = useCallback(
+    (episode, index) => {
+      setBackupLink(episode);
+      setSelectedEpisode(episode); // Cập nhật selectedEpisode
+      handleBackupLinkClick(index);
+      handleMainLinkClick(null);
+      setShowBackup(true); // Hiện player dự phòng
+    },
+    [handleMainLinkClick, handleBackupLinkClick]
   );
 
   const contentWithoutTags = useMemo(() => movieDetails?.content?.replace(/<[^>]+>/g, ''), [movieDetails?.content]);
 
   return (
     <div>
-      <MovieBox
-        poster={posterUrl}
-        episode={selectedEpisode}
-      />
+      {showBackup ? (
+        <BackupLinkPlayer backupLink={backupLink?.link_embed} />
+      ) : (
+        <MovieBox
+          poster={posterUrl}
+          episode={selectedEpisode?.link_m3u8}
+        />
+      )}
       <NoteViewer
         hidden='hidden'
         note={noteMovieWatch2}
@@ -63,7 +86,7 @@ const MovieWatchBox = React.memo(({ movieDetails }) => {
             <h1 className='leading-[25px] text-[18px] text-[#d78f07] tw-multiline-ellipsis-1 font-[500px]'>
               {movieDetails?.name}
               <span className='ml-1.5'>Tập: {selectedEpisode?.name} </span>
-              <span className=''>
+              <span className='ml-2'>
                 {movieDetails?.quality}+ {movieDetails?.lang}
               </span>
             </h1>
@@ -81,9 +104,15 @@ const MovieWatchBox = React.memo(({ movieDetails }) => {
         </div>
       )}
       <LinkServer
-        activeButton={activeLinkButton}
+        activeButton={activeMainLink}
         onEpisodeClick={handleEpisodeClick}
         serverName={serverName}
+        serverData={serverData}
+      />
+      <LinkServer
+        activeButton={activeBackupLink}
+        onEpisodeClick={handleEpisodeBackupClick}
+        serverName={`Link dự phòng`}
         serverData={serverData}
       />
       <ToastContainer

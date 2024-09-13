@@ -22,7 +22,7 @@ const UtilityButton = React.memo(() => {
           insetInlineEnd: 94,
         }}
         type='primary'
-        duration={100}
+        duration={500}
         icon={<PiArrowLineUpBold aria-label='Back to Top' />}
       />
     </>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import { MediaPlayer, MediaProvider, Spinner, ToggleButton, Poster } from '@vidstack/react';
 import { PlyrLayout } from '@vidstack/react/player/layouts/plyr';
@@ -28,7 +28,6 @@ const PlyrControl = [
 ];
 
 const MovieBox = React.memo(({ episode, poster }) => {
-  // console.log(poster)
   const [loading, setLoading] = useState(false);
   const handleSeeking = () => {
     setLoading(true);
@@ -46,7 +45,7 @@ const MovieBox = React.memo(({ episode, poster }) => {
         load='play'
         poster={`${IMG_URL}/${poster}`}
         posterLoad='idle'
-        src={episode?.link_m3u8}
+        src={episode}
         onSeeking={handleSeeking}
         onSeeked={handleSeeked}>
         <MediaProvider />
@@ -88,9 +87,6 @@ const MovieBox = React.memo(({ episode, poster }) => {
           />
         </ToggleButton>
         <div className='flex'>
-          <div>
-            <span>*0/5(0 lượt)</span>
-          </div>
           <Rating
             name='half-rating'
             defaultValue={2.5}

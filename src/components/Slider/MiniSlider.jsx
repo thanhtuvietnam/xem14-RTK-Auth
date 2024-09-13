@@ -11,14 +11,10 @@ import { IMG_URL } from '../../shared/constant.js';
 export const MiniSlider = React.memo(({ films }) => {
   // console.log(films);
   const allMovies = useMemo(() => {
-    // const phimmoi2 = films?.Phimmoi || [];
     const phimbo = (films?.Phimbo).slice(12, 24) || [];
     const phimle = (films?.Phimle).slice(12, 24) || [];
-
     return [...phimbo, ...phimle];
-    // return [...phimmoi2];
   }, [films]);
-  // console.log(allMovies);
 
   const swiperBreakpoints = {
     320: { slidesPerView: 2, spaceBetween: 10 },

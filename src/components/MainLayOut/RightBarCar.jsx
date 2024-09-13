@@ -22,7 +22,7 @@ const RightBarCar = React.memo(({ movieName, originName, year, view, thumbImage,
       onClick={handleClickItem}
       className={`relative rightbar-custom group flex items-center gap-4 p-3 rounded-md transition duration-300 ease-in-out 
       ${isHovering ? 'animate-gradientMovertl' : 'animate-gradientMoveltr'}
-      sm:flex-row sm:px-4`}
+      sm:flex-row sm:px-4 border-l border-[#473434]`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}>
       <div className={`w-1/4 sm:w-[15%] md:w-[12%] lg:w-1/4 overflow-hidden rounded-md ${heightThumb}`}>
