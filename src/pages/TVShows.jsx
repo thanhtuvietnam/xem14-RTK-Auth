@@ -1,4 +1,5 @@
 import { MovieCategory } from '../components/Common';
+import { metaDescriptionShows, titleTvShows } from '../shared/constant';
 const movieSortValue = 'tv-shows';
 
 const sortParams = [
@@ -8,6 +9,8 @@ const sortParams = [
 ];
 const TVShows = () => (
   <MovieCategory
+    title={titleTvShows}
+    metaDescription={metaDescriptionShows}
     numberSlice={10}
     movieSortValue={sortParams}
     categoryBreadCrumb='TV-SHOWS'

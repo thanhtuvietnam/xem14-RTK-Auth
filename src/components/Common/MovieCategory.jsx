@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { NoteViewer, CardItem, Filter, PaginationCom, SectionTitle, TrendingNow, BreadCrumb } from './index.js';
-import { IMG_URL, noteLine } from '../../shared/constant.js';
+import { IMG_URL, noteLine, titlePhimBo } from '../../shared/constant.js';
 import { classifyAddon } from '../../shared/utils.js';
 import PropTypes from 'prop-types';
 import SkeletonForAll from '../Skeleton/SkeletonForAll/SkeletonForAll.jsx';
@@ -11,10 +11,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useAppSelector } from '../../store/hook.js';
 import { setCurrentPage } from '../../store/searchSlice/searchSlice.js';
 import { icons } from '../../shared/icon.js';
+import { Helmet } from 'react-helmet';
 
 const { IoWarningSharp } = icons;
 
-const MovieCategory = React.memo(({ sectionTitle, dataResults, totalItemsSearch, categorySlug, categoryBreadCrumb, OthersBreadCrumb, hiddenOther, movieSortValue, numberSlice }) => {
+const MovieCategory = React.memo(({ sectionTitle, dataResults, totalItemsSearch, categorySlug, categoryBreadCrumb, OthersBreadCrumb, hiddenOther, movieSortValue, numberSlice, title, metaDescription }) => {
+  const selectedSlug = useAppSelector((state) => state.submenu.slug);
+  const selectedType = useAppSelector((state) => state.submenu.type);
   const location = useLocation();
 
   const pageType = location.pathname === '/tim-kiem' ? 'search' : 'normal';
@@ -101,6 +104,18 @@ const MovieCategory = React.memo(({ sectionTitle, dataResults, totalItemsSearch,
 
   return (
     <div className='min-h-screen custom-page px-0 bg-[#151d25]'>
+      <Helmet>
+        <title>{title}</title>
+        <meta
+          name='description'
+          content={metaDescription}
+        />
+        <link
+          rel='canonical'
+          href={categorySlug ? `https://cuongphim.vercel.app/${categorySlug}` : `https://cuongphim.vercel.app/${selectedType}/${selectedSlug}`}
+        />
+      </Helmet>
+      ;
       <NoteViewer
         note={noteLine}
         hidden={`hidden`}

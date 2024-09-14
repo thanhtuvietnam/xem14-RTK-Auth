@@ -14,7 +14,9 @@ const RightBarCar = React.memo(({ movieName, originName, year, view, thumbImage,
     if (searchKeyRTK !== '') {
       dispatch(clearSearchKey());
     }
-    setShowDropdown(false);
+    if (typeof setShowDropdown === 'function') {
+      setShowDropdown(); // Kiểm tra xem setShowDropdown có phải là hàm không
+    }
   };
 
   return (

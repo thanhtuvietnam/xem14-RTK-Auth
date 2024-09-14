@@ -2,6 +2,7 @@ import React from 'react';
 import { MovieCategory } from '../components/Common';
 import SkeletonForAll from '../components/Skeleton/SkeletonForAll/SkeletonForAll';
 import { useCategoryPage } from '../hooks/useCategoryPage';
+import { metaDescriptionGia, titleQuocgia } from '../shared/constant';
 const movieSortValue = '';
 
 const sortParams = [
@@ -18,6 +19,8 @@ const Quocgia = () => {
         <SkeletonForAll />
       ) : (
         <MovieCategory
+          title={titleQuocgia(titlePage)}
+          metaDescription={metaDescriptionGia(titlePage)}
           numberSlice={10}
           movieSortValue={sortParams}
           OthersBreadCrumb={titlePage}

@@ -4,8 +4,8 @@ import SectionSlider from '../components/Slider/SectionSlider';
 import { TrendingNow, Filter, NoteViewer } from '../components/Common/index.js';
 import { MiniSlider } from '../components/Slider/MiniSlider';
 import 'react-loading-skeleton/dist/skeleton.css';
-import { navLists, noteLine } from '../shared/constant.js';
-import { useGetPhimmoiQuery, useGetPhimboQuery, useGetPhimleQuery, useGetTVShowsQuery, useGetHoathinhQuery } from '../store/apiSlice/homeApi.slice.js';
+import { metaDescriptionHome, navLists, noteLine, titleHomePage } from '../shared/constant.js';
+import { useGetPhimmoiQuery, useGetPhimboQuery, useGetPhimleQuery, useGetTVShowsQuery, useGetHoathinhQuery, useGetHomeQuery } from '../store/apiSlice/homeApi.slice.js';
 import { useAppdispatch, useAppSelector } from '../store/hook.js';
 import { setActiveButton, setLoading } from '../store/mainSlice/LoadingSlice/loadingSlice.js';
 import { ToastContainer, toast } from 'react-toastify';
@@ -13,6 +13,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import SkeletonForAll from '../components/Skeleton/SkeletonForAll/SkeletonForAll.jsx';
 import Error from './Error.jsx';
 import { useActiveButton } from '../hooks/useActiveButton.js';
+import { Helmet } from 'react-helmet';
+import { setTotalItems } from '../store/searchSlice/searchSlice.js';
 
 const movieSortValue = 'phim-moi';
 
@@ -23,10 +25,11 @@ const sortParams = [
 ];
 
 const HomePage = React.memo(() => {
-  const Loading = useAppSelector((state) => state.loadingState.Loading);
   const dispatch = useAppdispatch();
-  const [activeButton, handleClick] = useActiveButton(navLists);
 
+  //---------------------------------------------------------------//
+  const Loading = useAppSelector((state) => state.loadingState.Loading);
+  const [activeButton, handleClick] = useActiveButton(navLists);
   const PhimmoiQuery = useGetPhimmoiQuery(1);
   const PhimboQuery = useGetPhimboQuery(1);
   const PhimleQuery = useGetPhimleQuery(1);
@@ -34,7 +37,7 @@ const HomePage = React.memo(() => {
   const HoathinhQuery = useGetHoathinhQuery(1);
 
   const queries = useMemo(() => [PhimmoiQuery, PhimboQuery, PhimleQuery, TVShowsQuery, HoathinhQuery], [PhimmoiQuery, PhimboQuery, PhimleQuery, TVShowsQuery, HoathinhQuery]);
-
+  //-----------------------------------------------------------------//
   const movies = useMemo(() => {
     if (queries.every((query) => query.data)) {
       return {
@@ -97,6 +100,17 @@ const HomePage = React.memo(() => {
 
   return (
     <div className='bg-[#222d38]'>
+      <Helmet>
+        <title>{titleHomePage}</title>
+        <meta
+          name='description'
+          content={metaDescriptionHome}
+        />
+        <link
+          rel='canonical'
+          href='https://cuongphim.vercel.app/'
+        />
+      </Helmet>
       <div className='min-h-screen custom-page px-0 bg-[#151d25]'>
         <NoteViewer
           hidden='hidden'

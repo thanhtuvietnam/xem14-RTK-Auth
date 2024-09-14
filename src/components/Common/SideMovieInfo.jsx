@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CarInfo, InfoBlock, ContentInfo, TableLink, RecommendMovie, LinkServer } from './index.js';
 import { IMG_URL } from '../../shared/constant.js';
 import { icons } from '../../shared/icon.js';
@@ -15,7 +15,7 @@ const SideMovieInfo = React.memo(({ detail, handleWatchMovie }) => {
 
   const movie = detail;
   const movieTrailerUrl = movie?.trailer_url;
-
+  const newestEpisode = movie?.episodes[0]?.serverdata;
   const movieID = getYoutubeVideoId(movieTrailerUrl);
 
   const movieServerName = movie?.episodes[0]?.server_name;
@@ -27,7 +27,9 @@ const SideMovieInfo = React.memo(({ detail, handleWatchMovie }) => {
 
   const items = useAppSelector((state) => state.filter.recommendMovies);
   const excludeItems = useAppSelector((state) => state.filter.excludeItems);
-  // console.log(category);
+
+  const lastThreeEpisodes = movieServerData?.slice(-3).map((i) => i.slug);
+  // console.log(lastThreeEpisodes.join(', '));
 
   return (
     <div>
@@ -64,6 +66,7 @@ const SideMovieInfo = React.memo(({ detail, handleWatchMovie }) => {
               time={movie?.time}
               view={movie?.view}
               imdbScore={<ImdbScore film={movie} />}
+              newestEpisode={lastThreeEpisodes.join(', ')}
             />
           </div>
         </div>

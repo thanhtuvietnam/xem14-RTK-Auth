@@ -1,5 +1,6 @@
 import React from 'react';
 import { MovieCategory } from '../components/Common';
+import { metaDescriptionLe, titlePhimLe } from '../shared/constant';
 const movieSortValue = 'phim-le';
 
 const sortParams = [
@@ -9,6 +10,8 @@ const sortParams = [
 ];
 const PhimLe = () => (
   <MovieCategory
+    title={titlePhimLe}
+    metaDescription={metaDescriptionLe}
     numberSlice={10}
     movieSortValue={sortParams}
     categoryBreadCrumb='Phim Lẻ'

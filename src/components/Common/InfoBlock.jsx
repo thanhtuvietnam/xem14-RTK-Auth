@@ -3,7 +3,7 @@ import { icons } from '../../shared/icon';
 
 const { FaCalendarAlt, FaClock } = icons;
 
-const InfoBlock = React.memo(({ title, originalName, episodeCurrent, qua, lang, actor, director, category, country, year, time, view, imdbScore }) => {
+const InfoBlock = React.memo(({ title, originalName, episodeCurrent, qua, lang, actor, director, category, country, year, time, view, imdbScore, newestEpisode }) => {
   return (
     <div className='text-[#a5a5a5] text-[12.5px] leading-[20px] flex flex-col gap-1.5'>
       <h1 className='text-[20px] text-[#cacaca] font-bold'>{title}</h1>
@@ -23,7 +23,9 @@ const InfoBlock = React.memo(({ title, originalName, episodeCurrent, qua, lang, 
       <p>
         Đang phát: <span className='cardInfo-trailer text-white py-1 px-1 rounded-sm font-medium'>{episodeCurrent}</span>
       </p>
-      <p>Tập mới nhất:</p>
+      <p>
+        Tập mới nhất: <span className='text-yellow-500'>{newestEpisode}</span>
+      </p>
       <p>
         Quốc gia: <span className='text-[#82b0da]'>{country?.join(', ')}</span>
       </p>

@@ -2,6 +2,7 @@ import React from 'react';
 import { MovieCategory } from '../components/Common';
 import SkeletonForAll from '../components/Skeleton/SkeletonForAll/SkeletonForAll';
 import { useCategoryPage } from '../hooks/useCategoryPage';
+import { metaDescriptionLoai, titleTheloai } from '../shared/constant';
 
 const movieSortValue = '';
 
@@ -20,6 +21,8 @@ const Theloai = () => {
         <SkeletonForAll />
       ) : (
         <MovieCategory
+          title={titleTheloai(titlePage)}
+          metaDescription={metaDescriptionLoai(titlePage)}
           numberSlice={10}
           movieSortValue={sortParams}
           OthersBreadCrumb={titlePage}

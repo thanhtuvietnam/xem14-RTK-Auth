@@ -29,21 +29,22 @@ const SearchBar = React.memo(() => {
   const typeRTK = useAppSelector((state) => state.submenu.type);
   const slugRTK = useAppSelector((state) => state.submenu.slug);
   const currentPageRTK = useAppSelector((state) => state.search.currentPage);
-  const totalItemsRTK = useAppSelector((state) => state.search.totalItems);
+
   const activeOther = useAppSelector((state) => state.loadingState.activeOther);
 
-  const { data: homeRes } = useGetHomeQuery(null, { skip: totalItemsRTK !== 0 });
   const { data: state, isLoading, error, isFetching } = useGetSearchQuery({ searchTerm: debouncedSearchTerm, page }, { skip: !debouncedSearchTerm });
 
-  const navigate = useNavigate();
-  const inputRef = useRef(null);
-  const { isOpen, toggleDropdown, closeDropdown, dropdownRef } = useClickOutSide([inputRef], 'click');
-
+  const totalItemsRTK = useAppSelector((state) => state.search.totalItems);
+  const { data: homeRes } = useGetHomeQuery(null, { skip: totalItemsRTK !== 0 });
   useEffect(() => {
     if (homeRes?.data?.params?.pagination?.totalItems) {
       dispatch(setTotalItems(homeRes.data.params.pagination.totalItems));
     }
   }, [homeRes, dispatch]);
+
+  const navigate = useNavigate();
+  const inputRef = useRef(null);
+  const { isOpen, toggleDropdown, closeDropdown, dropdownRef } = useClickOutSide([inputRef], 'click');
 
   const handleChange = useCallback(
     (e) => {
@@ -59,7 +60,6 @@ const SearchBar = React.memo(() => {
         dispatch(clearType());
         dispatch(clearSlug());
       }
-      // setShowDropdown(true);
       toggleDropdown(true);
     },
     [dispatch, activeOther, currentPageRTK, page, typeRTK, slugRTK, toggleDropdown]
@@ -70,32 +70,27 @@ const SearchBar = React.memo(() => {
       e.preventDefault();
       if (searchTerm.trim() !== '') {
         navigate(`/tim-kiem?keyword=${searchTerm}`);
-        // setShowDropdown(false);
         closeDropdown();
       }
     },
     [searchTerm, navigate, closeDropdown]
   );
 
-  const searchResults = useMemo(
-    () => {
-      return state?.data?.items?.map((result) => (
-        <Link
-          to={`/chitiet-phim/${result?.slug}`}
-          key={result._id}>
-          <RightBarCar
-            setShowDropdown={toggleDropdown}
-            thumbImage={`${IMG_URL}/${result?.thumb_url}`}
-            year={result?.year}
-            movieName={result?.name}
-            originName={result?.origin_name}
-          />
-        </Link>
-      ));
-    },
-    [state?.data?.items],
-    toggleDropdown
-  );
+  const searchResults = useMemo(() => {
+    return state?.data?.items?.map((result) => (
+      <Link
+        to={`/chitiet-phim/${result?.slug}`}
+        key={result._id}>
+        <RightBarCar
+          setShowDropdown={closeDropdown}
+          thumbImage={`${IMG_URL}/${result?.thumb_url}`}
+          year={result?.year}
+          movieName={result?.name}
+          originName={result?.origin_name}
+        />
+      </Link>
+    ));
+  }, [state?.data?.items, toggleDropdown]);
 
   return (
     <div className='search-container sm:w-[300px] md:w-[350px]'>

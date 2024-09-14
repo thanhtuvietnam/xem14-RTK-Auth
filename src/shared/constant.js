@@ -40,3 +40,26 @@ export const API_URL = 'https://ophim1.com/v1/api/';
 // export const API_URL = "https://api.themoviedb.org/3";
 // export const IMG_URL = 'https://phimimg.com/';
 export const IMG_URL = 'https://img.ophim.live/uploads/movies';
+
+// SEO ON PAGE
+const currentyear = new Date().getFullYear();
+export const titleHomePage = `Phim Mới | Phim hay | Xem phim nhanh | Xem phim online | Phim mới vietsub hay nhất ${currentyear}`;
+export const metaDescriptionHome = `Xem phim mới miễn phí nhanh chất lượng cao. Xem Phim online Việt Sub, Thuyết minh, lồng tiếng chất lượng HD. Xem phim nhanh online chất lượng cao`;
+
+export const titlePhimBo = `Phim bộ | Phim bộ hay tuyển chọn | Phim bộ mới nhất ${currentyear}`;
+export const metaDescriptionBo = `Phim bộ mới nhất tuyển chọn chất lượng cao, phim bộ trọn bộ ${currentyear} vietsub cập nhật nhanh nhất. Phim bộ vietsub nhanh nhất`;
+
+export const titlePhimLe = `Phim lẻ | Phim lẻ hay tuyển chọn | Phim lẻ mới nhất ${currentyear}`;
+export const metaDescriptionLe = `Phim lẻ mới nhất tuyển chọn chất lượng cao, phim lẻ mới nhất ${currentyear} vietsub cập nhật nhanh nhất. Phim lẻ vietsub nhanh nhất`;
+
+export const titleTvShows = `Tv Shows | Tv Shows hay tuyển chọn | Tv Shows mới nhất ${currentyear}`;
+export const metaDescriptionShows = `Tv Shows mới nhất tuyển chọn chất lượng cao, Tv Shows mới nhất ${currentyear} vietsub cập nhật nhanh nhất. Tv Shows vietsub nhanh nhất`;
+
+export const titleHoathinh = `Phim hoạt hình | Phim hoạt hình hay tuyển chọn | Phim hoạt hình mới nhất ${currentyear}`;
+export const metaDescriptionHinh = `Phim hoạt hình mới nhất tuyển chọn chất lượng cao, Phim hoạt hình mới nhất ${currentyear} vietsub cập nhật nhanh nhất. Phim hoạt hình vietsub nhanh nhất`;
+
+export const titleTheloai = (genre) => `Phim ${genre} | Phim ${genre} hay tuyển chọn | Phim ${genre} mới nhất ${currentyear}`;
+export const metaDescriptionLoai = (kind) => `Phim ${kind} mới nhất tuyển chọn chất lượng cao, Phim ${kind}  mới nhất ${currentyear} vietsub cập nhật nhanh nhất. Phim ${kind} vietsub nhanh nhất`;
+
+export const titleQuocgia = (country) => `Phim ${country} | Phim ${country} hay tuyển chọn | Phim ${country} mới nhất ${currentyear}`;
+export const metaDescriptionGia = (countryDes) => `Phim ${countryDes} mới nhất tuyển chọn chất lượng cao, Phim ${countryDes}  mới nhất ${currentyear} vietsub cập nhật nhanh nhất. Phim ${countryDes} vietsub nhanh nhất`;

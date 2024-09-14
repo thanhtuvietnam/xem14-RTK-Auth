@@ -1,10 +1,10 @@
 import { navLists } from '../../shared/constant';
 import { Link } from 'react-router-dom';
 import React, { useMemo } from 'react';
-import { convertToSlug } from '../../shared/utils';
+import { convertToSlug, getCurrentYear } from '../../shared/utils';
 
 const Footer = React.memo(() => {
-  const getCurrentYear = new Date().getFullYear();
+  // const getCurrentYear = new Date().getFullYear();
   const navListsSlug = useMemo(() => navLists.map(convertToSlug), []);
   return (
     <footer className='bg-[#151d25] text-[#8f8f8f] py-8 border-t border-[#435153a8]'>

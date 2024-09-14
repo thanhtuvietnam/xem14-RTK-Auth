@@ -4,12 +4,14 @@ import { Filter, TrendingNow, MovieWatchBox, RecommendMovie, TableLink, NoteView
 import { useAppdispatch, useAppSelector } from '../store/hook.js';
 import { setLoading } from '../store/mainSlice/LoadingSlice/loadingSlice.js';
 import { LazyLoadComponent } from 'react-lazy-load-image-component';
-import { noteLine, noteMovieWatch } from '../shared/constant.js';
+import { metaDescriptionHome, noteLine, noteMovieWatch, titleHomePage } from '../shared/constant.js';
 import { useActiveLinkButton } from '../hooks/useActiveButton.js';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import FilterSkeleton from '../components/Skeleton/HomePageSkeleton/FilterSkeleton.jsx';
 import CardSkeleton from '../components/Skeleton/HomePageSkeleton/CardSkeleton.jsx';
 import { MoonLoader } from 'react-spinners';
+import { Helmet } from 'react-helmet';
+import useSplitContents from '../hooks/useSplitContent.js';
 
 const movieSortValue = '';
 
@@ -24,8 +26,8 @@ const MovieWatch = React.memo(() => {
   const movieDetails = location?.state?.movieDetails;
 
   const serverData = movieDetails?.episodes[0]?.server_data;
-  // const isLoading = useAppSelector((state) => state.loadingState.Loading);
-  const dispatch = useAppdispatch();
+  const { contentBlockWithoutTags, contentBlockSplitted } = useSplitContents(movieDetails);
+
   const [isLoading, setIsLoading] = useState(false);
 
   const items = useAppSelector((state) => state.filter.recommendMoviesWatch);
@@ -113,6 +115,18 @@ const MovieWatch = React.memo(() => {
 
   return (
     <div className='min-h-screen custom-page px-0 bg-[#151d25]'>
+      <Helmet>
+        <title>{movieDetails ? `${movieDetails?.name}-${movieDetails?.origin_name}` : titleHomePage}</title>
+        <meta
+          name='description'
+          content={`${contentBlockSplitted[0]}...`}
+        />
+        <link
+          rel='canonical'
+          href={`https://cuongphim.vercel.app/xem-phim/${movieDetails?.slug}`}
+        />
+      </Helmet>
+
       {renderNoteViewer}
       {isLoading ? (
         <div className='min-h-screen custom-page'>{renderSkeletonContent}</div>

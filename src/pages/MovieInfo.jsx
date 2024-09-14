@@ -12,8 +12,10 @@ import Error from './Error.jsx';
 import { MoonLoader } from 'react-spinners';
 import { CardSkeleton, FilterSkeleton } from '../components/Skeleton/HomePageSkeleton/index.js';
 
-import { noteLine, timeSort } from '../shared/constant.js';
+import { metaDescriptionHome, noteLine, timeSort, titleHomePage } from '../shared/constant.js';
 import { getRandomItem } from '../shared/utils.js';
+import { Helmet } from 'react-helmet';
+import useSplitContents from '../hooks/useSplitContent.js';
 
 const movieSortValue = '';
 
@@ -40,10 +42,12 @@ const MovieInfo = React.memo(() => {
   const movieDetails = MovieRes?.data?.item;
   const breadCrumbItem = MovieRes?.data?.breadCrumb[0];
 
+  const { contentBlockWithoutTags, contentBlockSplitted } = useSplitContents(movieDetails);
+
   const dispatch = useAppdispatch();
 
   const handleWatchMovie = useCallback(() => {
-    navigate(`/xem-phim/${slug}`, { state: { movieDetails } });
+    navigate(`/xem-phim/${slug}`, { state: { movieDetails, slug } });
   }, [navigate, slug, movieDetails]);
 
   // ------------------------------------------------------------------//
@@ -268,6 +272,18 @@ const MovieInfo = React.memo(() => {
   }, []);
   return (
     <div className='min-h-screen custom-page px-0 bg-[#151d25]'>
+      <Helmet>
+        <title>{movieDetails ? `${movieDetails?.name}-${movieDetails?.origin_name}` : titleHomePage}</title>
+        <meta
+          name='description'
+          content={`${contentBlockSplitted[0]}...`}
+        />
+        <link
+          rel='canonical'
+          href={`https://cuongphim.vercel.app/chitiet-phim/${slug}`}
+        />
+      </Helmet>
+
       {renderNoteViewer}
       <ToastContainer />
       <ScrollToTop />

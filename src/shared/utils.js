@@ -17,7 +17,6 @@ export const convertToSlug = (text) => {
       .replace(/-+/g, '-'); // Loại bỏ dấu gạch ngang liên tiếp
   }
 };
-
 export const navListsSlug = navLists.map((text) => convertToSlug(text));
 
 export const useHoverState = () => {
@@ -114,3 +113,5 @@ export const getRandomItem = (array) => {
   const randomIndex = Math.floor(Math.random() * array.length);
   return randomIndex;
 };
+
+export const getCurrentYear = new Date().getFullYear();
