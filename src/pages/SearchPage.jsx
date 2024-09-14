@@ -6,6 +6,15 @@ import { useGetSearchQuery } from '../store/apiSlice/homeApi.slice';
 import { useDebounce } from '../hooks/useDebounce';
 import { setError } from '../store/mainSlice/LoadingSlice/loadingSlice';
 import { useNavigate } from 'react-router-dom';
+import { metaDescriptionHome, titleHomePage } from '../shared/constant';
+
+const movieSortValue = '';
+
+const sortParams = [
+  { movieSort: movieSortValue, theLoaiSort: '', quocGiaSort: '', yearSort: '', timeSort: '_id', pageSort: 1 }, // Ngày
+  { movieSort: movieSortValue, theLoaiSort: '', quocGiaSort: '', yearSort: '', timeSort: 'modified.time', pageSort: 1 }, // Tuần
+  { movieSort: movieSortValue, theLoaiSort: '', quocGiaSort: '', yearSort: '', timeSort: 'year', pageSort: 1 }, // Tháng
+];
 
 const SearchPage = React.memo(() => {
   const dispatch = useAppdispatch();
@@ -38,6 +47,10 @@ const SearchPage = React.memo(() => {
   return (
     <div className='min-h-screen custom-page px-0 bg-[#151d25]'>
       <MovieCategory
+        title={titleHomePage}
+        metaDescription={metaDescriptionHome}
+        numberSlice={10}
+        movieSortValue={sortParams}
         hiddenOther='hidden'
         categoryBreadCrumb='Tìm Kiếm'
         sectionTitle={`Kết quả tìm kiếm cho từ khoá: ${searchTerm}`}
