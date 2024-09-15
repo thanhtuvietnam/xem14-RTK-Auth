@@ -6,6 +6,14 @@ import { setFilterValues } from '../store/filterSlice/filter.slice';
 import { useGetSortQuery } from '../store/apiSlice/homeApi.slice';
 import SkeletonForAll from '../components/Skeleton/SkeletonForAll/SkeletonForAll';
 import { setError } from '../store/mainSlice/LoadingSlice/loadingSlice';
+import { metaDescriptionHome, titleHomePage } from '../shared/constant';
+
+const movieSortValue = '';
+const sortParams = [
+  { movieSort: movieSortValue, theLoaiSort: '', quocGiaSort: '', yearSort: '', timeSort: '_id', pageSort: 1 }, // Ngày
+  { movieSort: movieSortValue, theLoaiSort: '', quocGiaSort: '', yearSort: '', timeSort: 'modified.time', pageSort: 1 }, // Tuần
+  { movieSort: movieSortValue, theLoaiSort: '', quocGiaSort: '', yearSort: '', timeSort: 'year', pageSort: 1 }, // Tháng
+];
 const SortPage = React.memo(() => {
   const dispatch = useAppdispatch();
   const navigate = useNavigate();
@@ -24,7 +32,6 @@ const SortPage = React.memo(() => {
     if (filterValues.pageSort !== currentPage) {
       const updatedFilterValues = { ...filterValues, pageSort: currentPage }; // Tạo bản sao của filterValues và cập nhật pageSort
       dispatch(setFilterValues(updatedFilterValues)); // Dispatch hành động với giá trị cập nhật
-      // Xây dựng lại URL với tất cả các tham số hiện tại và tham số trang mới
       const queryParams = new URLSearchParams({
         sort_field: filterValues.timeSort || '',
         category: filterValues.theLoaiSort || '',
@@ -56,6 +63,10 @@ const SortPage = React.memo(() => {
 
   return (
     <MovieCategory
+      title={titleHomePage}
+      metaDescription={metaDescriptionHome}
+      numberSlice={10}
+      movieSortValue={sortParams}
       dataResults={dataFilter}
       categoryBreadCrumb='Lọc phim'
       sectionTitle={`Lọc phim: ${titlePage}`}
