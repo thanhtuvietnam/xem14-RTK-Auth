@@ -1,10 +1,15 @@
-import React, { useCallback, useEffect } from 'react';
-import { Footer, Header, NavBar, Title } from '../components/MainLayOut/index.js';
-import { Outlet, useLocation } from 'react-router-dom';
-import { useActiveButton } from '../hooks/useActiveButton.js';
-import { navLists } from '../shared/constant.js';
-import { analytics } from '../shared/firebase.js';
-import { logEvent } from 'firebase/analytics';
+import { logEvent } from "firebase/analytics";
+import React, { useCallback, useEffect } from "react";
+import { Outlet, useLocation } from "react-router-dom";
+import {
+  Footer,
+  Header,
+  NavBar,
+  Title,
+} from "../components/MainLayOut/index.js";
+import { useActiveButton } from "../hooks/useActiveButton.js";
+import { navLists } from "../shared/constant.js";
+import { analytics } from "../shared/firebase.js";
 
 const Home = React.memo(() => {
   const [activeButton, handleClick] = useActiveButton(navLists);
@@ -15,10 +20,9 @@ const Home = React.memo(() => {
   }, [handleClick, activeButton]);
 
   const location = useLocation(); // Sử dụng useLocation để theo dõi đường dẫn
-
   useEffect(() => {
     const trackPageView = (page) => {
-      logEvent(analytics, 'page_view', {
+      logEvent(analytics, "page_view", {
         page_location: window.location.href,
         page_title: document.title,
         page_path: page,
@@ -32,8 +36,8 @@ const Home = React.memo(() => {
   }, [location]); // Chạy lại khi location thay đổi
 
   return (
-    <div className='bg-[#222d38] overflow-x-hidden'>
-      <Title value='Cuồng Phim | Xem phim thỏa thích' />
+    <div className="bg-[#222d38]  overflow-x-hidden">
+      <Title value="Cuồng Phim | Xem phim thỏa thích" />
       <Header onLogoClick={handleLogoClick} />
       <NavBar />
       <div>
@@ -43,5 +47,5 @@ const Home = React.memo(() => {
     </div>
   );
 });
-Home.displayName = 'Home';
+Home.displayName = "Home";
 export default Home;
