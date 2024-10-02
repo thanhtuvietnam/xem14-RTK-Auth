@@ -1,20 +1,20 @@
-import { useState } from 'react';
-import { navLists } from './constant';
-import { nanoid } from '@reduxjs/toolkit';
+import { useState } from "react";
+import { navLists } from "./constant";
+import { nanoid } from "@reduxjs/toolkit";
 
 export const convertToSlug = (text) => {
-  if (text === 'TRANG CHỦ') {
-    return '';
+  if (text === "TRANG CHỦ") {
+    return "";
   } else {
     return text
       .toString()
       .toLowerCase()
-      .normalize('NFD') // Normalize Unicode để xử lý ký tự tiếng Việt có dấu
-      .replace(/[\u0300-\u036f]/g, '') // Loại bỏ dấu ngã, huyền, hỏi,... trong Unicode
-      .replace(/[đĐ]/g, 'd') // Chuyển đổi đ, Đ thành d
-      .replace(/\s+/g, '-') // Thay thế khoảng trắng bằng dấu gạch ngang
-      .replace(/[^\w-]+/g, '') // Loại bỏ các ký tự không phải chữ cái, số, hoặc dấu gạch ngang
-      .replace(/-+/g, '-'); // Loại bỏ dấu gạch ngang liên tiếp
+      .normalize("NFD") // Normalize Unicode để xử lý ký tự tiếng Việt có dấu
+      .replace(/[\u0300-\u036f]/g, "") // Loại bỏ dấu ngã, huyền, hỏi,... trong Unicode
+      .replace(/[đĐ]/g, "d") // Chuyển đổi đ, Đ thành d
+      .replace(/\s+/g, "-") // Thay thế khoảng trắng bằng dấu gạch ngang
+      .replace(/[^\w-]+/g, "") // Loại bỏ các ký tự không phải chữ cái, số, hoặc dấu gạch ngang
+      .replace(/-+/g, "-"); // Loại bỏ dấu gạch ngang liên tiếp
   }
 };
 export const navListsSlug = navLists.map((text) => convertToSlug(text));
@@ -28,16 +28,16 @@ export const useHoverState = () => {
 
 export const linkUrl = (film) => {
   switch (film.type) {
-    case 'series':
+    case "series":
       return `chitiet-phim/${film.slug}`;
-    case 'single':
+    case "single":
       return `chitiet-phim/${film.slug}`;
-    case 'hoathinh':
+    case "hoathinh":
       return `chitiet-phim/${film.slug}`;
-    case 'tvshows':
+    case "tvshows":
       return `chitiet-phim/${film.slug}`;
     default:
-      return '/error';
+      return "/error";
   }
 };
 export const titleListButton = (sectionFilm) => {
@@ -64,10 +64,10 @@ export const shuffleAndSliceArray = (array, slicesize) => {
 
 export const classifyAddon = (film) => {
   if (film?.sub_docquyen === true) {
-    return 'Vietsub Độc Quyền';
+    return "Vietsub Độc Quyền";
   } else {
-    if (film?.episode_current.toLowerCase() === 'full') {
-      if (film?.time === 'Đang cập nhật') {
+    if (film?.episode_current.toLowerCase() === "full") {
+      if (film?.time === "Đang cập nhật") {
         return null;
       } else {
         return film.time;
@@ -80,7 +80,8 @@ export const classifyAddon = (film) => {
 
 export const getYoutubeVideoId = (url) => {
   // const url = 'https://www.youtube.com/watch?v=Q47BZGNaA2o';
-  const regExp = /^.*((youtu.be\/)|(v\/)|(e\/)|(u\/\w+\/)|(embed\/)|(v=))([^#\&\?]*).*/;
+  const regExp =
+    /^.*((youtu.be\/)|(v\/)|(e\/)|(u\/\w+\/)|(embed\/)|(v=))([^#\&\?]*).*/;
   const match = url?.match(regExp);
   if (match && match[8].length === 11) {
     // console.log(match[8]);
